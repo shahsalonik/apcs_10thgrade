@@ -9,12 +9,12 @@ public class Modes
       display(tally);
       int[] modes = calculateModes(tally);
       display(modes);
-      /*int sum = 0;
+      int sum = 0;
       for(int k = 0; k < tally.length; k++)
           sum += tally[k];
       System.out.println("kth \tindex"); 
       for(int k = 1; k <= sum; k++)
-          System.out.println(k + "\t\t" + kthDataValue(tally, k));*/
+          System.out.println(k + "\t\t" + kthDataValue(tally, k));
    }
      
   /**
@@ -56,7 +56,24 @@ public class Modes
    */
    public static int kthDataValue(int[] tally, int k)
    {
-      // Your code goes here.
+      int count = 0;
+      
+      for (int x = 0; x < tally.length; x++) {
+      
+         int y = tally[count];
+      
+         if (k < tally[x]) {
+            return x;
+         }
+         else if ( k == tally[x] ) {
+            return x;
+         }
+         else {
+            k = k - y;
+         }
+         count++;
+      }
+      
       return -1;
    }
      
