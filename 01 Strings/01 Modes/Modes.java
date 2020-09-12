@@ -14,7 +14,7 @@ public class Modes
           sum += tally[k];
       System.out.println("kth \tindex"); 
       for(int k = 1; k <= sum; k++)
-          System.out.println(k + "\t\t" + kthDataValue(tally, k));
+          System.out.println(k + "\t\t" + kthDataValue(tally, k));          
    }
      
   /**
@@ -28,6 +28,8 @@ public class Modes
       int count = 0;
       int pos = 0;
       
+      //looks through each index of tally and checks which indexes are equal to the max number
+      //increases the count based on that
       for(int i = 0; i < tally.length; i++){
       
          if(tally[i] == maxNum){
@@ -35,8 +37,10 @@ public class Modes
          }
       }
      
+      //creates an array based on the number of modes there are
       int[] array = new int[count]; 
       
+      //if the number at the index equals to the max number, put that index at that spot the array
       for(int x = 0; x < tally.length; x++){
       
          if(tally[x] == maxNum){
@@ -45,6 +49,7 @@ public class Modes
          }
       }
       
+      //returns the array made 
       return array;
    }
      
@@ -58,20 +63,18 @@ public class Modes
    {
       int count = 0;
       
+      //
       for (int x = 0; x < tally.length; x++) {
       
-         int y = tally[count];
+         int y = tally[count];         //y is equal to the value at the specified index
       
-         if (k < tally[x]) {
-            return x;
-         }
-         else if ( k == tally[x] ) {
+         if (k <= tally[x]) {          //if k is less than or equal to the value at that position, return the index
             return x;
          }
          else {
-            k = k - y;
+            k = k - y;  //subtract y from the value of k 
          }
-         count++;
+         count++; //increase count
       }
       
       return -1;
