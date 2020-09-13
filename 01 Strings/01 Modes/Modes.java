@@ -23,6 +23,8 @@ public class Modes
    *                the array's length equals the number of modes.
    *
    * @param tally the array with the frequencies of the index numbers
+   * @return an int array that contains the modes(s);
+   *                the array's length equals the number of modes.
    */
    public static int[] calculateModes(int[] tally)
    {
@@ -62,6 +64,8 @@ public class Modes
    * 
    * @param tally the array with the frequencies of the index numbers
    * @param k the number in the array whose value needs to be found
+   * @return the kth value in the data collection
+   *                represented by tally
    */
    public static int kthDataValue(int[] tally, int k)
    {
@@ -89,6 +93,7 @@ public class Modes
    * postcondition: returns the maximal value in nums
    *
    * @param nums the array of integers
+   * @return the maximal value in nums
    */
    public static int findMax(int[] nums)
    {
