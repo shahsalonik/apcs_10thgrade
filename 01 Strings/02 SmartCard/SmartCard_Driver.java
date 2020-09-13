@@ -133,7 +133,7 @@ class SmartCard
 	   /**
 	    * Checks whether or not the passenger has boarded.
 	    * 
-	    * @return true if isBoarded is true; false otherwise.
+	    * @return true if boarded; false otherwise.
 	    */
    public boolean isBoarded() {
       
@@ -147,7 +147,7 @@ class SmartCard
 	    * if they have already boarded (based on isBoarded). Prints where they boarded
 	    * and the balance in their SmartCard if they pass all the checks.
 	    * 
-	    * @param s the station name where the passenger boards.
+	    * @param s the station where the passenger boards.
 	    */
    public void board(Station s) {
       
@@ -173,7 +173,8 @@ class SmartCard
 	   /**
 	    * Returns the cost of traveling
 	    * 
-	    * @param s the place where the person is traveling.
+	    * @param s the station where the person is traveling.
+       *
 	    * @return the cost of traveling to their desired destination.
 	    */
    public double cost(Station s) {
@@ -241,7 +242,8 @@ class SmartCard
 	   
 	   /**
 	    * Returns the money remaining on the SmartCard.
-	    * @return balance
+       *
+	    * @return balance remaining on the card
 	    */
    double getMoneyRemaining()
    {
@@ -249,9 +251,9 @@ class SmartCard
    }
 	   
 	   /**
-	    * Returns the station and zone where the passenger boarded.
+	    * Returns the station where the passenger boarded.
 	    * 
-	    * @return the station and zone where the passenger boarded.
+	    * @return the station where the passenger boarded.
 	    */
    Station getBoardedAt()
    {
