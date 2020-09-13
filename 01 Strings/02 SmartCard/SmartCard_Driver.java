@@ -51,6 +51,11 @@ public class SmartCard_Driver {
       SmartCard f = new SmartCard(100.00);
       f.exit(downtown);
       System.out.println();
+      
+      SmartCard j = new SmartCard(100.00);
+      j.board(center);
+      j.exit(center);
+      System.out.println();
          
    }
 } 	
@@ -151,7 +156,6 @@ class SmartCard
 	    */
    public void board(Station s) {
       
-      boardingStation = s;
       
       if(isBoarded){
          System.out.println("Error: already boarded?!");
@@ -163,6 +167,7 @@ class SmartCard
             return;
          }
          else {
+            boardingStation = s;
             isBoarded = true;
             System.out.println("Boarded at " + boardingStation.getName() + ". SmartCard has " + df.format(balance));
          }
@@ -218,22 +223,27 @@ class SmartCard
          System.out.println("Error: Did not board?!");
          return;
       }
-      else {
-         
-         double costCheck = cost(s);
-         String exitStation = s.getName();
-         String boardStation = boardingStation.getName();
       
+      String exitStation = s.getName();
+      String boardStation = boardingStation.getName();
+         
+      double costCheck = cost(s);
+      
+      if(costCheck > balance) {
+         System.out.println("Insufficient funds to exit. Please add more money.");
+         return; 
+      }
+      else{
          isBoarded = false;
-         if(costCheck > balance) {
-            System.out.println("Insufficient funds to exit. Please add more money.");
-            return; 
+         balance = balance - costCheck;
+         if(boardStation.equals(exitStation)){
+            boardingStation = null;
+            return;
          }
-         else {
-            balance = balance - costCheck;
+         else{
             System.out.println("From " + boardStation + " to " + exitStation + " costs " + df.format(costCheck) + ". SmartCard has " + df.format(balance)); 
          }
-      }
+      }   
    }
 	   
 	   //the next 3 methods are for use ONLY by Grade-It
