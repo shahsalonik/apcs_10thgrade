@@ -34,18 +34,24 @@ public class Modes
       
       //forms a new array based on the number of modes in the array passed
       for(int i = 0; i < tally.length; i++){
-      
+         
          if(tally[i] == maxNum){
             count++;
          }
       }
      
       //creates the new array
-      int[] array = new int[count]; 
       
-      //puts the modes into the new array
+      if(count == tally.length) {
+         int[] array = {};
+         return array;
+      }
+      else{
+         int[] array = new int[count]; 
+         
+         //puts the modes into the new array
       for(int x = 0; x < tally.length; x++){
-      
+         
          if(tally[x] == maxNum){
             array[pos] = x;
             pos++;
@@ -54,6 +60,8 @@ public class Modes
       
       //returns the array of modes 
       return array;
+      
+      }
    }
      
   /**  
