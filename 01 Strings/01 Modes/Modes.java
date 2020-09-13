@@ -21,6 +21,8 @@ public class Modes
    * precondition: tally.length > 0
    * postcondition: returns an int array that contains the modes(s);
    *                the array's length equals the number of modes.
+   *
+   * @param tally the array with the frequencies of the index numbers
    */
    public static int[] calculateModes(int[] tally)
    {
@@ -28,8 +30,7 @@ public class Modes
       int count = 0;
       int pos = 0;
       
-      //looks through each index of tally and checks which indexes are equal to the max number
-      //increases the count based on that
+      //forms a new array based on the number of modes in the array passed
       for(int i = 0; i < tally.length; i++){
       
          if(tally[i] == maxNum){
@@ -37,10 +38,10 @@ public class Modes
          }
       }
      
-      //creates an array based on the number of modes there are
+      //creates the new array
       int[] array = new int[count]; 
       
-      //if the number at the index equals to the max number, put that index at that spot the array
+      //puts the modes into the new array
       for(int x = 0; x < tally.length; x++){
       
          if(tally[x] == maxNum){
@@ -49,7 +50,7 @@ public class Modes
          }
       }
       
-      //returns the array made 
+      //returns the array of modes 
       return array;
    }
      
@@ -58,12 +59,15 @@ public class Modes
    * 	             0 < k <= total number of values in data collection
    * postcondition: returns the kth value in the data collection
    *                represented by tally
+   * 
+   * @param tally the array with the frequencies of the index numbers
+   * @param k the number in the array whose value needs to be found
    */
    public static int kthDataValue(int[] tally, int k)
    {
       int count = 0;
       
-      //
+      //checks to see which number occurs at the kth place in the array passed.
       for (int x = 0; x < tally.length; x++) {
       
          int y = tally[count];         //y is equal to the value at the specified index
@@ -72,7 +76,7 @@ public class Modes
             return x;
          }
          else {
-            k = k - y;  //subtract y from the value of k 
+            k = k - y;  //subtract y from the value of k and repeat
          }
          count++; //increase count
       }
@@ -83,6 +87,8 @@ public class Modes
   /**
    * precondition:  nums.length > 0
    * postcondition: returns the maximal value in nums
+   *
+   * @param nums the array of integers
    */
    public static int findMax(int[] nums)
    {
