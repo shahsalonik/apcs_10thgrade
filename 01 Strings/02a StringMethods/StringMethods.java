@@ -1,5 +1,5 @@
-//Name: 
-//Date: 
+//Name: Saloni Shah
+//Date: 09/21/2020 (due date)
 public class StringMethods
 {
    public static void main(String[] args)

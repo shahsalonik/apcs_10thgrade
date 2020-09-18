@@ -42,6 +42,9 @@ public class PigLatin
    {
       if(s.length() == 0)
          return "";
+         
+      String ay = "ay";
+      String way = "way";
    
       //remove and store the beginning punctuation 
            
@@ -54,6 +57,19 @@ public class PigLatin
       //     y is a vowel if it is not the first letter
       //     qu
       
+      String pigWord = "";
+      int vowelIndex = getVowelIndex(s);
+     
+      if(vowelIndex == -1) {
+         s = "***NO VOWEL***";
+      }
+      else if(vowelIndex == 0) {
+         s = s + way;
+      }
+      else {
+         pigWord = s.substring(0, vowelIndex);
+         s = s.substring(vowelIndex) + pigWord + ay;
+      }
       
       //if no vowel has been found
       
@@ -63,10 +79,30 @@ public class PigLatin
       
       //return the piglatinized word 
       
-      
-      
+      return s;
    }
-
+   
+   public static int getVowelIndex(String s) {
+   
+      int vowelIndex = -1;
+   
+      for (int a = 0; a < s.length(); a++) {
+      
+         for(int x = 0; x < vowels.length(); x++) {
+            
+            if(s.charAt(a) == (vowels.charAt(x))) {
+               vowelIndex = s.indexOf(vowels.charAt(x));
+               break;
+            } 
+         }
+         if(vowelIndex != -1) {
+            break;
+         }
+      }
+      
+      return vowelIndex;
+      
+   }  
 
    public static void part_2_using_piglatenizeFile() 
    {
@@ -124,6 +160,8 @@ public class PigLatin
       if(s.length() == 0)
          return "";
          
+   
+      return s;
          
    }
 }
