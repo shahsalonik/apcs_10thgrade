@@ -67,12 +67,18 @@ public class PigLatin
          s = s + way;
       }
       else {
-         pigWord = s.substring(0, vowelIndex);
-         s = s.substring(vowelIndex) + pigWord + ay;
+         if(s.contains("qu") && s.indexOf("qu") < vowelIndex) {
+            pigWord = s.substring(0, s.indexOf("qu") + 2);
+            s = s.substring(s.indexOf("qu") + 2) + pigWord + ay;
+         }
+         else {
+            pigWord = s.substring(0, vowelIndex);
+            s = s.substring(vowelIndex) + pigWord + ay;
+         }
       }
       
       //if no vowel has been found
-      
+   
       
       //is the first letter capitalized?
       
