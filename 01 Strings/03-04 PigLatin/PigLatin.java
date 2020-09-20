@@ -42,30 +42,28 @@ public class PigLatin
    {
       if(s.length() == 0)
          return "";
-         
+
+      
       String ay = "ay";
       String way = "way";
-      //store beg
+      //store the punctuation at the beginning of the string
       String beginningPunctuation = getBeginningPunctuation(s);
-      //store end
+      //store the punctuation at the end of the string
       String endPunctuation = getEndPunctuation(s);
      
-     //new string
+     //the new string without any punctuation
       s = s.substring(beginningPunctuation.length(), s.lastIndexOf(endPunctuation));
       
+      //stores whether or not the string starts with a capital letter.
       boolean isUpperCase = isCapitalLetter(s);
       char firstLetter = s.charAt(0);
       
+      //changes the first letter of the string to lower case 
       firstLetter = Character.toLowerCase(s.charAt(0));
       
-      //check for capitalization
-         
-      //START HERE with the basic case:
-      //     find the index of the first vowel
-      //     y is a vowel if it is not the first letter
-      //     qu
-      
+      //stores the suffix (later)
       String pigWord = "";
+      //stores the index of the first occurring vowel
       int vowelIndex = getVowelIndex(s);
      
      //no vowel
@@ -77,19 +75,22 @@ public class PigLatin
          s = s + way;
       }
       else {
-      //qu
-         //y
-         
+    	 
+    	  
          if(s.contains("y")) {
-         
+        	 
+        	 //if the string contains y and if y is at 0, print normally
             if(s.indexOf("y") == 0) {
                pigWord = firstLetter + s.substring(1, vowelIndex);
                s = s.substring(vowelIndex) + pigWord + ay;
             }
+            //if the string contains y and if y is not 0 and if the index of y is less 
+            //than the vowel index, consider y to be the first vowel.
             else if (s.indexOf("y") != 0 && s.indexOf("y") < vowelIndex) {
                pigWord = firstLetter + s.substring(1, s.indexOf("y"));
                s = s.substring(s.indexOf("y")) + pigWord + ay;
             }
+            //print normally in all other cases
             else {
                pigWord = firstLetter + s.substring(1, vowelIndex);
                s = s.substring(vowelIndex) + pigWord + ay;
@@ -97,28 +98,43 @@ public class PigLatin
             
          }
          
+         //if the string contains "qu", move it and anything that comes before and after
+         //it (until the first vowel) to the end (as a suffix)
          else if(containsQU(s, vowelIndex)) {
             pigWord = firstLetter + s.substring(1, s.toLowerCase().indexOf("qu") + 2);
             s = s.substring(s.toLowerCase().indexOf("qu") + 2) + pigWord + ay;
          }
          
-         //normal
+         //print normally in all other cases
          else {
             pigWord = firstLetter + s.substring(1, vowelIndex);
             s = s.substring(vowelIndex) + pigWord + ay;
          }
       }
       
+      //the new first letter of the string after the cases have been run through
       char newFirstLetter = s.charAt(0);
       
+      //if the first letter is upper case, endure that the first letter of the new string is
+      //also upper case.
       if(isUpperCase) {
          newFirstLetter = Character.toUpperCase(s.charAt(0));
          s = newFirstLetter + s.substring(1);
       }
       
+      //returns the stored beginning punctuation, the string, and the end punctuation as one.
       return beginningPunctuation + s + endPunctuation;
    }
    
+   /*
+    * Returns the punctuation at the beginning of the string that is inputed by the user.
+    * Goes through two for-loops. The outer one checks the string and the inner one checks
+    * the punctuation. If punctuation is found, then the boolean foundPunct is true and
+    * breaks out of the loop.
+    * 
+    * @param s the input string of the method
+    * @return the beginning punctuation of the string
+    */
    public static String getBeginningPunctuation(String s) {
    	
       String begPunct = "";
@@ -147,6 +163,14 @@ public class PigLatin
    	
    }
    
+   /*
+    * Returns ending punctuation. Uses two for-loops (one going through the string and one
+    * going through punctuation). Starts at the end of the string and goes backward. The
+    * boolean foundPunct is true if punctuation is found and breaks out of the loop.
+    * 
+    * @param s the string inputed by the user.
+    * @return the end punctuation of the string.
+    */
    public static String getEndPunctuation(String s) {
    	
       String endPunct = "";
@@ -175,6 +199,14 @@ public class PigLatin
    	
    }
    
+   /*
+    * Returns the first occurring case of a vowel in the string. Uses two for-loops to
+    * look for it (the outer one going through the string and the inner one going through 
+    * the vowel string).
+    * 
+    * @param s the string that is inputed by the user.
+    * @return an int that shows the vowel index.
+    */
    public static int getVowelIndex(String s) {
    
       int vowelIndex = -1;
@@ -197,6 +229,14 @@ public class PigLatin
       
    }
    
+   /*
+    * Checks whether the first letter in the string is capital. If yes, breaks out of the 
+    * loops. The outer loops checks the string's characters and the inner loops looks at
+    * the capital letters. 
+    * 
+    * @param s the string that is inputed by the user.
+    * @return a boolean that tells the user whether the first letter is capital.
+    */
    public static boolean isCapitalLetter(String s) { 
    
       boolean isUpperCase = false;
@@ -221,6 +261,14 @@ public class PigLatin
       return isUpperCase;
    }  
    
+   /*
+    * Checks whether the string contains "qu" and its variations. Returns true if yes, false
+    * if no.
+    * 
+    * @param s the string that is inputed by the user.
+    * @param vowelIndex the index of the first occurring vowel in the string.
+    * @return true if the string contains "qu"; false if not.
+    */
    public static boolean containsQU(String s, int vowelIndex) {
    
       if(s.contains("qu") && s.indexOf("qu") < vowelIndex) {
