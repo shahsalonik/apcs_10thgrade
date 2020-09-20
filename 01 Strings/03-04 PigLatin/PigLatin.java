@@ -1,5 +1,5 @@
-// Name:   
-// Date: 
+// Name: Saloni Shah   
+// Date: 09/21/2020 (due date)
 import java.util.*;
 import java.io.*;
 public class PigLatin
@@ -45,12 +45,20 @@ public class PigLatin
          
       String ay = "ay";
       String way = "way";
-   
-      //remove and store the beginning punctuation 
-           
-           
-      //remove and store the ending punctuation 
-         
+      //store beg
+      String beginningPunctuation = getBeginningPunctuation(s);
+      //store end
+      String endPunctuation = getEndPunctuation(s);
+     
+     //new string
+      s = s.substring(beginningPunctuation.length(), s.lastIndexOf(endPunctuation));
+      
+      boolean isUpperCase = isCapitalLetter(s);
+      char firstLetter = s.charAt(0);
+      
+      firstLetter = Character.toLowerCase(s.charAt(0));
+      
+      //check for capitalization
          
       //START HERE with the basic case:
       //     find the index of the first vowel
@@ -60,32 +68,102 @@ public class PigLatin
       String pigWord = "";
       int vowelIndex = getVowelIndex(s);
      
+     //no vowel
       if(vowelIndex == -1) {
          s = "***NO VOWEL***";
       }
+      //first letter vowel
       else if(vowelIndex == 0) {
          s = s + way;
       }
       else {
-         if(s.contains("qu") && s.indexOf("qu") < vowelIndex) {
-            pigWord = s.substring(0, s.indexOf("qu") + 2);
-            s = s.substring(s.indexOf("qu") + 2) + pigWord + ay;
+      //qu
+         if(containsQU(s, vowelIndex)) {
+            pigWord = firstLetter + s.substring(1, s.toLowerCase().indexOf("qu") + 2);
+            s = s.substring(s.toLowerCase().indexOf("qu") + 2) + pigWord + ay;
          }
+         //y
+         if(s.contains("y")) {
+            if(s.indexOf("y") == 0) {
+               pigWord = firstLetter + s.substring(1, vowelIndex);
+               s = s.substring(vowelIndex) + pigWord + ay;
+            }
+            if (s.indexOf("y") < vowelIndex) {
+               pigWord = firstLetter + s.substring(1, s.indexOf("y"));
+               s = s.substring(s.indexOf("y")) + pigWord + ay;
+            }
+         }
+         //normal
          else {
-            pigWord = s.substring(0, vowelIndex);
+            pigWord = firstLetter + s.substring(1, vowelIndex);
             s = s.substring(vowelIndex) + pigWord + ay;
          }
       }
       
-      //if no vowel has been found
+      char newFirstLetter = s.charAt(0);
+      
+      if(isUpperCase) {
+         newFirstLetter = Character.toUpperCase(s.charAt(0));
+         s = newFirstLetter + s.substring(1);
+      }
+      
+      return beginningPunctuation + s + endPunctuation;
+   }
    
-      
-      //is the first letter capitalized?
-      
-      
-      //return the piglatinized word 
-      
-      return s;
+   public static String getBeginningPunctuation(String s) {
+   	
+      String begPunct = "";
+   	
+      for(int inputChar = 0; inputChar < s.length(); inputChar++) {
+      	
+         boolean foundPunct = false;
+      	
+         for(int punctChar = 0; punctChar < punct.length(); punctChar++) {
+         	
+            if(s.charAt(inputChar) == punct.charAt(punctChar)) {
+               begPunct = begPunct + s.charAt(inputChar);
+               foundPunct = true;
+               break;
+            }
+         	
+         }
+      	
+         if(!foundPunct) {
+            break;
+         }
+      	
+      }
+   	
+      return begPunct;
+   	
+   }
+   
+   public static String getEndPunctuation(String s) {
+   	
+      String endPunct = "";
+   	
+      for(int inputChar = s.length()-1; inputChar > 0; inputChar--) {
+      	
+         boolean foundPunct = false;
+      	
+         for(int punctChar = 0; punctChar < punct.length(); punctChar++) {
+         	
+            if(s.charAt(inputChar) == punct.charAt(punctChar)) {
+               endPunct = s.charAt(inputChar) + endPunct;
+               foundPunct = true;
+               break;
+            }
+         	
+         }
+      	
+         if(!foundPunct) {
+            break;
+         }
+      	
+      }
+   	
+      return endPunct;
+   	
    }
    
    public static int getVowelIndex(String s) {
@@ -108,7 +186,48 @@ public class PigLatin
       
       return vowelIndex;
       
+   }
+   
+   public static boolean isCapitalLetter(String s) { 
+   
+      boolean isUpperCase = false;
+      
+      for(int inputChar = 0; inputChar < s.length(); inputChar++) {
+      
+         for(int upperChar = 0; upperChar < letters.length()/2; upperChar++) {
+         
+            if(s.charAt(inputChar) == letters.charAt(upperChar)) {
+               isUpperCase = true;
+               break;
+            }
+         
+         }
+         
+         if(isUpperCase) {
+            break;
+         }
+      
+      }
+      
+      return isUpperCase;
    }  
+   
+   public static boolean containsQU(String s, int vowelIndex) {
+   
+      if(s.contains("qu") && s.indexOf("qu") < vowelIndex) {
+         return true;
+      }
+      if(s.contains("Qu") && s.indexOf("Qu") < vowelIndex) {
+         return true;
+      }
+      if(s.contains("QU") && s.indexOf("QU") < vowelIndex) {
+         return true;
+      }
+      if(s.contains("qU") && s.indexOf("qU") < vowelIndex) {
+         return true;
+      }
+      return false;
+   }
 
    public static void part_2_using_piglatenizeFile() 
    {
