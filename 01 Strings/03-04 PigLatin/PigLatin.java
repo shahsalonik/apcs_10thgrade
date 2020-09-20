@@ -78,21 +78,30 @@ public class PigLatin
       }
       else {
       //qu
-         if(containsQU(s, vowelIndex)) {
-            pigWord = firstLetter + s.substring(1, s.toLowerCase().indexOf("qu") + 2);
-            s = s.substring(s.toLowerCase().indexOf("qu") + 2) + pigWord + ay;
-         }
          //y
+         
          if(s.contains("y")) {
+         
             if(s.indexOf("y") == 0) {
                pigWord = firstLetter + s.substring(1, vowelIndex);
                s = s.substring(vowelIndex) + pigWord + ay;
             }
-            if (s.indexOf("y") < vowelIndex) {
+            else if (s.indexOf("y") != 0 && s.indexOf("y") < vowelIndex) {
                pigWord = firstLetter + s.substring(1, s.indexOf("y"));
                s = s.substring(s.indexOf("y")) + pigWord + ay;
             }
+            else {
+               pigWord = firstLetter + s.substring(1, vowelIndex);
+               s = s.substring(vowelIndex) + pigWord + ay;
+            }
+            
          }
+         
+         else if(containsQU(s, vowelIndex)) {
+            pigWord = firstLetter + s.substring(1, s.toLowerCase().indexOf("qu") + 2);
+            s = s.substring(s.toLowerCase().indexOf("qu") + 2) + pigWord + ay;
+         }
+         
          //normal
          else {
             pigWord = firstLetter + s.substring(1, vowelIndex);
