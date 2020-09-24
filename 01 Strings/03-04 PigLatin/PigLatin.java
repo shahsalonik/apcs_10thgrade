@@ -6,16 +6,16 @@ public class PigLatin
 {
    public static void main(String[] args) 
    {
-      part_1_using_pig();
-      // part_2_using_piglatenizeFile();
+      //part_1_using_pig();
+      //part_2_using_piglatenizeFile();
       
-      /*  extension only    */
-      // String pigLatin = pig("What!?");
-      // System.out.print(pigLatin + "\t\t" + pigReverse(pigLatin));   //Yahwta!?
-      // pigLatin = pig("{(Hello!)}");
-      // System.out.print("\n" + pigLatin + "\t\t" + pigReverse(pigLatin)); //{(Yaholle!)}
-      // pigLatin = pig("\"McDonald???\"");
-      // System.out.println("\n" + pigLatin + "  " + pigReverse(pigLatin));//"YaDcmdlano???"
+      /* extension only    */
+      String pigLatin = pig("What!?");
+      System.out.print(pigLatin + "\t\t" + pigReverse(pigLatin));   //Yahwta!?
+      pigLatin = pig("{(Hello!)}");
+      System.out.print("\n" + pigLatin + "\t\t" + pigReverse(pigLatin)); //{(Yaholle!)}
+      pigLatin = pig("\"McDonald???\"");
+      System.out.println("\n" + pigLatin + "  " + pigReverse(pigLatin));//"YaDcmdlano???"
    }
 
    public static void part_1_using_pig()
@@ -42,7 +42,7 @@ public class PigLatin
    {
       if(s.length() == 0)
          return "";
-
+   
       
       String ay = "ay";
       String way = "way";
@@ -75,11 +75,11 @@ public class PigLatin
          s = s + way;
       }
       else {
-    	 
-    	  
+       
+        
          if(s.contains("y")) {
-        	 
-        	 //if the string contains y and if y is at 0, print normally
+          
+          //if the string contains y and if y is at 0, print normally
             if(s.indexOf("y") == 0) {
                pigWord = firstLetter + s.substring(1, vowelIndex);
                s = s.substring(vowelIndex) + pigWord + ay;
@@ -325,10 +325,30 @@ public class PigLatin
          System.out.println("File not created");
          System.exit(0);
       }
-   	//process each word in each line
+   	
+      //process each word in each line
       
+      String piggedString = "";
       
+      //2 while loops (one for lines, other for words in the lines)
+      while(infile.hasNextLine()) {
       
+      //used to scan in the lines
+         String line = infile.nextLine();
+         Scanner lineScanner = new Scanner(line);
+         
+         //while the line has a next word
+         while(lineScanner.hasNext()) {
+         
+         //go to that word
+            piggedString = lineScanner.next();
+            //print the translated bit
+            outfile.print(pig(piggedString) + " ");
+         
+         }
+         //go to the next line
+         outfile.println();
+      }
    
       outfile.close();
       infile.close();
@@ -342,8 +362,53 @@ public class PigLatin
       if(s.length() == 0)
          return "";
          
+      //converts the string to piglatin    
+      pig(s);
+      
+      //store the punctuation at the beginning of the string
+      String beginningPunctuation = getBeginningPunctuation(s);
+      //store the punctuation at the end of the string
+      String endPunctuation = getEndPunctuation(s);
+     
+     //the new string without any punctuation
+      s = s.substring(beginningPunctuation.length(), s.lastIndexOf(endPunctuation));
+      
+      //stores whether or not the string starts with a capital letter.
+      boolean isUpperCase = isCapitalLetter(s);
+      char firstLetter = s.charAt(0);
+      
+      //changes the first letter of the string to lower case 
+      firstLetter = Character.toLowerCase(s.charAt(0));
+      
+      //concatinates the new lowercase letter to the rest of the piglatenized string
+      s = firstLetter + s.substring(1);
+      
+      //puts the string's characters into an array
+      char[] originalArray = s.toCharArray();
+      
+      //new string temp: for reversal purposes
+      String temp = "";
+      
+      //reverses the string
+      for(int i = 0; i < originalArray.length; i++) {
+         temp = temp + originalArray[originalArray.length - i - 1]; 
+      }
+      
+      //uppercase first letter to add to the beginning of the string
+      String newFirstLetter = temp.substring(0,1).toUpperCase();
+      
+      //checks if the first (initial) letter was uppercase; 
+      //if yes, adds on the uppercase first letter to the reversed string
+      //if no, returns the reversed string
+      if(isUpperCase) {
+         s = newFirstLetter + temp.substring(1);
+      }
+      else {
+      s = temp;
+      }
    
-      return s;
+      //adds the beginning and end punctuation to the string and returns that value
+      return beginningPunctuation + s + endPunctuation;
          
    }
 }
