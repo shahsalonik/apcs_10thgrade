@@ -1,5 +1,6 @@
 // Name: Saloni Shah
-// Date: 10/05/2020
+// Date: 09/28/2020 (due date)
+
 import java.util.*;
 import java.io.*;
 import java.text.DecimalFormat;
@@ -9,15 +10,15 @@ public class Cemetery
 {
    public static void main (String [] args)
    {
-      //File file = new File("cemetery_short.txt");
-      File file = new File("cemetery.txt");
+      File file = new File("cemetery_short.txt");
+      //File file = new File("cemetery.txt");
       int numEntries = countEntries(file);
       Person[] cemetery = readIntoArray(file, numEntries); 
       //see what you have
       for (int i = 0; i < cemetery.length; i++) 
          System.out.println(cemetery[i]);
        
-       DecimalFormat df2 = new DecimalFormat("0.000");
+      DecimalFormat df2 = new DecimalFormat("0.000");
          
       int min = locateMinAgePerson(cemetery);
       int max = locateMaxAgePerson(cemetery); 
@@ -37,11 +38,13 @@ public class Cemetery
           
    }
    
-   /* Counts and returns the number of entries in File f. 
-      Returns 0 if the File f is not valid.
-      Uses a try-catch block.   
-      @param f -- the file object
-   */
+   /**
+    * Counts and returns the number of entries in File f. 
+    * Returns 0 if the File f is not valid.
+    * Uses a try-catch block.   
+    * @param f -- the file object
+    * @return 0 if file is not valid; else return the number of lines in the file.
+    */
    public static int countEntries(File f)
    {
       Scanner cemFile = null;
@@ -62,13 +65,17 @@ public class Cemetery
          return 0;
       }
       
+      cemFile.close();
+      
       return entryCount;
    }
 
-   /* Reads the data from file f (you may assume each line has same allignment).
-      Fills the array with Person objects. If File f is not valid return null.
-      @param f -- the file object 
-      @param num -- the number of lines in the File f  
+   /**
+    * Reads the data from file f (you may assume each line has same alignment).
+    * Fills the array with Person objects. If File f is not valid return null.
+    * @param f -- the file object 
+    * @param num -- the number of lines in the File f  
+    * @return the array of Person objects.
    */
    public static Person[] readIntoArray (File f, int num)
    {  
@@ -90,10 +97,12 @@ public class Cemetery
       return personArray;
    }
    
-   /* A helper method that instantiates one Person object.
-      @param entry -- one line of the input file.
-      This method is made public for gradeit testing purposes.
-      This method should not be used in any other class!!!
+   /**
+    * A helper method that instantiates one Person object.
+    * @param entry -- one line of the input file.
+    * This method is made public for gradeit testing purposes.
+    * This method should not be used in any other class!!!
+    * @return the Person object.
    */
    public static Person makeObjects(String entry)
    {
@@ -106,38 +115,58 @@ public class Cemetery
       return p;
    }  
    
-   /* Finds and returns the location (the index) of the Person
-      who is the youngest. (if the array is empty it returns -1)
-      If there is a tie the lowest index is returned.
-      @param arr -- an array of Person objects.
+   /**
+    * Finds and returns the location (the index) of the Person who is the youngest. 
+    * (if the array is empty it returns -1)
+    * If there is a tie the lowest index is returned.
+    * @param arr -- an array of Person objects.
+    * @return the position of the min age person
    */
    public static int locateMinAgePerson(Person[] arr)
    {
       int pos = 0;
       for(int k = 1; k < arr.length; k++) {
-         if(arr[k].getAge() < arr[pos].getAge()) {
-            pos = k; 
+    	  if(arr.length == 0) {
+    		  return -1;
+    	  }
+    	  else {
+    		  if(arr[k].getAge() < arr[pos].getAge()) {
+    	            pos = k; 
+    		  }
          }
       }
       return pos;
    }   
    
-   /* Finds and returns the location (the index) of the Person
-      who is the oldest. (if the array is empty it returns -1)
-      If there is a tie the lowest index is returned.
-      @param arr -- an array of Person objects.
+   /**
+    * Finds and returns the location (the index) of the Person who is the oldest. 
+    * (if the array is empty it returns -1)
+    * If there is a tie the lowest index is returned.
+    * @param arr -- an array of Person objects.
+    * @return the position of the maximum age person
    */
    public static int locateMaxAgePerson(Person[] arr)
    {
       int pos = 0;
       for(int k = 1; k < arr.length; k++) {
-         if(arr[k].getAge() > arr[pos].getAge()) {
-            pos = k; 
+    	  if(arr.length == 0) {
+    		  return -1;
+    	  }
+    	  else {
+    		  if(arr[k].getAge() > arr[pos].getAge()) {
+    	            pos = k; 
+    		  }
          }
       }
       return pos;
    } 
    
+   /** EXTENTION
+    * Calculates and returns the average age of death of the people buried in the
+    * cemetery.
+    * @param arr - an array of Person objects.
+    * @return the average death age of the people in the cemetery
+    */
    public static double locateMeanDeathAge(Person[] arr) {
    
       double sum = 0;
@@ -152,6 +181,12 @@ public class Cemetery
    
    }
    
+   /** EXTENSION
+    * Counts and returns the number of people who died under the age of thirty in the
+    * cemetery.
+    * @param arr - an array of Person objects.
+    * @return the number of people who died under the age of thirty in the cemetery.
+    */
    public static int deathUnderThirty(Person[] arr) {
    
       int count = 0;
@@ -176,10 +211,12 @@ class Person
    private String dateBuried;
    private double personAge;
       
-   /* a three-arg constructor  
-    @param name, burialDate may have leading or trailing spaces
-    It creates a valid Person object in which each field has the leading and trailing
-    spaces eliminated*/
+   /** 
+    * a three-arg constructor  
+    * @param name, burialDate may have leading or trailing spaces
+    * It creates a valid Person object in which each field has the leading and trailing
+    * spaces eliminated
+    */
    public Person(String name, String burialDate, String age)
    {
    
@@ -188,24 +225,38 @@ class Person
       personAge = calculateAge(age);
    
    }
+   
    /* any necessary accessor methods (at least "double getAge()" and "String getName()" )
    make sure your get and/or set methods use the same data type as the field  */
    
+   /**
+    * Returns the age of the person.
+    * @return the age of the person.
+    */
    public double getAge() {
       return personAge;
    }
    
+   /**
+    * Returns the name of the person.
+    * @return the name of the person.
+    */
    public String getName() {
       return personName;
    }
    
+   /**
+    * Returns the date the person was buried.
+    * @return the date the person was buried.
+    */
    public String getBurialDate() { 
       return dateBuried;
    }
    
-   /*handles the inconsistencies regarding age
-     @param a = a string containing an age from file. Ex: "12", "12w", "12d"
-     returns the age transformed into year with 4 decimals rounding
+   /**
+    * handles the inconsistencies regarding age
+    * @param a = a string containing an age from file. Ex: "12", "12w", "12d"
+    * @return the age transformed into year with 4 decimals rounding
    */
    public double calculateAge(String a)
    {
@@ -230,6 +281,9 @@ class Person
    
    }
    
+   /**
+    * Overrides the toString() method.
+    */
    public String toString() {
       return personName + ", " + dateBuried + ", " + personAge;
    }
