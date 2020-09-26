@@ -7,7 +7,7 @@ public class PigLatin
    public static void main(String[] args) 
    {
       //part_1_using_pig();
-      //part_2_using_piglatenizeFile();
+      part_2_using_piglatenizeFile();
       
       /* extension only    */
       String pigLatin = pig("What!?");
@@ -285,6 +285,22 @@ public class PigLatin
       }
       return false;
    }
+   
+   public static String reverseString(String s) {
+      
+      //puts the string's characters into an array
+      char[] originalArray = s.toCharArray();
+      
+      //new string temp: for reversal purposes
+      String temp = "";
+      
+      //reverses the string
+      for(int i = 0; i < originalArray.length; i++) {
+         temp = temp + originalArray[originalArray.length - i - 1]; 
+      }
+      
+      return temp; 
+   }
 
    public static void part_2_using_piglatenizeFile() 
    {
@@ -375,36 +391,25 @@ public class PigLatin
       
       //stores whether or not the string starts with a capital letter.
       boolean isUpperCase = isCapitalLetter(s);
-      char firstLetter = s.charAt(0);
-      
-      //changes the first letter of the string to lower case 
-      firstLetter = Character.toLowerCase(s.charAt(0));
+      char firstLetter = isUpperCase? Character.toLowerCase(s.charAt(0)) : s.charAt(0);
       
       //concatinates the new lowercase letter to the rest of the piglatenized string
       s = firstLetter + s.substring(1);
       
-      //puts the string's characters into an array
-      char[] originalArray = s.toCharArray();
-      
-      //new string temp: for reversal purposes
-      String temp = "";
-      
-      //reverses the string
-      for(int i = 0; i < originalArray.length; i++) {
-         temp = temp + originalArray[originalArray.length - i - 1]; 
-      }
-      
-      //uppercase first letter to add to the beginning of the string
-      String newFirstLetter = temp.substring(0,1).toUpperCase();
+      //reverseString method
+      String temp = reverseString(s);
       
       //checks if the first (initial) letter was uppercase; 
       //if yes, adds on the uppercase first letter to the reversed string
       //if no, returns the reversed string
       if(isUpperCase) {
+      
+      //uppercase first letter to add to the beginning of the string
+         String newFirstLetter = temp.substring(0,1).toUpperCase();
          s = newFirstLetter + temp.substring(1);
       }
       else {
-      s = temp;
+         s = temp;
       }
    
       //adds the beginning and end punctuation to the string and returns that value
