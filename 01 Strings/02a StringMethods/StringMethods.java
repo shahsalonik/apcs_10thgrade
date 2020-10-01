@@ -117,7 +117,7 @@ public class StringMethods
          for(int punctChar = 0; punctChar < punct.length(); punctChar++) {
             
             if(str.charAt(inputChar) == punct.charAt(punctChar)) {
-               str = str.replace(str.substring(inputChar, inputChar + 1), "");
+               str = str.replace(str.charAt(inputChar), '\0');
             }
             
          }
@@ -130,7 +130,7 @@ public class StringMethods
       4. Given a line of text, remove all punctuation from that line.
       One way is to keep all characters that are letters or a space.
       */      
-      String str2 = "a @galaxy far, far away --right there! on the (TJ planetarium} ceiling. https://t.co/XfoqbyA9JY";
+      String str2 = "a @galaxy far, far away --right there! on the (TJ planetarium} ceiling. https://t.co/XfoqbyA9JY:";
       String letters = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       String cleaned = "";
       
