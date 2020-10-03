@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 10/05/2020 (due date);
   
 import java.util.*;
 public class Permutations
@@ -29,7 +29,7 @@ public class Permutations
      */
    public static void leftRight(String s, int n)
    {
-   
+   //keep adding L or R if the length of the string is less than the digits
       if(s.length() < n) {
          leftRight("L" + s, n);
          leftRight("R" + s, n);
@@ -47,6 +47,7 @@ public class Permutations
      */
    public static void oddDigits(String s, int n)
    {
+   //string + x (which is always odd) for as long as the length is less than n
       if(s.length() == n) {
          System.out.println(s);
       }
@@ -76,14 +77,15 @@ public class Permutations
      */
    private static void recur(int k, int n)
    {
-      if(isPrimeImproved(k)) {
+      if(isPrime(k)) {
          String s = k + "";
          if(s.length() == n) {
             System.out.println(k);
-            count++;
+            count++; //EXTENSION (counts # of superprimes)
             return;
          }
          
+         //builds a superprime
          for(int i = 0; i < 10; i++) {
             recur(k*10+i, n);
          }
@@ -98,37 +100,16 @@ public class Permutations
      */
    public static boolean isPrime(int n)
    {
-      long startTime = System.nanoTime();
-      
       if(n == 1) {
          return false;
       }
       
-      for(int i = 2; i < n; i++) {
-         if(n % i == 0) {
-            return false;
-         }
-      }
-      long stopTime = System.nanoTime();
-      System.out.println("Time for run: " + (stopTime - startTime));
-      return true;
-   }
-   
-   public static boolean isPrimeImproved(int n) {
-      
-      long startTime = System.nanoTime();        
-      if(n == 1) {
-         return false;
-      }
-      
+      //repeats for as long as the square of i <= n (goes faster)
       for(int i = 2; i*i <= n; i++) {
          if(n % i == 0) {
             return false;
          }
       }
-      long stopTime = System.nanoTime();
-      System.out.println("Time for run: " + (stopTime - startTime));        
       return true;
    }
-   
 }

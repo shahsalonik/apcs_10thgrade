@@ -1,5 +1,5 @@
 // Name: Saloni Shah
-// Date: 10/05/2020
+// Date: 10/05/2020 (due date)
   
 public class Sentence_Driver
 {
@@ -57,12 +57,14 @@ class Sentence
       
       int count = 0;
       
+      //counts the spaces
       for(int x = 0; x < str.length(); x++) {
          if(str.charAt(x) == ' ') {
             count++;
          }
       }
       
+      //number of words = spaces + 1
       myNumWords = count+1;
    }
    
@@ -95,16 +97,18 @@ class Sentence
    //Returns true if s is a palindrome, false otherwise.
    public static boolean isPalindrome( String s, int start, int end )
    {
-      
+     
       if(s.length() <= 1) {
          return true;
       }
+      //if the character at the beginning is equal to the character at the end, shorten the string
+      //run isPalindrome with the shortened string
       else if(s.charAt(start) == s.charAt(end)) {
          s = s.substring(start+1, end);
          return isPalindrome (s, 0, s.length()-1);
       }
       else {
-      return false;
+         return false;
       }
    }
    //Returns copy of String s with all blanks removed.
@@ -132,8 +136,10 @@ class Sentence
       String punct = ".,'?!:;\"(){}[]<>"; 
       String temp = "";
       
+      //adds all the characters that aren't in the punctuation string into a temp string
+      //returns temp
       for(int z = 0; z < s.length(); z++) {
-    	  boolean isPunct = false;
+         boolean isPunct = false;
          for(int a = 0; a < punct.length(); a++) {
             if(s.charAt(z) == punct.charAt(a)) {
                isPunct = true;
@@ -141,7 +147,7 @@ class Sentence
             }
          }
          if(!isPunct) {
-        	 temp = temp + s.charAt(z);
+            temp = temp + s.charAt(z);
          }
       }
       
