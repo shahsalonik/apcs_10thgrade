@@ -79,12 +79,12 @@ class Sentence
    //Returns true if mySentence is a palindrome, false otherwise.
    public boolean isPalindrome()
    {
-   
-      mySentence = removeBlanks(mySentence);
-      mySentence = lowerCase(mySentence);
-      mySentence = removePunctuation(mySentence);
+      String newSentence = new String(mySentence);
+      newSentence = removeBlanks(newSentence);
+      newSentence = lowerCase(newSentence);
+      newSentence = removePunctuation(newSentence);
       
-      if(isPalindrome(mySentence, 0, mySentence.length()-1)) {
+      if(isPalindrome(newSentence, 0, newSentence.length()-1)) {
          return true;
       }
       else {
@@ -96,28 +96,23 @@ class Sentence
    public static boolean isPalindrome( String s, int start, int end )
    {
       
-      if(s.charAt(start) != s.charAt(end)) {
-         return false;
+      if(s.length() <= 1) {
+         return true;
+      }
+      else if(s.charAt(start) == s.charAt(end)) {
+         s = s.substring(start+1, end);
+         return isPalindrome (s, 0, s.length()-1);
       }
       else {
-         s = s.substring(start + 1, end);
-         isPalindrome (s, start, end);
+      return false;
       }
-      
-      return true;
    }
    //Returns copy of String s with all blanks removed.
    //Postcondition:  Returned string contains just one word.
    public static String removeBlanks( String s )
    {  
-      String temp = new String(s);
-      for(int x = 0; x < s.length(); x++) {
-         if(temp.charAt(x) == ' ') {
-            temp = temp.replace(temp.charAt(x), '\0');
-         }
-      }
-      
-      return temp;
+      s = s.replaceAll(" ", "");
+      return s;
    }
    
    //Returns copy of String s with all letters in lowercase.
@@ -125,11 +120,8 @@ class Sentence
    //						number of words in s.
    public static String lowerCase( String s )
    {  
-      String temp = new String(s);
-     
-      temp = temp.toLowerCase();
-     
-      return temp;
+      s = s.toLowerCase();
+      return s;
    }
    
    //Returns copy of String s with all punctuation removed.
@@ -138,13 +130,18 @@ class Sentence
    public static String removePunctuation( String s )
    { 
       String punct = ".,'?!:;\"(){}[]<>"; 
-      String temp = new String(s);
+      String temp = "";
       
-      for(int z = 0; z < temp.length(); z++) {
+      for(int z = 0; z < s.length(); z++) {
+    	  boolean isPunct = false;
          for(int a = 0; a < punct.length(); a++) {
-            if(temp.charAt(z) == punct.charAt(a)) {
-               temp = temp.replace(temp.charAt(z), '\0');
+            if(s.charAt(z) == punct.charAt(a)) {
+               isPunct = true;
+               break;
             }
+         }
+         if(!isPunct) {
+        	 temp = temp + s.charAt(z);
          }
       }
       

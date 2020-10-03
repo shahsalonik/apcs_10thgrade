@@ -13,13 +13,13 @@ public class Permutations
       int n = sc.nextInt();
       leftRight("", n);  
               
-      //oddDigits("", n);
+      oddDigits("", n);
       
-      //superprime(n);
-      //if(count==0)
-         //System.out.println("no superprimes");
-      //else
-         // System.out.println("Count is "+count);
+      superprime(n);
+      if(count==0)
+         System.out.println("no superprimes");
+      else
+         System.out.println("Count is "+count);
    }
    
     /**
@@ -29,7 +29,15 @@ public class Permutations
      */
    public static void leftRight(String s, int n)
    {
-  
+   
+      if(s.length() < n) {
+         leftRight("L" + s, n);
+         leftRight("R" + s, n);
+      }
+      else {
+         System.out.println(s);
+      }
+   
    }
    
     /**
@@ -39,7 +47,14 @@ public class Permutations
      */
    public static void oddDigits(String s, int n)
    {
-    
+      if(s.length() == n) {
+         System.out.println(s);
+      }
+      else {
+         for(int x = 1; x <= 9; x+=2) {
+            oddDigits(s + x, n);
+         }
+      }
    }
       
     /**
@@ -61,7 +76,19 @@ public class Permutations
      */
    private static void recur(int k, int n)
    {
-
+      if(isPrimeImproved(k)) {
+         String s = k + "";
+         if(s.length() == n) {
+            System.out.println(k);
+            count++;
+            return;
+         }
+         
+         for(int i = 0; i < 10; i++) {
+            recur(k*10+i, n);
+         }
+         
+      }
    }
 
     /**
@@ -71,6 +98,37 @@ public class Permutations
      */
    public static boolean isPrime(int n)
    {
-
+      long startTime = System.nanoTime();
+      
+      if(n == 1) {
+         return false;
+      }
+      
+      for(int i = 2; i < n; i++) {
+         if(n % i == 0) {
+            return false;
+         }
+      }
+      long stopTime = System.nanoTime();
+      System.out.println("Time for run: " + (stopTime - startTime));
+      return true;
    }
+   
+   public static boolean isPrimeImproved(int n) {
+      
+      long startTime = System.nanoTime();        
+      if(n == 1) {
+         return false;
+      }
+      
+      for(int i = 2; i*i <= n; i++) {
+         if(n % i == 0) {
+            return false;
+         }
+      }
+      long stopTime = System.nanoTime();
+      System.out.println("Time for run: " + (stopTime - startTime));        
+      return true;
+   }
+   
 }
