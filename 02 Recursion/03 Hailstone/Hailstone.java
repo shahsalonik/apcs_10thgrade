@@ -29,8 +29,23 @@ public class Hailstone
     */
    public static int hailstone(int n, int count)
    {
- 
- 
+      //base case
+      if(n == 1) {
+         System.out.print(n);
+         return count;
+      }
+      //if n is even
+      if(n % 2 == 0) {
+         System.out.print(n + "-");
+         count++;
+         return hailstone(n/2, count);
+      }
+      //if n is odd
+      else {
+         System.out.print(n + "-");
+         count++;
+         return hailstone(3 * n + 1, count);
+      }
    }
   
    /**
@@ -45,9 +60,21 @@ public class Hailstone
     */
    public static int hailstone(int n)
    {
-
-
-
+      //base case
+      if(n == 1) {
+         System.out.print(n);
+         return 1;
+      }
+      //if n is even
+      if(n % 2 == 0) {
+         System.out.print(n + "-");
+         return 1 + hailstone(n/2);
+      }
+      //if n is odd
+      else {
+         System.out.print(n + "-");
+         return 1 + hailstone(3 * n + 1);
+      }
    }
 }
 
