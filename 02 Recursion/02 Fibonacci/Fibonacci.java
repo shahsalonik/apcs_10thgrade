@@ -46,6 +46,7 @@ public class Fibonacci
             a = b; //sets the value of a to b
             b = sum; //sets the b value to the sum
          }
+         //the next number
          return sum;
       }
    }

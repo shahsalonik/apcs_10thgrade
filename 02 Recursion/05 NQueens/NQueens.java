@@ -1,4 +1,5 @@
-// Name:    Date:
+//Name: Saloni Shah
+//Date: 10/19/2020 (due date)
 
 import java.awt.*;
 import java.awt.event.*;
@@ -60,9 +61,15 @@ public class NQueens extends JPanel
    private boolean isPlaced(int row, int col)
    {
       if(row == N)            //matrix is filled
-         return true;
-         
-         
+         return true;   
+      else {
+         for(int c = col; c < board[0].length; c++) {
+            if(locationIsOK(row, c)) {
+               addQueen(row, c);
+            }
+         }   
+      }
+      return isPlaced(row+1, col);
    } 
    
   /** Verify that another queen can't attack this location.
@@ -71,7 +78,7 @@ public class NQueens extends JPanel
     **/
    private boolean locationIsOK(int r, int c)
    {
-   
+      return true;
    }
 
     /** Adds a queen to the specified location.

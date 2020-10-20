@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 10/19/2020 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -76,15 +76,38 @@ public class AreaFill
       }
       /* enter your code here */
       
-  }
+      int rows = infile.nextInt();
+      int columns = infile.nextInt();
+      
+      char[][] grid = new char[rows][columns];
+      
+      for(int x = 0; x < rows; x++) {
+         grid[x] = infile.next().toCharArray();
+      }
+      return grid;
+      
+   }
    
    /**
+    * Displays the text in the file as a matrix
     * @param g A 2-D array of chars.
     * @returns A string representing the 2D array.
     */
    public static String display(char[][] g)
    {
-      return null;
+      int rows = g.length;
+      int columns = g[0].length;
+      String s = "";
+      
+      for(int r = 0; r < rows; r++) {
+         for(int c = 0; c < columns; c++) {
+            s = s + (g[r][c]);
+         }
+         s = s + "\n";
+      }
+      
+      return s;
+   
    }
    
    /**
@@ -96,6 +119,17 @@ public class AreaFill
     */
    public static void fill(char[][] g, int r, int c, char ch)
    {
+   
+      int rows = g.length;
+      int columns = g[0].length;
+      
+      if(r < rows && c < columns && r >= 0 && c >= 0 && ch == g[r][c]) {
+         g[r][c] = '*';
+         fill(g, r+1, c, ch);
+         fill(g, r-1, c, ch);
+         fill(g, r, c-1, ch);
+         fill(g, r, c+1, ch);
+      }
       
    }
    
@@ -110,6 +144,17 @@ public class AreaFill
     */
    public static int fillAndCount(char[][] g, int r, int c, char ch)
    {
+   
+      int rows = g.length;
+      int columns = g[0].length;
+      
+      if(r < rows && c < columns && r >= 0 && c >= 0 && ch == g[r][c]) {
+         g[r][c] = '*';
+         int count;
+         count = 1 + fillAndCount(g, r+1, c, ch) + fillAndCount(g, r-1, c, ch) + fillAndCount(g, r, c-1, ch) + fillAndCount(g, r, c+1, ch);
+         return count;
+      }
+   
       return 0; //never reached
    }
 }

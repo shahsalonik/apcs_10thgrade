@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 10/14/2020 (due date)
     
 import java.util.*;
   
@@ -37,13 +37,13 @@ public class Hailstone
       //if n is even
       if(n % 2 == 0) {
          System.out.print(n + "-");
-         count++;
+         count++; //increases count
          return hailstone(n/2, count);
       }
       //if n is odd
       else {
          System.out.print(n + "-");
-         count++;
+         count++; //increases count
          return hailstone(3 * n + 1, count);
       }
    }
