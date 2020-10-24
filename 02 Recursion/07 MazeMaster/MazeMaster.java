@@ -175,11 +175,13 @@ class Maze
       int rows = maze.length;
       int columns = maze[0].length;
       
-      if(r < 0 || r > rows || c < 0 || c > columns) {
+      if(r < 0 || r >= rows || c < 0 || c >= columns) {
          return;
       }
       else if(maze[r][c] == START || maze[r][c] == DOT) {
-         maze[r][c] = PATH;
+         if(maze[r][c] == DOT) {
+            maze[r][c] = PATH;
+         }
          markAll(r+1, c);
          markAll(r-1, c);
          markAll(r, c+1);
@@ -201,27 +203,103 @@ class Maze
       
       int rows = maze.length;
       int columns = maze[0].length;
-      
-      if(r < 0 || r > rows || c < 0 || c > columns) {
-         return 0;
+      if(r < 0 || r >= rows || c < 0 || c >= columns) {
+         return 1;
       }
       else if(maze[r][c] == START || maze[r][c] == DOT) {
-         maze[r][c] = PATH;
+         if(maze[r][c] == DOT) {
+            maze[r][c] = PATH;
+         }
          return 1 + markAllAndCountRecursions(r+1, c) + markAllAndCountRecursions(r-1, c) + markAllAndCountRecursions(r, c+1) + markAllAndCountRecursions(r, c-1);
       }
       else {
-         return 0;
+         return 1;
       }
    }
 
    /* 
-	 * From handout, #3.
-	 * Solve the maze, OR the booleans, and mark the path through it with a “*” 
+	 * From handout, #3. 
 	 * Recur until you find E, then mark the True path.
 	 */ 	
-   public boolean markTheCorrectPath(int r, int c)
+   /*public boolean markTheCorrectPath(int r, int c)
    {
-      return false;
+      boolean exitFound = false;
+      int rows = maze.length;
+      int columns = maze[0].length;
+      
+      if(r < 0 || r >= rows || c < 0 || c >= columns) {
+         return false;
+      }
+      else if(maze[r][c] == START || maze[r][c] == DOT) {
+         if(maze[r][c] == DOT) {
+            maze[r][c] = TEMP;
+         }
+         if(markTheCorrectPath(r+1, c) || markTheCorrectPath(r-1, c) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r, c-1)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = PATH;
+            }
+            return true;
+         }
+         if(!markTheCorrectPath(r+1, c) && !markTheCorrectPath(r-1, c) && !markTheCorrectPath(r, c+1) && !markTheCorrectPath(r, c-1)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = DOT;
+            }
+            return false;
+         }
+         else {
+            return false;
+         }
+      }
+      else {
+         if(maze[r][c] == EXIT) {
+            return true;
+         }
+         return false;
+      } 
+      
+   }*/
+   
+   public boolean markTheCorrectPath(int r, int c) {
+   
+      int rows = maze.length;
+      int columns = maze[0].length;
+   
+      if(r < 0 || r >= rows || c < 0 || c >= columns) {
+         return false;
+      }
+      else if(maze[r][c] == EXIT) {
+         return true;
+      }
+      else if(maze[r][c] == START) {
+         if(markTheCorrectPath(r+1, c) || markTheCorrectPath(r, c-1) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r-1, c)) {
+            return true;
+         }
+         else {
+            return false;
+         }
+      }
+      else if(maze[r][c] == DOT) {
+         maze[r][c] = TEMP;
+         if(markTheCorrectPath(r, c-1) || markTheCorrectPath(r+1, c) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r-1, c)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = PATH;
+            }
+            return true;
+         }
+         if(!markTheCorrectPath(r+1, c) && !markTheCorrectPath(r-1, c) && !markTheCorrectPath(r, c+1) && !markTheCorrectPath(r, c-1)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = DOT;
+            }
+            return false;
+         }
+         else {
+            return false;
+         }
+      }
+      else {
+         return false;
+      }
+   
    }
 	
 	
@@ -237,7 +315,46 @@ class Maze
 	 */ 	
    public boolean markCorrectPathAndCountSteps(int r, int c, int count)
    {
-      return false;
+      int rows = maze.length;
+      int columns = maze[0].length;
+   
+      if(r < 0 || r >= rows || c < 0 || c >= columns) {
+         return false;
+      }
+      else if(maze[r][c] == EXIT) {
+         System.out.println("Number of Steps: " + count);
+         return true;
+      }
+      else if(maze[r][c] == START) {
+         if(markCorrectPathAndCountSteps(r+1, c, count+1) || markCorrectPathAndCountSteps(r, c-1, count+1) || markCorrectPathAndCountSteps(r, c+1, count+1) || markCorrectPathAndCountSteps(r-1, c, count+1)) {
+            return true;
+         }
+         else {
+            return false;
+         }
+      }
+      else if(maze[r][c] == DOT) {
+         maze[r][c] = TEMP;
+         if(markCorrectPathAndCountSteps(r, c-1, count+1) || markCorrectPathAndCountSteps(r+1, c, count+1) || markCorrectPathAndCountSteps(r, c+1, count+1) || markCorrectPathAndCountSteps(r-1, c, count+1)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = PATH;
+            }
+            return true;
+         }
+         if(!markCorrectPathAndCountSteps(r+1, c, count+1) && !markCorrectPathAndCountSteps(r-1, c, count+1) && !markCorrectPathAndCountSteps(r, c+1, count+1) && !markCorrectPathAndCountSteps(r, c-1, count+1)) {
+            if(maze[r][c] == TEMP) {
+               maze[r][c] = DOT;
+            }
+            return false;
+         }
+         else {
+            return false;
+         }
+      }
+      else {
+         return false;
+      
+      }
    }
 }
 
