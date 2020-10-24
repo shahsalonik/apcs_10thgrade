@@ -221,43 +221,6 @@ class Maze
 	 * From handout, #3. 
 	 * Recur until you find E, then mark the True path.
 	 */ 	
-   /*public boolean markTheCorrectPath(int r, int c)
-   {
-      boolean exitFound = false;
-      int rows = maze.length;
-      int columns = maze[0].length;
-      
-      if(r < 0 || r >= rows || c < 0 || c >= columns) {
-         return false;
-      }
-      else if(maze[r][c] == START || maze[r][c] == DOT) {
-         if(maze[r][c] == DOT) {
-            maze[r][c] = TEMP;
-         }
-         if(markTheCorrectPath(r+1, c) || markTheCorrectPath(r-1, c) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r, c-1)) {
-            if(maze[r][c] == TEMP) {
-               maze[r][c] = PATH;
-            }
-            return true;
-         }
-         if(!markTheCorrectPath(r+1, c) && !markTheCorrectPath(r-1, c) && !markTheCorrectPath(r, c+1) && !markTheCorrectPath(r, c-1)) {
-            if(maze[r][c] == TEMP) {
-               maze[r][c] = DOT;
-            }
-            return false;
-         }
-         else {
-            return false;
-         }
-      }
-      else {
-         if(maze[r][c] == EXIT) {
-            return true;
-         }
-         return false;
-      } 
-      
-   }*/
    
    public boolean markTheCorrectPath(int r, int c) {
    
