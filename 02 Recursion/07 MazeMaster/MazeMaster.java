@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 10/26/2020 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -46,7 +46,7 @@ class Maze
 	 */
    public Maze()
    {
-   
+      
    }
 	
 	/* 
@@ -74,9 +74,38 @@ class Maze
 	 */
    public Maze(String filename)    
    {
-       
-   	       
+      Scanner infile = null;
+      try {
+         infile = new Scanner(new File(filename));
+      }
+      catch(FileNotFoundException e) {
+         System.out.println("Sorry, that file cannot be found");
+         maze = null;
+         System.exit(0);
+      }
       
+      int rows = infile.nextInt();
+      int columns = infile.nextInt();
+      
+      char[][] grid = new char[rows][columns];
+      
+      for(int x = 0; x < rows; x++) {
+         grid[x] = infile.next().toCharArray();
+      }
+      
+      maze = grid;
+      
+      for(int r = 0; r < maze.length; r++)
+      {
+         for(int c = 0; c < maze[0].length; c++)
+         { 
+            if(maze[r][c] == START)      //identify start location
+            {
+               startRow = r;
+               startCol = c;
+            }
+         }
+      }
    }
    
    public char[][] getMaze()
@@ -143,6 +172,22 @@ class Maze
 	 */ 
    public void markAll(int r, int c)
    {
+      int rows = maze.length;
+      int columns = maze[0].length;
+      
+      if(r < 0 || r > rows || c < 0 || c > columns) {
+         return;
+      }
+      else if(maze[r][c] == START || maze[r][c] == DOT) {
+         maze[r][c] = PATH;
+         markAll(r+1, c);
+         markAll(r-1, c);
+         markAll(r, c+1);
+         markAll(r, c-1);
+      }
+      else {
+         return;
+      }
       
    }
 
@@ -152,13 +197,26 @@ class Maze
 	 * Like AreaFill's counting without a static variable.
 	 */ 
    public int markAllAndCountRecursions(int r, int c)
-   {
-      return -1;
+   {  
+      
+      int rows = maze.length;
+      int columns = maze[0].length;
+      
+      if(r < 0 || r > rows || c < 0 || c > columns) {
+         return 0;
+      }
+      else if(maze[r][c] == START || maze[r][c] == DOT) {
+         maze[r][c] = PATH;
+         return 1 + markAllAndCountRecursions(r+1, c) + markAllAndCountRecursions(r-1, c) + markAllAndCountRecursions(r, c+1) + markAllAndCountRecursions(r, c-1);
+      }
+      else {
+         return 0;
+      }
    }
 
    /* 
 	 * From handout, #3.
-	 * Solve the maze, OR the booleans, and mark the path through it with a ì*î 
+	 * Solve the maze, OR the booleans, and mark the path through it with a ‚Äú*‚Äù 
 	 * Recur until you find E, then mark the True path.
 	 */ 	
    public boolean markTheCorrectPath(int r, int c)
