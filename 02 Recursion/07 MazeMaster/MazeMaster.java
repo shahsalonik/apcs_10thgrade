@@ -10,8 +10,8 @@ public class MazeMaster
    {
       Scanner sc = new Scanner(System.in);
       System.out.print("Enter the maze's filename (no .txt): ");
-      Maze m = new Maze(sc.next()+".txt");
-      // Maze m = new Maze();    //extension
+      //Maze m = new Maze(sc.next()+".txt");
+      Maze m = new Maze();    //extension
       m.display();      
       System.out.println("Options: ");
       System.out.println("1: Mark all dots.");
@@ -46,7 +46,86 @@ class Maze
 	 */
    public Maze()
    {
+   //random size
+      int rowNum = (int) (Math.random() * 10 + 1);
+      int colNum = (int) (Math.random() * 10 + 1);
+      char[][] randomMaze = new char[rowNum][colNum];
+     //random start placement 
+      int begRow = (int) (Math.random() * 5);
+      int begCol = (int) (Math.random() * 5);
+     //random end placement 
+      int endRow = (int) (Math.random() * 5);
+      int endCol = (int) (Math.random() * 5);
+      //if the row of the matrix is less than where S is placed, rerun the position of S
+      while(rowNum <= begRow) {
+         begRow = (int) (Math.random() * 5);
+      }
+      //if the column of the matrix is less than where S is placed, rerun the position of S
+      while(colNum <= begCol) {
+         begCol = (int) (Math.random() * 5); 
+      }
+      //if the row of the matrix is less than where E is placed, rerun the position of E
+      while(rowNum <= endRow) {
+         endRow = (int) (Math.random() * 5);
+      }
+      //if the column of the matrix is less than where E is placed, rerun the position of E
+      while(colNum <= endCol) {
+         endCol = (int) (Math.random() * 5);
+      }
       
+      //if the start and the end are the same, rerun the end position
+      if(startRow == endRow && startCol == endCol) {
+         endRow = (int) (Math.random() * 5);
+         endCol = (int) (Math.random() * 5);
+      }
+      
+      //starts building the maze; puts down dots
+      for(int r = 0; r < randomMaze.length; r++) {
+         for(int c = 0; c < randomMaze[0].length; c++) {
+            randomMaze[r][c] = DOT;
+         }
+      }
+      
+      //number of walls
+      int wallNums = (int) (Math.random() * (rowNum * colNum));
+      
+      //repeats for the number of walls
+      for(int x = 0; x < wallNums; x++) {
+         int randRow = (int) (Math.random() * x);
+         int randCol = (int) (Math.random() * x);
+         
+         //if the random row is greater than the matrix, rerun it
+         while(randRow >= rowNum) {
+            randRow = (int) (Math.random() * x);
+         }
+         //if the random column is greater than the matrix, rerun it
+         while(randCol >= colNum) {
+            randCol = (int) (Math.random() * x);
+         }
+         //places a wall at the final randRow and randCol position
+         randomMaze[randRow][randCol] = WALL;
+      }
+         
+         //places start and exit
+      randomMaze[begRow][begCol] = START;
+      randomMaze[endRow][endCol] = EXIT;
+      
+      //identifies start location
+      for(int r = 0; r < randomMaze.length; r++)
+      {
+         for(int c = 0; c < randomMaze[0].length; c++)
+         { 
+            if(randomMaze[r][c] == START)      //identify start location
+            {
+               startRow = r;
+               startCol = c;
+            }
+         }
+      }
+      
+      maze = randomMaze;
+      
+      System.out.println();
    }
 	
 	/* 
@@ -113,6 +192,9 @@ class Maze
       return maze;
    }
    
+   /**
+   * Prints the maze
+   */
    public void display()
    {
       if(maze==null) 
@@ -128,6 +210,10 @@ class Maze
       System.out.println();
    }
    
+   /**
+   * Calls an option depending on the user input number
+   * @param n the case number
+   */
    public void solve(int n)
    {
       switch(n)
@@ -172,12 +258,15 @@ class Maze
 	 */ 
    public void markAll(int r, int c)
    {
+      //rows and columns for the matrix
       int rows = maze.length;
       int columns = maze[0].length;
       
+      //base: boundary conditions
       if(r < 0 || r >= rows || c < 0 || c >= columns) {
          return;
       }
+      //recurs if the spot is a start or a dot. if it is an accessible dot, replace it with an asterisk
       else if(maze[r][c] == START || maze[r][c] == DOT) {
          if(maze[r][c] == DOT) {
             maze[r][c] = PATH;
@@ -200,12 +289,15 @@ class Maze
 	 */ 
    public int markAllAndCountRecursions(int r, int c)
    {  
-      
+      //rows and columns
       int rows = maze.length;
       int columns = maze[0].length;
+      
+      //base: boundary conditions, returns 1
       if(r < 0 || r >= rows || c < 0 || c >= columns) {
          return 1;
       }
+      //recurs and returns 1 if the spot is a start or a dot. if it is an accessible dot, replace it with an asterisk
       else if(maze[r][c] == START || maze[r][c] == DOT) {
          if(maze[r][c] == DOT) {
             maze[r][c] = PATH;
@@ -224,15 +316,19 @@ class Maze
    
    public boolean markTheCorrectPath(int r, int c) {
    
+      //rows and columns
       int rows = maze.length;
       int columns = maze[0].length;
    
+      //base: bounday, returns false
       if(r < 0 || r >= rows || c < 0 || c >= columns) {
          return false;
       }
+      //true if the spot is exit
       else if(maze[r][c] == EXIT) {
          return true;
       }
+      //if the spot is a start and any of the pathways are accessible, returns true
       else if(maze[r][c] == START) {
          if(markTheCorrectPath(r+1, c) || markTheCorrectPath(r, c-1) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r-1, c)) {
             return true;
@@ -242,19 +338,23 @@ class Maze
          }
       }
       else if(maze[r][c] == DOT) {
+         //temporary char to prevent stack overflow
          maze[r][c] = TEMP;
+         //if the spot is a dot and any of the pathways are accessible, replaces the space with an asterisk and returns true
          if(markTheCorrectPath(r, c-1) || markTheCorrectPath(r+1, c) || markTheCorrectPath(r, c+1) || markTheCorrectPath(r-1, c)) {
             if(maze[r][c] == TEMP) {
                maze[r][c] = PATH;
             }
             return true;
          }
+         //if none of the paths are accessible, replaces the temp with the original dot and returns false
          if(!markTheCorrectPath(r+1, c) && !markTheCorrectPath(r-1, c) && !markTheCorrectPath(r, c+1) && !markTheCorrectPath(r, c-1)) {
             if(maze[r][c] == TEMP) {
                maze[r][c] = DOT;
             }
             return false;
          }
+         //returns false for any other conditions
          else {
             return false;
          }
@@ -278,6 +378,7 @@ class Maze
 	 */ 	
    public boolean markCorrectPathAndCountSteps(int r, int c, int count)
    {
+   //does the same thing as the previous method (#3 or markTheCorrectPath)
       int rows = maze.length;
       int columns = maze[0].length;
    
@@ -285,9 +386,11 @@ class Maze
          return false;
       }
       else if(maze[r][c] == EXIT) {
+      //once the exit is found, print the count
          System.out.println("Number of Steps: " + count);
          return true;
       }
+      //adds 1 per recursion
       else if(maze[r][c] == START) {
          if(markCorrectPathAndCountSteps(r+1, c, count+1) || markCorrectPathAndCountSteps(r, c-1, count+1) || markCorrectPathAndCountSteps(r, c+1, count+1) || markCorrectPathAndCountSteps(r-1, c, count+1)) {
             return true;
@@ -296,6 +399,7 @@ class Maze
             return false;
          }
       }
+      //adds 1 per recursion
       else if(maze[r][c] == DOT) {
          maze[r][c] = TEMP;
          if(markCorrectPathAndCountSteps(r, c-1, count+1) || markCorrectPathAndCountSteps(r+1, c, count+1) || markCorrectPathAndCountSteps(r, c+1, count+1) || markCorrectPathAndCountSteps(r-1, c, count+1)) {
