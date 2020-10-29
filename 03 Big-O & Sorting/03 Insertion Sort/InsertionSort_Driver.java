@@ -1,5 +1,5 @@
- //Name:     
- //Date:
+ //Name: Saloni Shah
+ //Date: 11/04/2020 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -55,13 +55,23 @@ public class InsertionSort_Driver
    
    public static boolean isAscending(double[] a)
    {
-   
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x] > a[x+1]) {
+            return false;
+         }
+      }
+      return true;
    }
    
    @SuppressWarnings("unchecked")//this removes the warning for Comparable
    public static boolean isAscending(Comparable[] a)
    {
-   
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x].compareTo(a[x+1]) > 0) {
+            return false;
+         }
+      }
+      return true;
    }
 }
 
@@ -71,23 +81,39 @@ class Insertion
 {
    public static void sort(double[] array)
    { 
-   
+      for(int i = 1; i < array.length; i++){
+         double temp = array[i];
+         int insert = shift(array, i, array[i]);
+         array[insert] = temp;
+      }
    }
  
    private static int shift(double[] array, int index, double value)
    {
-   
+      while(index > 0 && array[index - 1] > value){
+         array[index] = array[index-1];
+         index--;
+      }
+      return index;
    }
  
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    { 
-   
+      for(int i = 1; i < array.length; i++){
+         Comparable temp = array[i];
+         int insert = shift(array, i, array[i]);
+         array[insert] = temp;
+      }
    }
    
    @SuppressWarnings("unchecked")
    private static int shift(Comparable[] array, int index, Comparable value)
    {
-   
+      while(index > 0 && array[index - 1].compareTo(value) > 0){
+         array[index] = array[index-1];
+         index--;
+      }
+      return index;
    }
 }

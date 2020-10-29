@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 11/04/2020 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -54,13 +54,23 @@ public class SelectionSort_Driver
   
    public static boolean isAscending(double[] a)
    {
-   
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x] > a[x+1]) {
+            return false;
+         }
+      }
+      return true;
    }
    
    @SuppressWarnings("unchecked")
    public static boolean isAscending(Comparable[] a)
    {
-   
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x].compareTo(a[x+1]) > 0) {
+            return false;
+         }
+      }
+      return true;
    }
 }
 /////////////////////////////////////////////////////
@@ -69,36 +79,64 @@ class Selection
 {
    public static void sort(double[] array)
    {
-   
+      int maxPos;
+      for(int k = 0; k < array.length; k++)
+      {
+         maxPos = findMax(array, array.length - k - 1);
+         swap(array, maxPos, array.length - k - 1);
+      }
    }
    
    // upper controls where the inner loop of the Selection Sort ends
    private static int findMax(double[] array, int upper)
    {
-   
-   
+      int maxPos = 0;
+      
+      for(int i = 1; i <= upper; i++) {
+         if(array[i] > array[maxPos]) {
+            maxPos = i;
+         }
+      }
+      
+      return maxPos;
    }
    private static void swap(double[] array, int a, int b)
    {
-   
+      double temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    }   	
    
 	/*******  for Comparables ********************/
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    {
-   
+      int maxPos;
+      for(int k = 0; k < array.length; k++)
+      {
+         maxPos = findMax(array, array.length - k - 1);
+         swap(array, maxPos, array.length - k - 1);
+      }
    }
    
    @SuppressWarnings("unchecked")
    public static int findMax(Comparable[] array, int upper)
    {
-   
-   
+      int maxPos = 0; 
+      
+      for(int i = 1; i <= upper; i++) {
+         if(array[i].compareTo(array[maxPos]) > 0) {
+            maxPos = i;
+         }
+      }
+      
+      return maxPos;
    }
    public static void swap(Object[] array, int a, int b)
    {
-   
+      Object temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    }
 }
 
