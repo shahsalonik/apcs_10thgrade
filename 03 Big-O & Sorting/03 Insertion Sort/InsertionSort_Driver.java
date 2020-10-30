@@ -55,6 +55,7 @@ public class InsertionSort_Driver
    
    public static boolean isAscending(double[] a)
    {
+      //checks if sorted in ascending order by comparing two adjacent values
       for(int x = 0; x < a.length - 1; x++) {
          if(a[x] > a[x+1]) {
             return false;
