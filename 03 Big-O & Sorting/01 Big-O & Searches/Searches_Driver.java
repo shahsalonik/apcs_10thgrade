@@ -104,7 +104,7 @@ class Searches
          return mid;
       }
       else if(target.compareTo(array[mid]) < 0) {
-         return binaryhelper(array, target, start, mid);
+         return binaryhelper(array, target, start, mid-1);
       }
       else {
          return binaryhelper(array, target, mid+1, end);
