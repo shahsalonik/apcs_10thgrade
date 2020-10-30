@@ -79,6 +79,8 @@ class Selection
 {
    public static void sort(double[] array)
    {
+      //finds the maximum position and swaps it 
+      //continues doing that for the entire array
       int maxPos;
       for(int k = 0; k < array.length; k++)
       {
@@ -92,6 +94,8 @@ class Selection
    {
       int maxPos = 0;
       
+      //iteratively looks through each index and checks if it is greater than the previous max
+      //returns the final max
       for(int i = 1; i <= upper; i++) {
          if(array[i] > array[maxPos]) {
             maxPos = i;
@@ -102,6 +106,7 @@ class Selection
    }
    private static void swap(double[] array, int a, int b)
    {
+      //swap code
       double temp = array[a];
       array[a] = array[b];
       array[b] = temp;
@@ -111,6 +116,8 @@ class Selection
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    {
+      //finds the maximum position and swaps it 
+      //continues doing that for the entire array
       int maxPos;
       for(int k = 0; k < array.length; k++)
       {
@@ -124,6 +131,8 @@ class Selection
    {
       int maxPos = 0; 
       
+      //iteratively looks through each index and checks if it is greater than the previous max
+      //returns the final max
       for(int i = 1; i <= upper; i++) {
          if(array[i].compareTo(array[maxPos]) > 0) {
             maxPos = i;
@@ -134,6 +143,7 @@ class Selection
    }
    public static void swap(Object[] array, int a, int b)
    {
+      //swap code
       Object temp = array[a];
       array[a] = array[b];
       array[b] = temp;

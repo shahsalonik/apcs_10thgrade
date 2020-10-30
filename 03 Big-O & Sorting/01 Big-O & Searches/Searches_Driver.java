@@ -68,6 +68,9 @@ class Searches
    @SuppressWarnings("unchecked")//removes the warning for Comparable
    public static int linear(Comparable[] array, Comparable target)
    { 
+      //goes through each index and checks if it is equal to the target
+      //if yes, returns the index
+      //if no, continues until the end
       for(int i = 0; i < array.length; i++) {
          linearCount++;
          if(array[i].compareTo(target) == 0) {
@@ -80,18 +83,23 @@ class Searches
    @SuppressWarnings("unchecked")
    public static int binary(Comparable[] array, Comparable target)
    {
-      binaryCount++;
+      //calls binaryhelper, a recursive helper method
       return binaryhelper(array, target, 0, array.length-1);
    }
    
    @SuppressWarnings("unchecked")
    private static int binaryhelper(Comparable[] array, Comparable target, int start, int end)
    {
+      //increments binaryCount, a static varible, every run.
       binaryCount++;
       if(start>=end) {
          return -1;
       }
+      //finds the middle
       int mid = (start + end) / 2;
+      //if the middle value is equal to the target, return the middle
+      //else if the target is less than the middle return binaryhelper for the first half of the array
+      //else return binary helper for the last half of the array
       if(target.compareTo(array[mid]) == 0) {
          return mid;
       }

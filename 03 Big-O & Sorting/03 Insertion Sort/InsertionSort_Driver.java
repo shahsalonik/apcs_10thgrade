@@ -81,6 +81,7 @@ class Insertion
 {
    public static void sort(double[] array)
    { 
+      //sorts the array using shift for every index
       for(int i = 1; i < array.length; i++){
          double temp = array[i];
          int insert = shift(array, i, array[i]);
@@ -90,6 +91,7 @@ class Insertion
  
    private static int shift(double[] array, int index, double value)
    {
+      //shifts larger values
       while(index > 0 && array[index - 1] > value){
          array[index] = array[index-1];
          index--;
@@ -100,6 +102,7 @@ class Insertion
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    { 
+      //sorts the array using shift for every index
       for(int i = 1; i < array.length; i++){
          Comparable temp = array[i];
          int insert = shift(array, i, array[i]);
@@ -110,6 +113,7 @@ class Insertion
    @SuppressWarnings("unchecked")
    private static int shift(Comparable[] array, int index, Comparable value)
    {
+      //shifts larger values
       while(index > 0 && array[index - 1].compareTo(value) > 0){
          array[index] = array[index-1];
          index--;
