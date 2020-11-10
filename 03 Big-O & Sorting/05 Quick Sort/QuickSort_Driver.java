@@ -91,22 +91,26 @@ class QuickSort
     */
    private static int rearrange(double[] array, int first, int last)
    {
-  
+   
       int indexOfPivot = first;    //save the index   
       double pivot = array[first]; //save the pivot
       first++;
       while (first <= last)
       { 
-        if()       //if it's on the correct side, 
-                   //   move right      
-        else if()  //if it's on the correct side,   
-                   //   move left 
-        else                                //if both on the wrong side,  
-        {  
-                   //   then swap them,
-                   //   update both right and left
-        
-        }
+         if(array[first] <= pivot)       //if it's on the correct side, move right   
+         {
+            first++;
+         }   
+         else if(array[last] >= pivot)  //if it's on the correct side,   move left 
+         {
+            last--;
+         }
+         else                                //if both on the wrong side,  then swap them, update both right and left
+         {
+            swap(array, first, last);
+            first++;
+            last--;
+         }
       }
       swap(array, last, indexOfPivot); 	// swap pivot with element at indexOfPivot
       indexOfPivot = last;			         // set indexOfPivot to place where the halves meet
@@ -115,31 +119,62 @@ class QuickSort
 
    private static void swap(double[] array, int a, int b)
    {
-   
+      double temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    }
    
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    {
-   
+      sort(array, 0, array.length - 1);
    }
    
    @SuppressWarnings("unchecked")
    private static void sort(Comparable[] array, int first, int last)
    {
-    
+      int indexOfPivot;
+      if (first < last) // General case
+      {    
+         indexOfPivot = rearrange(array, first, last);
+         sort(array, first, indexOfPivot - 1);	// sort left side
+         sort(array, indexOfPivot + 1, last);	   // sort right side
+      }
    }
 
    @SuppressWarnings("unchecked")
    private static int rearrange(Comparable[] array, int first, int last)
    {
-    
+      int indexOfPivot = first;    //save the index   
+      Comparable pivot = array[first]; //save the pivot
+      first++;
+      while (first <= last)
+      { 
+         if(array[first].compareTo(pivot) < 0 || array[first].compareTo(pivot) == 0)       //if it's on the correct side, move right   
+         {
+            first++;
+         }   
+         else if(array[last].compareTo(pivot) > 0 || array[last].compareTo(pivot) == 0)  //if it's on the correct side,   move left 
+         {
+            last--;
+         }
+         else                                //if both on the wrong side,  then swap them, update both right and left
+         {
+            swap(array, first, last);
+            first++;
+            last--;
+         }
+      }
+      swap(array, last, indexOfPivot); 	// swap pivot with element at indexOfPivot
+      indexOfPivot = last;			         // set indexOfPivot to place where the halves meet
+      return indexOfPivot;
    }
 
    @SuppressWarnings("unchecked")
    private static void swap(Comparable[] array, int a, int b)
    {
-
+      Comparable temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    }
 }
-
