@@ -11,9 +11,9 @@ public class MergeSort_Driver
       //Part 1, for doubles
       double[] array = {3,1,4,1,5,9,2,6};    // small example array from the MergeSort handout
       //int n = (int)(Math.random()*50+10);
-      // double[] array = new double[n];
-      // for(int k = 0; k < array.length; k++)
-         // array[k] = Math.random();
+      //double[] array = new double[n];
+     // for(int k = 0; k < array.length; k++)
+      //   array[k] = Math.random();
          	
       MergeSort.sort(array);
    
@@ -49,18 +49,33 @@ public class MergeSort_Driver
   
    public static boolean isAscending(double[] a)
    {
-   
+   //checks if sorted in ascending order by comparing two adjacent values
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x] > a[x+1]) {
+            return false;
+         }
+      }
+      return true;
    }
   
    public static void print(Object[] peach)
    {
-   
+   //prints each element of the array
+      for(int x = 0; x < peach.length; x++) {
+         System.out.print(peach[x] + " ");
+      }
    }
    
    @SuppressWarnings("unchecked")
    public static boolean isAscending(Comparable[] a)
    {
-   
+   //checks if sorted in ascending order by comparing two adjacent values
+      for(int x = 0; x < a.length - 1; x++) {
+         if(a[x].compareTo(a[x+1]) > 0) {
+            return false;
+         }
+      }
+      return true;
    }
 }
 /////////////////////////////////////////////
@@ -86,16 +101,16 @@ class MergeSort
    private static void mergeSortHelper(double[] array, double[] copyBuffer,
                                                       int low, int high)
    {  
-      // if ( high - low  < CUTOFF )                  //switch to selection sort  when
-         // SelectionLowHigh.sort(array, low, high);        //the list gets small enough 
-      // else
-      if (low < high)
-      {
-         int middle = (low + high) / 2;
-         mergeSortHelper(array, copyBuffer, low, middle);
-         mergeSortHelper(array, copyBuffer, middle + 1, high);
-         merge(array, copyBuffer, low, middle, high);
-      }
+      if ( high - low  < CUTOFF )                  //switch to selection sort  when
+         SelectionLowHigh.sort(array, low, high);        //the list gets small enough 
+      else
+         if (low < high)
+         {
+            int middle = (low + high) / 2;
+            mergeSortHelper(array, copyBuffer, low, middle);
+            mergeSortHelper(array, copyBuffer, middle + 1, high);
+            merge(array, copyBuffer, low, middle, high);
+         }
    }
    
    /* array				array that is being sorted
@@ -112,19 +127,49 @@ class MergeSort
       // Interleave items from the subarrays into the copyBuffer in such 
       // a way that order is maintained.
       
+      int x = low;
+      int i1 = low;
+      int i2 = middle + 1;
       
+      while(i1 <= middle && i2 <= high) {
+         if(array[i1] <= array[i2]) {
+         //copies element to the other array and then moves to the next one
+            copyBuffer[x] = array[i1];
+            x++;
+            i1++;
+         }
+         else {
+            copyBuffer[x] = array[i2];
+            x++;
+            i2++;
+         }
+      }
       
       //then copy the just-sorted values (from low to high)
       // from the copyBuffer back to the array.
-   	
-   
+      
+      while(i1 <= middle) {
+         copyBuffer[x] = array[i1];
+         x++;
+         i1++;
+      }
+      while(i2 <= high) {
+         copyBuffer[x] = array[i2];
+         x++;
+         i2++;
+      }
+      //copies the temp array values to the original array in the sorted order
+      for(int i=low; i <= high; i++) {
+         array[i] = copyBuffer[i];
+      }
       
    }	
       
    @SuppressWarnings("unchecked")//this removes the warning for Comparable
    public static void sort(Comparable[] array)
    { 
-   
+      Comparable[] copyBuffer = new Comparable[array.length];
+      mergeSortHelper(array, copyBuffer, 0, array.length - 1);
    }
 
    /* array				array that is being sorted
@@ -134,7 +179,13 @@ class MergeSort
    @SuppressWarnings("unchecked")
    private static void mergeSortHelper(Comparable[] array, Comparable[] copyBuffer, int low, int high)
    {
-     
+      if (low < high)
+      {
+         int middle = (low + high) / 2;
+         mergeSortHelper(array, copyBuffer, low, middle);
+         mergeSortHelper(array, copyBuffer, middle + 1, high);
+         merge(array, copyBuffer, low, middle, high);
+      }
    }
    
    /* array				array that is being sorted
@@ -147,7 +198,41 @@ class MergeSort
    public static void merge(Comparable[] array, Comparable[] copyBuffer,
                                    int low, int middle, int high)
    {
-     
+      int x = low;
+      int i1 = low;
+      int i2 = middle + 1;
+      
+      while(i1 <= middle && i2 <= high) {
+      //copies element to the other array and then moves to the next one
+         if(array[i1].compareTo(array[i2]) < 0) {
+            copyBuffer[x] = array[i1];
+            x++;
+            i1++;
+         }
+         else {
+            copyBuffer[x] = array[i2];
+            x++;
+            i2++;
+         }
+      }
+      
+      //then copy the just-sorted values (from low to high)
+      // from the copyBuffer back to the array.
+      
+      while(i1 <= middle) {
+         copyBuffer[x] = array[i1];
+         x++;
+         i1++;
+      }
+      while(i2 <= high) {
+         copyBuffer[x] = array[i2];
+         x++;
+         i2++;
+      }
+      //copies the temp array values to the original array in the sorted order
+      for(int i=low; i <= high; i++) {
+         array[i] = copyBuffer[i];
+      }
    }    	
 }
 
@@ -159,14 +244,31 @@ class SelectionLowHigh
 {
    public static void sort(double[] array, int low, int high)
    {  
-   
+      int maxPos;
+      for(int k = 0; k < array.length; k++)
+      {
+         maxPos = findMax(array, 0, array.length - k - 1);
+         swap(array, maxPos, array.length - k - 1);
+      }
    }
    private static int findMax(double[] array, int low, int upper)
    {
-      return 0;
+      int maxPos = 0;
+      
+      //iteratively looks through each index and checks if it is greater than the previous max
+      //returns the final max
+      for(int i = 1; i <= upper; i++) {
+         if(array[i] > array[maxPos]) {
+            maxPos = i;
+         }
+      }
+      
+      return maxPos;
    }
    private static void swap(double[] array, int a, int b)
    {
-   
+      double temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    } 
 }

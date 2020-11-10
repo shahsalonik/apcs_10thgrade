@@ -9,12 +9,14 @@ public class InsertionSort_Driver
    public static void main(String[] args) throws Exception
    {
       //Part 1, for doubles
-      int n = (int)(Math.random()*100)+20;
+      /*int n = (int)(Math.random()*100)+20;
       double[] array = new double[n];
       for(int k = 0; k < array.length; k++)
-         array[k] = Math.random()*100;	
+         array[k] = Math.random()*100;*/
+         
+      double[] array = {1, 7, 9, 5, 4, 12};	
       
-      Insertion.sort(array);
+      Insertion.insertionSort();
       print(array);
       
       if( isAscending(array) )
@@ -99,7 +101,8 @@ class Insertion
       }
       return index;
    }
- 
+   
+   
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
    { 
@@ -115,7 +118,7 @@ class Insertion
    private static int shift(Comparable[] array, int index, Comparable value)
    {
       //shifts larger values
-      while(index > 0 && array[index - 1].compareTo(value) > 0){
+      while(index > 0 && array[index - 1].compareTo(value) < 0){
          array[index] = array[index-1];
          index--;
       }
