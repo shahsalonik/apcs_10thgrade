@@ -9,11 +9,12 @@ public class QuickSort_Driver
    public static void main(String[] args) throws Exception
    {
       //Part 1 for doubles
-      int n = (int)(Math.random()*50 + 10);
-      double[] array = new double[n];
-      for(int k = 0; k < array.length; k++)
-         array[k] = Math.random();
+      /*int n = (int)(Math.random()*50 + 10);
+            for(int k = 0; k < array.length; k++)
+         array[k] = Math.random();*/
          	
+      double[] array = {66, 33, 99, 55, 88, 22, 44, 77};
+   
       QuickSort.sort(array);
       print(array);
       if( isAscending(array) )
