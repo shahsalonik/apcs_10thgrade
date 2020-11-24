@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 12/07/2020 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -55,7 +55,14 @@ public class Josephus
 	 */
    public static ListNode readNLinesOfFile(int n, File f) throws FileNotFoundException
    {
-      return null;
+      Scanner infile = new Scanner(f);
+      ListNode list = new ListNode(infile.next(), null);
+      
+      for(int x = 1; x < n; x++) {
+         list = insert(list, infile.next());
+      }
+      
+      return list;
    }
    
    /* helper method to build the list.  Creates the node, then
@@ -63,6 +70,7 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
+      
       return null;
    }
    
@@ -78,6 +86,8 @@ public class Josephus
 	 */
    public static ListNode remove(ListNode p, int count)
    {
+      
+      
       return null;
    }
    
@@ -85,14 +95,22 @@ public class Josephus
 	 */
    public static void print(ListNode p)
    {
-   
+      ListNode temp = p;
+      while(temp != p) {
+         System.out.println(p.getValue());
+         p = p.getNext();
+      }
    }
 	
    /* replaces the value (the string) at the winning node.
 	 */
    public static void replaceAt(ListNode p, Object obj, int pos)
    {
-   
+      for(int x = 0; x < pos - 1; x++) {
+         p = p.getNext();
+      }
+      p = p.getNext();
+      p.setValue(obj);
    }
 }
 /**********************************************************
@@ -120,4 +138,3 @@ public class Josephus
   ----jGRASP: operation complete.
   
   **************************************************/
-
