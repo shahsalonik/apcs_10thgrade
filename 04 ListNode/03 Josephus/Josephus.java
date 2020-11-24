@@ -70,8 +70,16 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
+      ListNode ins = p;
       
-      return null;
+      while(ins.getNext() != p) {
+         ins = ins.getNext();
+      }
+      
+      ListNode val = new ListNode (obj, p);
+      ins.setNext(val);
+      
+      return ins;
    }
    
    /* Runs a Josephus game, counting off and removing each name. Prints after each removal.
@@ -79,16 +87,34 @@ public class Josephus
 	 */
    public static ListNode countingOff(ListNode p, int count, int n)
    {
-      return null;
+      print(p);
+      while(p.getNext() != p && n > 1) {
+         p = remove(p, count);
+         print(p);
+         n--;
+      } 
+      
+      return p;
    }
    
    /* removes the node after counting off count-1 nodes.
 	 */
    public static ListNode remove(ListNode p, int count)
    {
-      
-      
-      return null;
+      if(count == 1) {
+         ListNode last = p;
+         while(p.getNext() != p) {
+            last = last.getNext();
+         }
+         last.setNext(p.getNext());
+      }
+      else {
+         for(int i=1; i < count; i++){
+            p = p.getNext();
+         }
+         p.setNext(p.getNext().getNext());
+      }
+      return p.getNext();
    }
    
    /* prints the circular linked list.
