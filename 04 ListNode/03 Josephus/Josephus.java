@@ -65,6 +65,7 @@ public class Josephus
          prevNode = temp;
       }
       prevNode.setNext(head);
+      head = prevNode;
       return head;
    }
    
@@ -73,16 +74,21 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
-      ListNode head = p;
+      ListNode temp = new ListNode(obj, p.getNext()); 
+      p.setNext(temp); 
+      p = temp;
+      return p;
       
-      while(p.getNext() != head) {
+      /*ListNode head = p;
+      
+      while(head != p.getNext()) {
          p = p.getNext();
       }
       
       ListNode temp = new ListNode (obj, head);
       p.setNext(temp);
       
-      return head;
+      return head;*/
    }
    
    /* Runs a Josephus game, counting off and removing each name. Prints after each removal.
@@ -104,14 +110,21 @@ public class Josephus
 	 */
    public static ListNode remove(ListNode p, int count)
    {
-      ListNode prevNode = null;
+      //condition for count == 1
       
-      for(int i = 0; i < count - 1; i++){
-         prevNode = p;
-         p = p.getNext();
+      if(count == 1) {
+      
       }
+      else {
+         ListNode prevNode = null;
       
-      prevNode.setNext(p.getNext());
+         for(int i = 1; i < count; i++){
+            prevNode = p.getNext();
+            p = p.getNext().getNext();
+         }
+      
+         prevNode.setNext(p.getNext());
+      }
       
       return p.getNext();
    }
@@ -120,13 +133,13 @@ public class Josephus
 	 */
    public static void print(ListNode p)
    {
-      ListNode temp = p;
-      System.out.print(p.getValue());
       p = p.getNext();
-      while(p != temp) {
-         System.out.print(" " + p.getValue());
+      ListNode head = p;
+      do{
+         System.out.print(p.getValue() + " ");
          p = p.getNext();
       }
+      while (p != head);
       System.out.println();
    }
 	
@@ -134,10 +147,9 @@ public class Josephus
 	 */
    public static void replaceAt(ListNode p, Object obj, int pos)
    {
-      for(int x = 1; x < pos - 1; x++) {
+      for(int x = 1; x < pos + 1; x++) {
          p = p.getNext();
       }
-      p = p.getNext();
       p.setValue(obj);
    }
 }
