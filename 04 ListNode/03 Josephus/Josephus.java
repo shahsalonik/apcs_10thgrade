@@ -61,14 +61,12 @@ public class Josephus
       for(int x = 1; x < n; x++) {
          list = insert(list, infile.next());
       }
-<<<<<<< HEAD
       prevNode.setNext(head);
       head = prevNode;
       return head;
-=======
+
       
       return list;
->>>>>>> parent of 2bc32c7... Working Josephus
    }
    
    /* helper method to build the list.  Creates the node, then
@@ -76,7 +74,6 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
-<<<<<<< HEAD
       ListNode temp = new ListNode(obj, p.getNext()); 
       p.setNext(temp); 
       p = temp;
@@ -86,22 +83,17 @@ public class Josephus
       
       while(head != p.getNext()) {
          p = p.getNext();
-=======
       ListNode ins = p;
       
       while(ins.getNext() != p) {
          ins = ins.getNext();
->>>>>>> parent of 2bc32c7... Working Josephus
       }
       
       ListNode val = new ListNode (obj, p);
       ins.setNext(val);
       
-<<<<<<< HEAD
       return head;*/
-=======
       return ins;
->>>>>>> parent of 2bc32c7... Working Josephus
    }
    
    /* Runs a Josephus game, counting off and removing each name. Prints after each removal.
@@ -123,7 +115,6 @@ public class Josephus
 	 */
    public static ListNode remove(ListNode p, int count)
    {
-<<<<<<< HEAD
       //condition for count == 1
       
       if(count == 1) {
@@ -140,7 +131,6 @@ public class Josephus
          prevNode.setNext(p.getNext());
       }
       
-=======
       if(count == 1) {
          ListNode last = p;
          while(p.getNext() != p) {
@@ -154,7 +144,6 @@ public class Josephus
          }
          p.setNext(p.getNext().getNext());
       }
->>>>>>> parent of 2bc32c7... Working Josephus
       return p.getNext();
    }
    
@@ -162,7 +151,6 @@ public class Josephus
 	 */
    public static void print(ListNode p)
    {
-<<<<<<< HEAD
       p = p.getNext();
       ListNode head = p;
       do{
@@ -171,24 +159,19 @@ public class Josephus
       }
       while (p != head);
       System.out.println();
-=======
       ListNode temp = p;
       while(temp != p) {
          System.out.println(p.getValue());
          p = p.getNext();
       }
->>>>>>> parent of 2bc32c7... Working Josephus
    }
 	
    /* replaces the value (the string) at the winning node.
 	 */
    public static void replaceAt(ListNode p, Object obj, int pos)
    {
-<<<<<<< HEAD
       for(int x = 1; x < pos + 1; x++) {
-=======
       for(int x = 0; x < pos - 1; x++) {
->>>>>>> parent of 2bc32c7... Working Josephus
          p = p.getNext();
       }
       p.setValue(obj);
