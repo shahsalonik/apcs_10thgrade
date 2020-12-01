@@ -55,24 +55,20 @@ public class Josephus
 	 */
    public static ListNode readNLinesOfFile(int n, File f) throws FileNotFoundException
    {
-      Scanner infile = new Scanner(f);
+      Scanner infile = new Scanner(f); 
       ListNode head = new ListNode(infile.next(), null);
       ListNode prevNode = head;
       
+      //goes through the file until the specified number of lines
+      //puts them into a linked list
       for(int x = 0; x < n-1; x++) {
          ListNode temp = new ListNode(infile.next(), null);
          prevNode.setNext(temp);
          prevNode = temp;
       }
-      prevNode.setNext(head);
-      head = prevNode;
-      return head;
-<<<<<<< HEAD
-=======
-
-      
-      return list;
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
+      prevNode.setNext(head); //ciruclar linked list
+      head = prevNode; //head is the last node put into the list
+      return head; //returns the list
    }
    
    /* helper method to build the list.  Creates the node, then
@@ -80,35 +76,14 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
-<<<<<<< HEAD
+      //puts the node into the list and makes that node the head
       ListNode head = p;
       ListNode temp = new ListNode (obj, head.getNext());
       head.setNext(temp);
       head = temp;
       
+      //returns the list with the inserted node as the head
       return head;
-=======
-      ListNode temp = new ListNode(obj, p.getNext()); 
-      p.setNext(temp); 
-      p = temp;
-      return p;
-      
-      /*ListNode head = p;
-      
-      while(head != p.getNext()) {
-         p = p.getNext();
-      ListNode ins = p;
-      
-      while(ins.getNext() != p) {
-         ins = ins.getNext();
-      }
-      
-      ListNode val = new ListNode (obj, p);
-      ins.setNext(val);
-      
-      return head;*/
-      return ins;
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
    
    /* Runs a Josephus game, counting off and removing each name. Prints after each removal.
@@ -116,13 +91,15 @@ public class Josephus
 	 */
    public static ListNode countingOff(ListNode p, int count, int n)
    {
+      //prints original
       print(p);
       while(p.getNext() != p && n > 1) {
-         p = remove(p, count);
+         p = remove(p, count); 
          print(p);
          n--;
       } 
       
+      //returns the remaining node
       return p.getNext();
    }
    
@@ -130,84 +107,42 @@ public class Josephus
 	 */
    public static ListNode remove(ListNode p, int count)
    {
-<<<<<<< HEAD
       ListNode prevNode = null;
-=======
-      //condition for count == 1
       
-      if(count == 1) {
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
-      
+      //traverses the linked list until reaching the count number
       for(int i = 0; i < count; i++){
          prevNode = p;
          p = p.getNext();
       }
       
+      //removes the one at that position
       prevNode.setNext(p.getNext());
       
-<<<<<<< HEAD
       return p;
-=======
-         prevNode.setNext(p.getNext());
-      }
-      
-      if(count == 1) {
-         ListNode last = p;
-         while(p.getNext() != p) {
-            last = last.getNext();
-         }
-         last.setNext(p.getNext());
-      }
-      else {
-         for(int i=1; i < count; i++){
-            p = p.getNext();
-         }
-         p.setNext(p.getNext().getNext());
-      }
-      return p.getNext();
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
    
    /* prints the circular linked list.
 	 */
    public static void print(ListNode p)
    {
-<<<<<<< HEAD
+      //starts at the node after the head 
       ListNode start = p.getNext();
       
+      //prints each node until reaching the initial value
       do {
          System.out.print(start.getValue() + " ");
          start = start.getNext();
-=======
-      p = p.getNext();
-      ListNode head = p;
-      do{
-         System.out.print(p.getValue() + " ");
-         p = p.getNext();
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
       }
       while(start != p.getNext());
       System.out.println();
-<<<<<<< HEAD
-=======
-      ListNode temp = p;
-      while(temp != p) {
-         System.out.println(p.getValue());
-         p = p.getNext();
-      }
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
 	
    /* replaces the value (the string) at the winning node.
 	 */
    public static void replaceAt(ListNode p, Object obj, int pos)
    {
-<<<<<<< HEAD
+      //traverses the list until reaching the specified position; then, replaces the value of the node with the one passed
       for(int x = 1; x < pos; x++) {
-=======
-      for(int x = 1; x < pos + 1; x++) {
-      for(int x = 0; x < pos - 1; x++) {
->>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
          p = p.getNext();
       }
       p = p.getNext();
