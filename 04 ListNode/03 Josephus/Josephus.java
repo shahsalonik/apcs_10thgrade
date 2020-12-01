@@ -67,6 +67,12 @@ public class Josephus
       prevNode.setNext(head);
       head = prevNode;
       return head;
+<<<<<<< HEAD
+=======
+
+      
+      return list;
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
    
    /* helper method to build the list.  Creates the node, then
@@ -74,12 +80,35 @@ public class Josephus
 	 */
    public static ListNode insert(ListNode p, Object obj)
    {
+<<<<<<< HEAD
       ListNode head = p;
       ListNode temp = new ListNode (obj, head.getNext());
       head.setNext(temp);
       head = temp;
       
       return head;
+=======
+      ListNode temp = new ListNode(obj, p.getNext()); 
+      p.setNext(temp); 
+      p = temp;
+      return p;
+      
+      /*ListNode head = p;
+      
+      while(head != p.getNext()) {
+         p = p.getNext();
+      ListNode ins = p;
+      
+      while(ins.getNext() != p) {
+         ins = ins.getNext();
+      }
+      
+      ListNode val = new ListNode (obj, p);
+      ins.setNext(val);
+      
+      return head;*/
+      return ins;
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
    
    /* Runs a Josephus game, counting off and removing each name. Prints after each removal.
@@ -101,7 +130,13 @@ public class Josephus
 	 */
    public static ListNode remove(ListNode p, int count)
    {
+<<<<<<< HEAD
       ListNode prevNode = null;
+=======
+      //condition for count == 1
+      
+      if(count == 1) {
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
       
       for(int i = 0; i < count; i++){
          prevNode = p;
@@ -110,28 +145,69 @@ public class Josephus
       
       prevNode.setNext(p.getNext());
       
+<<<<<<< HEAD
       return p;
+=======
+         prevNode.setNext(p.getNext());
+      }
+      
+      if(count == 1) {
+         ListNode last = p;
+         while(p.getNext() != p) {
+            last = last.getNext();
+         }
+         last.setNext(p.getNext());
+      }
+      else {
+         for(int i=1; i < count; i++){
+            p = p.getNext();
+         }
+         p.setNext(p.getNext().getNext());
+      }
+      return p.getNext();
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
    
    /* prints the circular linked list.
 	 */
    public static void print(ListNode p)
    {
+<<<<<<< HEAD
       ListNode start = p.getNext();
       
       do {
          System.out.print(start.getValue() + " ");
          start = start.getNext();
+=======
+      p = p.getNext();
+      ListNode head = p;
+      do{
+         System.out.print(p.getValue() + " ");
+         p = p.getNext();
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
       }
       while(start != p.getNext());
       System.out.println();
+<<<<<<< HEAD
+=======
+      ListNode temp = p;
+      while(temp != p) {
+         System.out.println(p.getValue());
+         p = p.getNext();
+      }
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
    }
 	
    /* replaces the value (the string) at the winning node.
 	 */
    public static void replaceAt(ListNode p, Object obj, int pos)
    {
+<<<<<<< HEAD
       for(int x = 1; x < pos; x++) {
+=======
+      for(int x = 1; x < pos + 1; x++) {
+      for(int x = 0; x < pos - 1; x++) {
+>>>>>>> f55f6f08e1ef25b5c09542ebb8c324c58e91e98a
          p = p.getNext();
       }
       p = p.getNext();
