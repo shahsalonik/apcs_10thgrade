@@ -50,13 +50,15 @@ public class TJArrayList<E>
    {
       if(index > size || index < 0)
          throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-         
+      
+      //traverses the array, shifting everything to the right   
       for(int x = size - 1; x >= index; x--) {
          myArray[x+1] = myArray[x];
       }   
-       
+      
+      //inserts object at the index and increments size
+      myArray[index] = obj; 
       size++;
-      myArray[index] = obj;
    }
 
    /* return obj at position index.  
@@ -66,6 +68,7 @@ public class TJArrayList<E>
       if(index >= size || index < 0)
          throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
      
+     //returns the value at the specified index
       return myArray[index];
    }
    /**
@@ -77,6 +80,7 @@ public class TJArrayList<E>
       if(index >= size || index < 0)
          throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
       
+      //sets the value at the index to the object and then returns the replaced value
       E replaced = myArray[index];
       myArray[index] = obj;
       return replaced;
@@ -93,10 +97,12 @@ public class TJArrayList<E>
      
       E replaced = myArray[index];
       
+      //removes the node from the index by shifting all elements to the left
       for(int x = index + 1; x < myArray.length; x++) {
          myArray[x-1] = myArray[x];
       }
       
+      //decrements size and returns the removed object
       size--;
       return replaced;
    }
@@ -106,6 +112,7 @@ public class TJArrayList<E>
      	*/
    public boolean contains(E obj)
    {
+   //checks if the array has the object that has been passed by traversing it
       for(int i = 0; i < myArray.length; i++) {
          if(obj.equals(myArray[i])) {
             return true;
@@ -118,6 +125,7 @@ public class TJArrayList<E>
      	*/
    public String toString()
    {
+   //turns the array into a string
       String str = myArray[0] + "";
       
       for(int x = 1; x < size; x++) {
