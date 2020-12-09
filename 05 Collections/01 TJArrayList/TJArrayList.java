@@ -29,18 +29,19 @@ public class TJArrayList<E>
       if(size < myArray.length) {
          myArray[size] = obj;
       }
-      
+      else {
       //when the length of the array is doubled,
       //the original array is copied into the new array and
       //the object is added at the end
       //the new array is then put into the old array
       //size is incremented and returns true
-      E[] newArray = (E[]) new Object[myArray.length * 2];
-      for(int x = 0; x < myArray.length; x++) {
-         newArray[x] = myArray[x];
+         E[] newArray = (E[]) new Object[myArray.length * 2];
+         for(int x = 0; x < myArray.length; x++) {
+            newArray[x] = myArray[x];
+         }
+         newArray[size] = obj;
+         myArray = newArray;
       }
-      newArray[size] = obj;
-      myArray = newArray;
       size++;
       return true;
    }

@@ -135,7 +135,6 @@ public class IteratorLab
          if(!isThere) {
             noDupMovie.add(str);
          }
-          
       }
       
       return noDupMovie;
