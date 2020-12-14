@@ -40,11 +40,11 @@ class DocumentIndex extends ArrayList<IndexEntry>
 {
     //constructors
    public DocumentIndex() {
-      
+      super();
    }
    
-   public DocumentIndex(int capacity) {
-      
+   public DocumentIndex(int size) {
+      super(size);
    }
    
   /** extracts all the words from str, skipping punctuation and whitespace 
@@ -53,7 +53,15 @@ class DocumentIndex extends ArrayList<IndexEntry>
  e.g., str.split("[., \"!?]")       */
    public void addAllWords(String str, int lineNum) 
    {
+      String[] wordsArray = str.split("[., \"!?]");
       
+      if(wordsArray.length > 0) {
+         for(int x = 0; x < wordsArray.length; x++) {
+            if(wordsArray[x].length() > 0) {
+               addWord(wordsArray[x], lineNum);
+            }
+         }
+      }
    }
     
    /** calls foundOrInserted, which returns a position.  At that position,  
@@ -61,7 +69,7 @@ class DocumentIndex extends ArrayList<IndexEntry>
    public void addWord(String word, int lineNum)
    {
       int pos = foundOrInserted(word);
-      this.get(pos).add(lineNum);
+      get(pos).add(lineNum);
    }
         
     /** traverses this DocumentIndex and compares word to the words in the 
@@ -72,6 +80,23 @@ class DocumentIndex extends ArrayList<IndexEntry>
     IndexEntry.*/
    private int foundOrInserted(String word)
    {
+      int pos = 0;
+      IndexEntry newEntry = new IndexEntry(word);
+      
+      for(IndexEntry ind : this) {
+         if(ind.compareTo(newEntry) == 0) {
+            return 0;
+         }
+         else if(ind.compareTo(newEntry) > 0) {
+            add(pos, newEntry);
+         }
+         else {
+            pos++;
+         }
+      }
+      
+      add(pos, newEntry);
+      return pos;
       
    }
 }
@@ -97,7 +122,6 @@ class IndexEntry implements Comparable<IndexEntry>
       if(!numsList.contains(num)) {
          numsList.add(num);
       }
-      
    }
       
    	/** this is a standard accessor method  */
@@ -109,14 +133,21 @@ class IndexEntry implements Comparable<IndexEntry>
      /**  returns a string representation of this Index Entry.  */
    public String toString()
    {
-      String str = word + " ";
+      String str = word;
       
       for(Integer n : numsList) {
-         str = str + n + ", ";
+         str = n + ", ";
       }
+      str = str.substring(0, str.length()-2);
+      System.out.println(numsList);
       
       return str;
       
    }
+   
+   public int compareTo(IndexEntry ie) {
+      return word.compareTo(ie.getWord());
+   }
+   
 }
 
