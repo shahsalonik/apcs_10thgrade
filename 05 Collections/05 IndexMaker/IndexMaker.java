@@ -69,7 +69,8 @@ class DocumentIndex extends ArrayList<IndexEntry>
    public void addWord(String word, int lineNum)
    {
       int pos = foundOrInserted(word);
-      get(pos).add(lineNum);
+      IndexEntry entry = get(pos);
+      entry.add(lineNum);
    }
         
     /** traverses this DocumentIndex and compares word to the words in the 
@@ -87,12 +88,7 @@ class DocumentIndex extends ArrayList<IndexEntry>
          if(ind.compareTo(newEntry) == 0) {
             return 0;
          }
-         else if(ind.compareTo(newEntry) > 0) {
-            add(pos, newEntry);
-         }
-         else {
-            pos++;
-         }
+         pos++;
       }
       
       add(pos, newEntry);
@@ -133,13 +129,12 @@ class IndexEntry implements Comparable<IndexEntry>
      /**  returns a string representation of this Index Entry.  */
    public String toString()
    {
-      String str = word;
+      String str = word + " ";
       
       for(Integer n : numsList) {
-         str = n + ", ";
+         str += n + ", ";
       }
       str = str.substring(0, str.length()-2);
-      System.out.println(numsList);
       
       return str;
       
