@@ -39,10 +39,12 @@ public class IndexMaker
 class DocumentIndex extends ArrayList<IndexEntry>
 {
     //constructors
+    //default
    public DocumentIndex() {
       super();
    }
    
+   //passed size
    public DocumentIndex(int size) {
       super(size);
    }
@@ -53,8 +55,10 @@ class DocumentIndex extends ArrayList<IndexEntry>
  e.g., str.split("[., \"!?]")       */
    public void addAllWords(String str, int lineNum) 
    {
+      //makes an array with the words, splitting based on punctuation
       String[] wordsArray = str.split("[., \"!?]");
       
+      //calls addWord for each of the words in the array
       if(wordsArray.length > 0) {
          for(int x = 0; x < wordsArray.length; x++) {
             if(wordsArray[x].length() > 0) {
@@ -68,6 +72,7 @@ class DocumentIndex extends ArrayList<IndexEntry>
    updates that IndexEntry's list of line numbers with lineNum. */
    public void addWord(String word, int lineNum)
    {
+      //adds the line numbers next to the word
       int pos = foundOrInserted(word);
       IndexEntry entry = get(pos);
       entry.add(lineNum);
@@ -84,6 +89,8 @@ class DocumentIndex extends ArrayList<IndexEntry>
    
       IndexEntry newEntry = new IndexEntry(word);
       
+      //a loop that checks where the word should go alphabetically.
+      //does not add repeats
       for(int pos = 0; pos < size(); pos++) {
          if(get(pos).getWord().compareTo(word.toUpperCase()) == 0) {
             return pos;
@@ -97,6 +104,7 @@ class DocumentIndex extends ArrayList<IndexEntry>
          }
       }
       
+      //if none of the requirements are fulfilled, adds at the end
       add(newEntry);
       return size() - 1;
       
@@ -111,6 +119,7 @@ class IndexEntry implements Comparable<IndexEntry>
    private ArrayList<Integer> numsList;
      
      //constructors
+     //converts the word to uppercase
    public IndexEntry(String inputStr) {
       word = inputStr.toUpperCase();
       numsList = new ArrayList<Integer>();
@@ -121,6 +130,7 @@ class IndexEntry implements Comparable<IndexEntry>
           */
    public void add(int num)
    {
+   //adds only if the num isn't already there
       if(!numsList.contains(num)) {
          numsList.add(num);
       }
@@ -135,6 +145,8 @@ class IndexEntry implements Comparable<IndexEntry>
      /**  returns a string representation of this Index Entry.  */
    public String toString()
    {
+   
+   //makes a string of all the words with the line numbers where they occur
       String str = word + " ";
       
       for(Integer n : numsList) {
@@ -142,10 +154,12 @@ class IndexEntry implements Comparable<IndexEntry>
       }
       str = str.substring(0, str.length()-2);
       
+      //returns a string without the last comma
       return str;
       
    }
    
+   //compareTo method
    public int compareTo(IndexEntry ie) {
       return word.compareTo(ie.getWord());
    }
