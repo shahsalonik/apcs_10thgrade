@@ -81,18 +81,24 @@ class DocumentIndex extends ArrayList<IndexEntry>
     IndexEntry.*/
    private int foundOrInserted(String word)
    {
-      int pos = 0;
+   
       IndexEntry newEntry = new IndexEntry(word);
       
-      for(IndexEntry ind : this) {
-         if(ind.compareTo(newEntry) == 0) {
-            return 0;
+      for(int pos = 0; pos < size(); pos++) {
+         if(get(pos).getWord().compareTo(word.toUpperCase()) == 0) {
+            return pos;
          }
-         pos++;
+         else if(get(pos).getWord().compareTo(word.toUpperCase()) > 0) {
+            add(pos, newEntry);
+            return pos; 
+         }
+         else {
+            continue;
+         }
       }
       
-      add(pos, newEntry);
-      return pos;
+      add(newEntry);
+      return size() - 1;
       
    }
 }
