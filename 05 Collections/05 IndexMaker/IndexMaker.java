@@ -88,19 +88,17 @@ class DocumentIndex extends ArrayList<IndexEntry>
    {
    
       IndexEntry newEntry = new IndexEntry(word);
+      String wordUpper = word.toUpperCase();
       
       //a loop that checks where the word should go alphabetically.
       //does not add repeats
       for(int pos = 0; pos < size(); pos++) {
-         if(get(pos).getWord().compareTo(word.toUpperCase()) == 0) {
+         if(get(pos).getWord().compareTo(wordUpper) == 0) {
             return pos;
          }
-         else if(get(pos).getWord().compareTo(word.toUpperCase()) > 0) {
+         else if(get(pos).getWord().compareTo(wordUpper) > 0) {
             add(pos, newEntry);
             return pos; 
-         }
-         else {
-            continue;
          }
       }
       
