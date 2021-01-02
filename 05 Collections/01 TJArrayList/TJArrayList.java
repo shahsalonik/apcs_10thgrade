@@ -17,6 +17,7 @@ public class TJArrayList<E>
    }
    public int size()
    {
+   //O(1)
       return size;
    }
  	/* appends obj to end of list; increases size;
@@ -26,6 +27,8 @@ public class TJArrayList<E>
    public boolean add(E obj)
    {
       //adds the object to the end of the list
+      
+      //O(1)
       if(size < myArray.length) {
          myArray[size] = obj;
       }
