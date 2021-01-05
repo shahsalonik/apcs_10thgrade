@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah 
+// Date: 01/XX/2021 (due date)
 
 import java.util.*;
 
@@ -13,7 +13,20 @@ public class ParenMatch
       System.out.println("Parentheses Match");
       ArrayList<String> parenExp = new ArrayList<String>();
       /* enter test cases here */
-      
+      parenExp.add("5 + 7");
+      parenExp.add("( 15 + -7 )");
+      parenExp.add(") 5 + 7 (");
+      parenExp.add("( ( 5.0 - 7.3 ) * 3.5 )");
+      parenExp.add("< { 5 + 7 } * 3 >");
+      parenExp.add("[ ( 5 + 7 ) * ] 3");
+      parenExp.add("( 5 + 7 ) * 3");
+      parenExp.add("5 + ( 7 * 3 )");
+      parenExp.add("( ( 5 + 7 ) * 3");
+      parenExp.add("[ ( 5 + 7 ] * 3 )");
+      parenExp.add("[ ( 5 + 7 ) * 3 ] )");
+      parenExp.add("( [ ( 5 + 7 ) * 3 ]");
+      parenExp.add("( ( ( ) $ ) )");
+      parenExp.add("( ) [ ]");
    
       for( String s : parenExp )
       {
@@ -39,7 +52,34 @@ public class ParenMatch
    
    public static boolean checkParen(String exp)
    {
-   
+      //new stack of strings
+      Stack<String> paren = new Stack<String>();
+      
+      for(int x = 0; x < exp.length(); x++) {
+       
+         //adds only if it is a parenthesis
+         if(LEFT.contains("" + exp.charAt(x))) {
+            paren.push("" + exp.charAt(x));
+         }
+         
+         else if(RIGHT.contains("" + exp.charAt(x))) {
+         //checks if the stack is empty
+            if(paren.isEmpty()) {
+               return false;
+            }
+         
+         //the last left parenthesis added into the stack is going to match the one on the right
+         //if it does not, returns false
+            if(RIGHT.indexOf(exp.charAt(x)) != LEFT.indexOf(paren.pop())) {
+               return false;
+            }
+         }
+      }
+      
+      //returns true or false depending on whether the stack is empty
+      //if the stack is not empty, that means that the number of parenthesis does not match
+      return paren.isEmpty();
+      
    }
 }
 
