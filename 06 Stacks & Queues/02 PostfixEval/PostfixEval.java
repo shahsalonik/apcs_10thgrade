@@ -25,6 +25,8 @@ public class PostfixEval
       postfixExp.add("23 3 %");
       postfixExp.add("5 !");
       postfixExp.add("1 1 1 1 1 + + + + !");
+      postfixExp.add("3 2 ^");
+      postfixExp.add("2 3 + ! 2 ^");
    
       
       for( String pf : postfixExp )
@@ -39,11 +41,17 @@ public class PostfixEval
       /*  enter your code here  */
       Stack<Double> equation = new Stack<Double>();
       
+      //for each string in postfixParts,
+      //checks if it is a number
+      //if yes, converts it to a double and pushes it into the equation stack
+      //if no, performs operations based on the previous number and with the operator that comes after it
       for( String s : postfixParts ) {
          if(!isOperator(s)) {
-            equation.push(Double.parseDouble(""+s));
+            equation.push(Double.parseDouble(s));
          }
          else {
+         //if the size of the stack is 1 (i.e. only a single number with 1 operation)
+         //uses 1 as the second number
             if(equation.size() == 1) {
                equation.push(eval(1, equation.pop(), s));
             }
@@ -59,6 +67,7 @@ public class PostfixEval
    
    public static double eval(double a, double b, String ch)
    {
+      //checks for all of the operations
       if(ch.equals("+")) {
          return b + a;
       }
@@ -75,10 +84,10 @@ public class PostfixEval
          return b % a;
       }
       else if(ch.equals("^")) {
-         double num = a;
+         double num = b;
          
-         for(int x = 0; x < b; x++) {
-            num *= a;
+         for(int x = 1; x < a; x++) {
+            num *= b;
          }
          
          return num;
