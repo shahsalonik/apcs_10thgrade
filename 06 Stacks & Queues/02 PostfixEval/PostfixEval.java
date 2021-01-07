@@ -44,7 +44,12 @@ public class PostfixEval
             equation.push(Double.parseDouble(""+s));
          }
          else {
-            equation.push(eval(equation.pop(), equation.pop(), s));
+            if(equation.size() == 1) {
+               equation.push(eval(1, equation.pop(), s));
+            }
+            else {
+               equation.push(eval(equation.pop(), equation.pop(), s));
+            }
          }
       }
       
@@ -65,6 +70,27 @@ public class PostfixEval
       }
       else if(ch.equals("/")) {
          return b / a;
+      }
+      else if(ch.equals("%")) {
+         return b % a;
+      }
+      else if(ch.equals("^")) {
+         double num = a;
+         
+         for(int x = 0; x < b; x++) {
+            num *= a;
+         }
+         
+         return num;
+      }
+      else if(ch.equals("!")) {
+         double num = 1;
+         
+         for(int x = 1; x <= b; x++) {
+            num *= x;
+         }
+         
+         return num;  
       }
       else {
          return 0;
