@@ -1,4 +1,5 @@
-//Name:   Date:
+//Name: Saloni Shah 
+//Date: 01/19/2021 (due date)
 
 import java.util.*;
 import java.io.*;
@@ -93,6 +94,28 @@ public class McRonaldVIP
    
    static class Customer      
    {
-   
+      private int waitTime, timeArrived;
+      
+      public Customer(int t) {
+         timeArrived = t;
+         waitTime = 0;
+      }
+      
+      public void incrementMins() {
+         waitTime += 1;
+      }
+      
+      public int getWait() {
+         return waitTime;
+      }
+      
+      public int getArrivalTime() {
+         return timeArrived;
+      }
+      
+      public String toString() {
+         return "" + timeArrived;
+      }
+      
    }
 }

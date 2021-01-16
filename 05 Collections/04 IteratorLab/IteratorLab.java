@@ -7,6 +7,7 @@ public class IteratorLab
 {
    public static void main(String[] args)
    {
+         
       System.out.println("Iterator Lab\n");
       int[] rawNumbers = {-9, 4, 2, 5, -10, 6, -4, 24, 20, -28};
       for(int n : rawNumbers )
@@ -21,7 +22,9 @@ public class IteratorLab
                "Dr_No", "Dr_No", "Mary_Poppins", "High_Noon", "Tron"};
       ArrayList<String> movies = createMovies(rawMovies);
       System.out.println("Movies: " + movies);
-      System.out.println("Movies: " +  removeDupes(movies));
+      System.out.println("Movies: " +  removeDupes(movies));      
+      
+      
    }
       // pre: an array of just int values 
    	// post: return an ArrayList containing all the values
@@ -139,6 +142,23 @@ public class IteratorLab
       
       return noDupMovie;
       
+   }
+   
+   public static ArrayList<Character> noVowels(ArrayList<Character> a) {
+   
+      ListIterator<Character> noVowelList = a.listIterator();
+      
+      while(noVowelList.hasNext())  {
+         
+         char c = noVowelList.next();
+         
+         if( c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+            noVowelList.remove();
+         }
+         
+      }
+      
+      return a;   
    }
    
 }
