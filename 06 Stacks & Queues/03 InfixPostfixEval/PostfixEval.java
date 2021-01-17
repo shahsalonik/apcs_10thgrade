@@ -37,6 +37,9 @@ public class PostfixEval
    
    public static double eval(String pf)
    {
+      if(pf.equals("ERROR")) {
+         return -1.0;
+      }
       List<String> postfixParts = new ArrayList<String>(Arrays.asList(pf.split(" ")));
       /*  enter your code here  */
       Stack<Double> equation = new Stack<Double>();
