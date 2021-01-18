@@ -3,7 +3,7 @@
 //Date: 01/19/2021
 import java.util.*;
 import java.io.*;
-public class McRonald
+public class McRonaldREDO
 {
    public static final int TIME = 1080;     //18 hrs * 60 min
    public static double CHANCE_OF_CUSTOMER = .2;
@@ -68,20 +68,12 @@ public class McRonald
    public static void mcRonald(int TIME, PrintWriter of)
    {        
    
-      //new queue
       Queue<Customer> customer = new LinkedList<Customer>();
-      //default longest queue size
       longestQueue = customer.size();
-      //total mins to help calculat longest wait time
       int total = 0;
       longestWaitTime = total;
       
-      //first for-loop, repeats until closing time.
       for(int i = 0; i < TIME; i++) {
-      //since the chances of a customer coming in are 0.2, if any randomly generated number is less than 0.2,
-      //adds that customer to the queue and increments number of customers
-      //also checks if the current queue size is longer than the longest queue size
-      //checks for longest wait time and the initial customer's wait time too
          if(Math.random() < 0.2) {
             customer.add(new Customer(i, timeToOrderAndBeServed()));
             customers++;
@@ -101,9 +93,6 @@ public class McRonald
             }  
             totalMinutes += total;
          }
-         //if thisCustomersTime equals 1,
-         //removes the customer from the queue and sets the new customer's wait time to 0 (temp)
-         //if the queue is not empty, then sets the first customer's wait time to thisCustomersTime
          if(thisCustomersTime == 1) {
             customer.remove();
             thisCustomersTime = 0;
@@ -111,26 +100,18 @@ public class McRonald
                thisCustomersTime = customer.peek().getWait();
             }
          }
-         //otherwise decrements time
-         //set the wait time of the first customer to the updated time
          else {
             thisCustomersTime--;
             if(!customer.isEmpty()) {
                customer.peek().setWait(thisCustomersTime);
             }
          }
-         //displays the time and queue of the current iteration
          displayTimeAndQueue(customer, i);
-         //if there are customers, disply info in the format of:
-         //ARRIVAL TIME is now being served for SERVING TIME minutes.
          if(!customer.isEmpty()) {
             of.println("\t" + customer.peek() + " is now being served for " + thisCustomersTime + " minutes.");
          }
       }
    
-      //loop to be used in the case of the customer arriving after (or very close to) 1080 minutes
-      //repeats until the queue is empty, but only does it if the queue is still not empty after the first for-loop
-      //does the same as the above queue, just does not add any new customers because McRonald's is officially closed.
       if(!customer.isEmpty()) {
          for(int x = customer.peek().getArrival(); !customer.isEmpty(); x++) {
             if(thisCustomersTime == 1) {
@@ -187,7 +168,6 @@ public class McRonald
          return orderAndBeServed;
       }
       
-      //sets wait time
       public void setWait(int wait) {
          orderAndBeServed = wait;
       }
