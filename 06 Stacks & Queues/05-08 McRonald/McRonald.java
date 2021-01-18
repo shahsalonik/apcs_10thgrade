@@ -67,10 +67,88 @@ public class McRonald
    
    public static void mcRonald(int TIME, PrintWriter of)
    {
-      /***************************************
-           Write your code for the simulation   
-      **********************************/
-        
+      //new customer queue  
+      Queue<Customer> customer = new LinkedList<Customer>();
+      //initial time until served for the first customer
+      //between 2 and 7 mins
+      int timeUntilServed = ((int) ((Math.random() * 6) + 2));
+      //adds first customer's time to the total mins
+      totalMinutes += timeUntilServed;
+      //default longest wait time
+      longestWaitTime = timeUntilServed;
+      //default longest queue
+      longestQueue = customer.size();
+      
+      //first for-loop, repeats until closing time.
+      for(int i = 0; i < TIME; i++) {
+      //since the chances of a customer coming in are 0.2, if any randomly generated number is less than 0.2,
+      //adds that customer to the queue and increments number of customers
+      //also checks if the current queue size is longer than the longest queue size
+         if(Math.random() < 0.2) {
+            customer.add(new Customer(i));
+            customers++;
+            if(customer.size() > longestQueue) {
+               longestQueue = customer.size();
+            }
+         }
+         //if the timeUntilServed equals 1,
+         //removes the customer from the queue
+         //generates a new timeUntilServed and adds it on to the total
+         //checks if the longest wait time has been reached yet
+         if(timeUntilServed == 1) {
+            customer.remove();
+            timeUntilServed = ((int) ((Math.random() * 6) + 2));
+            totalMinutes += timeUntilServed;
+            if(timeUntilServed > longestWaitTime) {
+               longestWaitTime = timeUntilServed;
+            }
+            //if the queue is not empty
+            //set the wait time of the first customer to the newly generated time
+            if(!customer.isEmpty()) {
+               customer.peek().setWait(timeUntilServed);
+            }
+         }
+         else {
+            //decrements time for the customer and the displayed time
+            if(!customer.isEmpty()) {
+               customer.peek().decrementTime();
+               timeUntilServed--;
+            }
+         }
+         //displays the time and queue of the current iteration
+         displayTimeAndQueue(customer, i);
+         //if there are customers, disply info in the format of:
+            //ARRIVAL TIME is now being served for SERVING TIME minutes.
+         if(!customer.isEmpty()) {
+            of.println("\t" + customer.peek() + " is now being served for " + timeUntilServed + " minutes.");
+         }
+      }
+      
+         //loop to be used in the case of the customer arriving after (or very close to) 1080 minutes
+         //repeats until the queue is empty
+         //does the same as the above queue, just does not add any new customers because McRonald's is officially closed.
+         for(int x = customer.peek().getArrival(); !customer.isEmpty(); x++) {
+            if(timeUntilServed == 1) {
+               customer.remove();
+               timeUntilServed = ((int) ((Math.random() * 6) + 2));
+               while(timeUntilServed == 0) {
+                  timeUntilServed = ((int) ((Math.random() * 6) + 2));
+               }
+               if(!customer.isEmpty()) {
+                  customer.peek().setWait(timeUntilServed);
+               }
+            }
+            else {
+               if(!customer.isEmpty()) {
+                  customer.peek().decrementTime();
+                  timeUntilServed--;
+               }
+            }
+            displayTimeAndQueue(customer, x);
+            if(!customer.isEmpty()) {
+               of.println("\t" + customer.peek() + " is now being served for " + timeUntilServed + " minutes.");
+            }
+         }
         
         
               
@@ -91,8 +169,37 @@ public class McRonald
        Complete the Customer class with  
        constructor, accessor methods, toString.
     ***********************************/
-
     
+    //constructor with an input arrival time
+      public Customer(int t) {
+         arrivedAt = t;
+         orderAndBeServed = 0;
+      }
+    
+    //returns the time they arrived
+      public int getArrival() {
+         return arrivedAt;
+      }
+    
+    //returns their wait time
+      public int getWait() {
+         return orderAndBeServed;
+      }
+    
+    //sets their wait time
+      public void setWait(int w) {
+         orderAndBeServed = w;
+      }
+    
+    //decrements their wait time
+      public void decrementTime() {
+         orderAndBeServed -= 1;
+      }
+    
+    //toString method
+      public String toString() {
+         return "" + arrivedAt;
+      }
     
    }
 }
