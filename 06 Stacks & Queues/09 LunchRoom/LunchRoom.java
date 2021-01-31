@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 02/01/2021 (due date)
 
 import java.util.*;
 
@@ -11,24 +11,268 @@ public class LunchRoom
    {
       PriorityQueue<Customer> queue = new PriorityQueue<Customer>();
       /*  write code for the simulation   */
+      int thisCustomersTime = 0;
+      int longestQueue = queue.size();
+      int frTotal = 0, soTotal = 0, juTotal = 0, seTotal = 0;
+      int frWaitTime = 0, soWaitTime = 0, juWaitTime = 0, seWaitTime = 0;
+      int frNum = 0, soNum = 0, juNum = 0, seNum = 0;
+      int frLong = 0, soLong = 0, juLong = 0, seLong = 0;
+      int frLongWT = 0, soLongWT = 0, juLongWT = 0, seLongWT = 0;
       
+      for(int i = 0; i < TIME; i++) {
+         if(Math.random() < 0.2) {
+            int grade = (int) ((Math.random() * 4) + 1);
+            int waitTime = (int) ((Math.random() * 6) + 2);
+            Customer justAdded = new Customer(i, grade, waitTime, "");
+            if(grade == 1) {
+               frWaitTime += waitTime;
+               frTotal += waitTime;
+               frNum++;
+               frLong = frWaitTime + soWaitTime + juWaitTime + seWaitTime;
+               if(frLong > frLongWT) {
+                  frLongWT = frLong;
+               }
+            }
+            else if(grade == 2) {
+               soWaitTime += waitTime;
+               soTotal += waitTime;
+               soNum++;
+               frLong = frWaitTime + soWaitTime + juWaitTime + seWaitTime;
+               soLong = soWaitTime + juWaitTime + seWaitTime;
+               if(soLong > soLongWT) {
+                  soLongWT = soLong;
+               }
+            }
+            else if(grade == 3) {
+               juWaitTime += waitTime;
+               juTotal += waitTime;
+               juNum++;
+               frLong = frWaitTime + soWaitTime + juWaitTime + seWaitTime;
+               soLong = soWaitTime + juWaitTime + seWaitTime;;
+               juLong = juWaitTime + seWaitTime;
+               if(juLong > juLongWT) {
+                  juLongWT = juLong;
+               }
+            }
+            else {
+               seWaitTime += waitTime;
+               seTotal += waitTime;
+               seNum++;
+               frLong = frWaitTime + soWaitTime + juWaitTime + seWaitTime;
+               soLong = soWaitTime + juWaitTime + seWaitTime;
+               juLong = juWaitTime + seWaitTime;
+               seLong = seWaitTime;
+               if(seLong > seLongWT) {
+                  seLongWT = seLong;
+               }
+            }
+            
+            if(!queue.isEmpty() && justAdded.compareTo(queue.peek()) >= 0) {
+               queue.add(justAdded); 
+            }
+            else if (queue.isEmpty()) {
+               queue.add(justAdded);
+               thisCustomersTime = justAdded.getWait();
+            }
+            else {
+               queue.add(justAdded);
+               thisCustomersTime = justAdded.getWait();
+            }
+         
+            if(queue.size() > longestQueue) {
+               longestQueue = queue.size();
+            }
+            
+         }
+          //if thisCustomersTime equals 1,
+         //removes the customer from the queue and sets the new customer's wait time to 0 (temp)
+         //if the queue is not empty, then sets the first customer's wait time to thisCustomersTime
+         else {
+            if(thisCustomersTime == 1) {
+               
+               switch(queue.peek().getGrade()) {
+               
+                  case 1:
+                     frWaitTime -= queue.peek().getWait();
+                     break;
+                     
+                  case 2:
+                     soWaitTime -= queue.peek().getWait();
+                     break;
+                  
+                  case 3:
+                     juWaitTime -= queue.peek().getWait();
+                     break;
+                  
+                  case 4:
+                     seWaitTime -= queue.peek().getWait();
+                     break;
+                     
+                  default:
+                     break;
+               
+               }
+               
+               queue.remove();
+               thisCustomersTime = 0;
+               if(!queue.isEmpty()) {
+                  thisCustomersTime = queue.peek().getWait();
+               }
+            }
+            //otherwise decrements time
+            //set the wait time of the first customer to the updated time
+            else if(!queue.isEmpty()) {
+               thisCustomersTime--;
+            }
+         }
+         
+         display(i, queue);
+      }
       
+      if(!queue.isEmpty()) {
+         for(int x = TIME; !queue.isEmpty(); x++) {
+            if(thisCustomersTime == 1) {
+               
+               switch(queue.peek().getGrade()) {
+               
+                  case 1:
+                     frWaitTime -= queue.peek().getWait();
+                     break;
+                     
+                  case 2:
+                     soWaitTime -= queue.peek().getWait();
+                     break;
+                  
+                  case 3:
+                     juWaitTime -= queue.peek().getWait();
+                     break;
+                  
+                  case 4:
+                     seWaitTime -= queue.peek().getWait();
+                     break;
+                     
+                  default:
+                     break;
+               
+               }
+               
+               queue.remove();
+               thisCustomersTime = 0;
+               if(!queue.isEmpty()) {
+                  thisCustomersTime = queue.peek().getWait();
+               }
+            }
+            //otherwise decrements time
+            //set the wait time of the first customer to the updated time
+            else if(!queue.isEmpty()) {
+               thisCustomersTime--;
+            }
+            
+            display(x, queue);
+         }
+      }
       
+      frTotal += soTotal + juTotal + seTotal;
+      soTotal += juTotal + seTotal;
+      juTotal += seTotal;
+      
+      double avgFr = (double) frTotal/ frNum;
+      double avgSo = (double) soTotal/soNum;
+      double avgJu = (double) juTotal/juNum;
+      double avgSe = (double) seTotal/seNum;
       
       System.out.println("Customer\t\tTotal\t\tLongest\t\tAverage Wait");
       /* report the data  */
-   
+      System.out.println("Senior" + "\t" + seNum + "\t" + seLong + "\t" + avgSe);
+      System.out.println("Junior" + "\t" + juNum + "\t" + juLong + "\t" + avgJu);
+      System.out.println("Sophomore" + "\t" + soNum + "\t" + soLong + "\t" + avgSo);
+      System.out.println("Freshman" + "\t" + frNum + "\t" + frLong + "\t" + avgFr);
    }
    
    public static void display(int t, PriorityQueue<Customer> q)
    {
-      
+      System.out.println(t + ":" + q);
    }
 }
 
 class Customer implements Comparable<Customer>
 {
-
+   private int grade, arrival, wait;
+   private String gradeName;
+   
+   public Customer(int a, int g, int w, String n) {
+      arrival = a;
+      grade = g;
+      wait = w;
+      switch(grade){
+         case 1:
+            gradeName = "Fr";
+            break; 
+            
+         case 2:
+            gradeName = "So";
+            break; 
+            
+         case 3:
+            gradeName = "Ju";
+            break; 
+            
+         case 4:
+            gradeName = "Se";
+            break; 
+            
+         default:
+            gradeName = "";
+            break;
+         
+      }
+   }
+   
+   public int getArrival() {
+      return arrival;
+   }
+   
+   public int getGrade() {
+      return grade;
+   }
+   
+   public int getWait() {
+      return wait;
+   }
+   
+   public void setWait(int time) {
+      wait = time;
+   }
+   
+   public String getGradeName() {
+      return gradeName;
+   }
+   
+   public void setGradeName(String n) {
+      gradeName = n;
+   }
+   
+   public int compareTo(Customer c) {
+      if((grade - c.getGrade()) > 0) {
+         return -1;
+      }
+      else if (grade == c.getGrade()) {
+         if(arrival > c.getArrival()) {
+            return 1;
+         }
+         else {
+            return -1;
+         }
+      }
+      else {
+         return 1;
+      }
+   }
+   
+   public String toString() {
+      return gradeName + ":" + arrival;
+   }
+   
 }
 
 

@@ -5,16 +5,15 @@ public class PriorityQueueDemo
    {
       PriorityQueue<String> pq = new PriorityQueue<String>();
       //MyPriorityQueue pq = new MyPriorityQueue();
-      pq.add("c");
-      pq.add("b");
-      pq.add("a");
       pq.add("d");
-      pq.add("b");
+      pq.add("w");
+      pq.add("v");
+      pq.add("x");
+      pq.add("h");
+      pq.add("q");
+      pq.add("l");
       pq.add("a");
-      pq.add("d");
+      pq.add("u");
       pq.add("b");
-      pq.add("a");     
-      while( !pq.isEmpty() )
-         System.out.print( pq.remove() + " ");
    }
 }

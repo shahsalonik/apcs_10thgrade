@@ -1,5 +1,5 @@
 //Name: Saloni Shah    
-//Date: 01/25/2020 (due date)
+//Date: 01/25/2021 (due date)
 import java.util.*;
 
 public class AssemblyLine_Driver
@@ -31,7 +31,7 @@ class AssemblyLine
       //nDisks of random sizes
       for(int x = 0; x < nDisks; x++)
       {
-         assemblyLineIn.add(new Disk((int)(Math.random()*100 + 1)));
+         assemblyLineIn.add(new Disk((int)((Math.random() * maxRadius) + 1)));
       }
       assemblyLineOut = new LinkedList<Pyramid>();
       robotArm = new Pyramid();   

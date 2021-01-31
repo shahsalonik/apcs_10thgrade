@@ -14,6 +14,7 @@ public class InfixPostfixEval
       System.out.println("Infix  \t-->\tPostfix\t\t-->\tEvaluate");
       /*build your list of Infix expressions here  */
       ArrayList<String> infixExp = new ArrayList<String>();
+      infixExp.add("1 - ( 3 / 6 ) + 4");
       infixExp.add("8 + 1 * 2 - 9 / 3");
       infixExp.add("3 + 4 * 5");
       infixExp.add("3 * 4 + 5");

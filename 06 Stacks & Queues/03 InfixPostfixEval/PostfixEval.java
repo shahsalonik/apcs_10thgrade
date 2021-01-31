@@ -12,6 +12,7 @@ public class PostfixEval
       System.out.println("Postfix  -->  Evaluate");
       ArrayList<String> postfixExp = new ArrayList<String>();
       /*  build your list of expressions here  */
+      postfixExp.add("2 5 - 4 3 + *");
       postfixExp.add("3 4 5 * +");
       postfixExp.add("3 4 * 5 +");
       postfixExp.add("10 20 + -6 6 * +");
