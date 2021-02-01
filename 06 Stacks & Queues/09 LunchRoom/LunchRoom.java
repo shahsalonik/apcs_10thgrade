@@ -12,7 +12,6 @@ public class LunchRoom
       PriorityQueue<Customer> queue = new PriorityQueue<Customer>();
       /*  write code for the simulation   */
       int thisCustomersTime = 0;
-      int longestQueue = queue.size();
       int frTotal = 0, soTotal = 0, juTotal = 0, seTotal = 0;
       int frWaitTime = 0, soWaitTime = 0, juWaitTime = 0, seWaitTime = 0;
       int frNum = 0, soNum = 0, juNum = 0, seNum = 0;
@@ -20,15 +19,23 @@ public class LunchRoom
       int frLongWT = 0, soLongWT = 0, juLongWT = 0, seLongWT = 0;
       
       for(int i = 0; i < TIME; i++) {
+         //probability of arrival
          if(Math.random() < 0.2) {
+            //grade and wait time are random
             int grade = (int) ((Math.random() * 4) + 1);
             int waitTime = (int) ((Math.random() * 6) + 2);
+            //creates a customer without the grade, adds grade (String) in the class
             Customer justAdded = new Customer(i, grade, waitTime, "");
             if(grade == 1) {
+               //adds to the total wait time
                frWaitTime += waitTime;
+               //adds to the total time
                frTotal += waitTime;
+               //increases count of freshman
                frNum++;
+               //adds to longest wait time
                frLong = frWaitTime + soWaitTime + juWaitTime + seWaitTime;
+               //checks (and adjusts) longest wait time 
                if(frLong > frLongWT) {
                   frLongWT = frLong;
                }
@@ -67,20 +74,20 @@ public class LunchRoom
                }
             }
             
+            //if precedence is lower, just add the person to their spot
             if(!queue.isEmpty() && justAdded.compareTo(queue.peek()) >= 0) {
                queue.add(justAdded); 
             }
+            //if the queue is empty, add the person and set the time to their wait time
             else if (queue.isEmpty()) {
                queue.add(justAdded);
                thisCustomersTime = justAdded.getWait();
             }
+            //otherwise, precedence will be higher, so they will be at the front of the line
+            //set the time to their wait time
             else {
                queue.add(justAdded);
                thisCustomersTime = justAdded.getWait();
-            }
-         
-            if(queue.size() > longestQueue) {
-               longestQueue = queue.size();
             }
             
          }
@@ -90,9 +97,11 @@ public class LunchRoom
          else {
             if(thisCustomersTime == 1) {
                
+               //switch based on the grade of the person
                switch(queue.peek().getGrade()) {
                
                   case 1:
+                     //once the person leaves, subtracts from the existing wait time
                      frWaitTime -= queue.peek().getWait();
                      break;
                      
@@ -113,22 +122,25 @@ public class LunchRoom
                
                }
                
+               //removes the person from the queue and temp sets the time to 0
                queue.remove();
                thisCustomersTime = 0;
+               //sets the new time if the queue is not empty to the next person in the line
                if(!queue.isEmpty()) {
                   thisCustomersTime = queue.peek().getWait();
                }
             }
             //otherwise decrements time
-            //set the wait time of the first customer to the updated time
             else if(!queue.isEmpty()) {
                thisCustomersTime--;
             }
          }
          
+         //displays the queue
          display(i, queue);
       }
       
+      //only does this if the queue is not empty by the end
       if(!queue.isEmpty()) {
          for(int x = TIME; !queue.isEmpty(); x++) {
             if(thisCustomersTime == 1) {
@@ -163,7 +175,6 @@ public class LunchRoom
                }
             }
             //otherwise decrements time
-            //set the wait time of the first customer to the updated time
             else if(!queue.isEmpty()) {
                thisCustomersTime--;
             }
@@ -172,10 +183,12 @@ public class LunchRoom
          }
       }
       
+      //adds the time of all the people before them to the  total time for the grade
       frTotal += soTotal + juTotal + seTotal;
       soTotal += juTotal + seTotal;
       juTotal += seTotal;
       
+      //doubles for average times
       double avgFr = (double) frTotal/ frNum;
       double avgSo = (double) soTotal/soNum;
       double avgJu = (double) juTotal/juNum;
@@ -274,6 +287,8 @@ class Customer implements Comparable<Customer>
    }
    
 }
+
+
 
 
 /*-------------------------
