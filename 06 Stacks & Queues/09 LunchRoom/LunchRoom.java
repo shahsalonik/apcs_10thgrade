@@ -292,7 +292,6 @@ class Customer implements Comparable<Customer>
 
 
 /*-------------------------
-
  0: [0:So]
  1: [1:Ju, 0:So]
  2: [1:Ju, 0:So]
@@ -1463,5 +1462,4 @@ class Customer implements Comparable<Customer>
  Junior			56			22			5.0
  Sophomor			53			84			20.830188679245282
  Freshman			55			250			123.6    
-
  ******************************************/
