@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 02/08/2020 (due date)
 
 import java.util.*;
 
@@ -92,17 +92,24 @@ public class TreeLab
    
    public static String inorderTraverse(TreeNode t)
    {
-        
-         
-      	       						 		//recurse left
-            				 					//inorder visit
-                								//recurse right
-      return null;
+      String toReturn = "";
+      if(t == null)
+         return "";   
+      toReturn +=	inorderTraverse(t.getLeft());   //recurse left
+      toReturn += t.getValue() + " ";             //inorder visit
+      toReturn +=	inorderTraverse(t.getRight());  //recurse right  
+      return toReturn;
    }
    
    public static String postorderTraverse(TreeNode t)
    {
-      return null;
+      String toReturn = "";
+      if(t == null)
+         return "";   
+      toReturn +=	postorderTraverse(t.getLeft());   //recurse left
+      toReturn +=	postorderTraverse(t.getRight());  //recurse right 
+      toReturn += t.getValue() + " ";               //postorder visit 
+      return toReturn;
    }
    
    public static int countNodes(TreeNode t)
