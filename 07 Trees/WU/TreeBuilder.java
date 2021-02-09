@@ -4,29 +4,24 @@ import java.util.*;
 import java.io.*;
 
 public class TreeBuilder{
+   static TreeNode target;
    public static void main (String[] args) throws Exception {
    File tree = new File("input.txt");
    File tree_small = new File("input_small.txt");
    TreeNode root = buildTree(tree);
    TreeNode root_small = buildTree(tree_small);
       //your code here
-   System.out.println("A: " + count(root.getLeft(), "A"));
-   System.out.println("p: " + count(root.getRight(), "p"));
-   
+ 
    }
    
    //returns the number of times that the Object o appears in the Tree with root n.
    public static int count(TreeNode n, Object o){
       //your code here
-      if(n == null) {
-         return 0;
-      }
-      else if (n.getValue().equals(o)) {
-         return 1 + count(n.getLeft(), o) + count(n.getRight(), o);
-      }
-      else {
-         return count(n.getLeft(), o) + count(n.getRight(), o);
-      }
+      return -1;
+   }
+   
+   public static String path(TreeNode root, TreeNode n){
+   return "";
    }
    
 
@@ -51,6 +46,8 @@ public class TreeBuilder{
             nodes[i].setRight(nodes[children[i][1]]);
       }
       in.close();
+      if(nodes.length>50341)
+        target=nodes[50341];
       return nodes[0];
    }
 }

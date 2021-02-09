@@ -1,14 +1,14 @@
-// Name: Saloni Shah
-// Date: 02/08/2020 (due date)
+// Name:
+// Date:
 
 import java.util.*;
 
-public class TreeLab
+public class TreeLabREDO
 {
    public static TreeNode root = null;
-   //public static String s = "XCOMPUTERSCIENCE";
+   public static String s = "XCOMPUTERSCIENCE";
    //public static String s = "XThomasJeffersonHighSchool"; 
-   public static String s = "XAComputerScienceTreeHasItsRootAtTheTop";
+   //public static String s = "XAComputerScienceTreeHasItsRootAtTheTop";
    //public static String s = "XA";   //comment out lines 44-46 below
    //public static String s = "XAF";  //comment out lines 44-46 below
    //public static String s = "XAFP";  //comment out lines 44-46 below
@@ -92,81 +92,38 @@ public class TreeLab
    
    public static String inorderTraverse(TreeNode t)
    {
-      String toReturn = "";
-      if(t == null)
-         return "";   
-      toReturn +=	inorderTraverse(t.getLeft());   //recurse left
-      toReturn += t.getValue() + " ";             //inorder visit
-      toReturn +=	inorderTraverse(t.getRight());  //recurse right  
-      return toReturn;
+        
+         
+      	       						 		//recurse left
+            				 					//inorder visit
+                								//recurse right
+      return null;
    }
    
    public static String postorderTraverse(TreeNode t)
    {
-      String toReturn = "";
-      if(t == null)
-         return "";   
-      toReturn +=	postorderTraverse(t.getLeft());   //recurse left
-      toReturn +=	postorderTraverse(t.getRight());  //recurse right 
-      toReturn += t.getValue() + " ";               //postorder visit 
-      return toReturn;
+      return null;
    }
    
    public static int countNodes(TreeNode t)
    {
-      //counts nodes by going left and right and adding 1
-      if(t == null) {
-         return 0;
-      }
-      return 1 + countNodes(t.getLeft()) + countNodes(t.getRight());
+      return -1;
    }
    
    public static int countLeaves(TreeNode t)
    {
-      //counts leaves by determining whether it has any children
-      if(t == null) {
-         return 0;
-      }  
-      else if (t.getLeft() == null && t.getRight() == null) {
-         return 1;
-      }
-      else {
-         return countLeaves(t.getLeft()) + countLeaves(t.getRight());
-      }
+      return -1;
    }
    
    /*  there are clever ways and hard ways to count grandparents  */ 
    public static int countGrandParents(TreeNode t)
    {
-   //checks if height >= 2, if yes, return 1 and recurs until the end
-      if(t == null) {
-         return 0;
-      }
-      if(height(t) >= 2) {
-         return 1 + countGrandParents(t.getLeft()) + countGrandParents(t.getRight());
-      }
-      else {
-         return countGrandParents(t.getLeft()) + countGrandParents(t.getRight());
-      }
+      return -1;
    }
    
    public static int countOnlys(TreeNode t)
    {
-      //counts only children
-      if(t == null) {
-         return 0;
-      }
-      else {
-         if(t.getLeft() != null && t.getRight() == null) {
-            return 1 + countOnlys(t.getLeft());
-         }
-         else if (t.getLeft() == null && t.getRight() != null) {
-            return 1  + countOnlys(t.getRight());
-         }
-         else {
-            return countOnlys(t.getLeft()) + countOnlys(t.getRight());
-         }
-      }
+      return -1;
    }
    
   /* returns the max of the heights to the left and the heights to the right  
@@ -174,7 +131,6 @@ public class TreeLab
     */
    public static int height(TreeNode t)
    {
-      //returns max of the heights + 1 
       if(t == null) {
          return -1;
       }
@@ -187,18 +143,7 @@ public class TreeLab
  */
    public static int longestPath(TreeNode t)
    {
-      if(t == null) {
-         return 0;
-      }  
-      else {
-         int leftLongestPath = longestPath(t.getLeft());
-         int rightLongestPath = longestPath(t.getRight());
-         int rootLongestPath = 2 + height(t.getLeft()) + height(t.getRight());
-         
-         int temp = Math.max(leftLongestPath, rightLongestPath);
-         int max = Math.max(temp, rootLongestPath);
-         return max;
-      }
+      return -1;
    }
    
    /*  Object must be cast to Comparable in order to call .compareTo  
@@ -206,20 +151,7 @@ public class TreeLab
    @SuppressWarnings("unchecked")
    public static Object min(TreeNode t)
    {
-      if(t == null) {
-         return "z";
-      } 
-      //has a default min object, finds the min on both sides, then compares them to each other
-      Comparable minObj = (Comparable) t.getValue();
-      Comparable leftMin = (Comparable) min(t.getLeft());
-      Comparable rightMin = (Comparable) min(t.getRight());
-      if(leftMin.toString().compareTo(minObj.toString()) < 0) {
-         minObj = leftMin;
-      }
-      if(rightMin.toString().compareTo(minObj.toString()) < 0) {
-         minObj = rightMin;
-      }
-      return (Object) minObj;
+      return null;
    }
    
    /*  Object must be cast to Comparable in order to call .compareTo  
@@ -227,20 +159,7 @@ public class TreeLab
    @SuppressWarnings("unchecked")
    public static Object max(TreeNode t)
    {
-      if(t == null) {
-         return "A";
-      } 
-      //has a default max object, finds the max on both sides, then compares them to each other
-      Comparable maxObj = (Comparable) t.getValue();
-      Comparable leftMax = (Comparable) max(t.getLeft());
-      Comparable rightMax = (Comparable) max(t.getRight());
-      if(leftMax.toString().compareTo(maxObj.toString()) > 0) {
-         maxObj = leftMax;
-      }
-      if(rightMax.toString().compareTo(maxObj.toString()) > 0) {
-         maxObj = rightMax;
-      }
-      return (Object) maxObj;
+      return null;
    }
       
    /* This method is not recursive.  Use a local queue
@@ -248,22 +167,7 @@ public class TreeLab
     */
    public static String displayLevelOrder(TreeNode t)
    {
-      Queue<TreeNode> levelQueue = new LinkedList<TreeNode>();
-      levelQueue.add(t);
-      String levelOrder = "";
-      //adds and removes until the queue is empty
-      while(!levelQueue.isEmpty()) 
-      { 
-         TreeNode n = levelQueue.remove(); 
-         levelOrder += n.getValue(); 
-         if(n.getLeft() != null) {
-            levelQueue.add(n.getLeft());
-         } 
-         if(n.getRight() != null) {
-            levelQueue.add(n.getRight()); 
-         }
-      }
-      return levelOrder;
+      return "";
    }
 }
 
