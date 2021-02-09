@@ -6,22 +6,45 @@ import java.io.*;
 public class TreeBuilder{
    static TreeNode target;
    public static void main (String[] args) throws Exception {
-   File tree = new File("input.txt");
-   File tree_small = new File("input_small.txt");
-   TreeNode root = buildTree(tree);
-   TreeNode root_small = buildTree(tree_small);
+      File tree = new File("input.txt");
+      File tree_small = new File("input_small.txt");
+      TreeNode root = buildTree(tree);
+      TreeNode root_small = buildTree(tree_small);
       //your code here
- 
+      System.out.println(path(root, target));
+      
    }
    
    //returns the number of times that the Object o appears in the Tree with root n.
    public static int count(TreeNode n, Object o){
-      //your code here
-      return -1;
+      if(n == null) {
+         return 0;
+      }
+      else if (n.getValue().equals(o)) {
+         return 1 + count(n.getLeft(), o) + count(n.getRight(), o);
+      }
+      else {
+         return count(n.getLeft(), o) + count(n.getRight(), o);
+      }
    }
    
-   public static String path(TreeNode root, TreeNode n){
-   return "";
+   public static String path(TreeNode root, TreeNode n){      
+      if(root == null) {
+         return null;
+      }
+      if (root == n){
+         return root.getValue().toString();
+      }
+      
+      String s = path(root.getLeft(), n);
+      if(s != null) {
+         return root.getValue().toString() + s;
+      }
+      s = path(root.getRight(), n);
+      if(s != null) {
+         return root.getValue().toString() + s;
+      }
+      return null; 
    }
    
 
@@ -47,7 +70,7 @@ public class TreeBuilder{
       }
       in.close();
       if(nodes.length>50341)
-        target=nodes[50341];
+         target=nodes[50341];
       return nodes[0];
    }
 }
