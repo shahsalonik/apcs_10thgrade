@@ -22,20 +22,19 @@ public class BXT
     
    public void buildTree(String str)
    {
-      Stack<TreeNode> stack = new Stack<TreeNode>(); 
-      StringTokenizer token = new StringTokenizer(str); 
-      while(token.hasMoreTokens()) 
+      String[] partsArray = str.split(" ");
+      Stack<TreeNode> stack = new Stack<TreeNode>();
+      for(String s : partsArray) 
       { 
-         String temp = token.nextToken(); 
-         if(!isOperator(temp)) 
+         if(!isOperator(s)) 
          { 
-            stack.push(new TreeNode(temp)); 
+            stack.push(new TreeNode(s)); 
          } 
          else 
          { 
             TreeNode right = (TreeNode)stack.pop(); 
             TreeNode left = (TreeNode)stack.pop(); 
-            TreeNode tree = new TreeNode(temp, left, right); 
+            TreeNode tree = new TreeNode(s, left, right); 
             stack.push(tree); 
          } 
       } 

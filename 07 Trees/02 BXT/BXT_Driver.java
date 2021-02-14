@@ -12,7 +12,6 @@ public class BXT_Driver
       postExp.add("20.0 3.0 -4.0 + *");
       postExp.add("2 3 + 5 / 4 5 - *");
       postExp.add("5.6");
-      postExp.add("1 2 + 3 4 + *");
    
       for( String postfix : postExp )
       {
