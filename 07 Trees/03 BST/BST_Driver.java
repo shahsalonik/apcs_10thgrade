@@ -14,6 +14,7 @@ public class BST_Driver
    {
       Scanner keyboard = new Scanner(System.in);
       ArrayList<String> list = new ArrayList<String>();
+      list.add("s o o n l l i c a");
       list.add("M A E N I R A C");
       list.add("A M E R I C A N");
       list.add("A A C E I M N R");
@@ -46,37 +47,6 @@ public class BST_Driver
 }
    
 /***************************************
- ----jGRASP exec: java BST_Driver_Teacher
- 		R
- 	N
- M
- 			I
- 		E
- 			C
- 	A
- 		A
- 
- Size = 8
- Min = A
- Max = R
- Input target: C
- found: C
- A A C E I M N R 
- --------------------------
- 		R
- 			N
- 	M
- 			I
- 		E
- 			C
- A
- 	A
- 
- Size = 8
- Min = A
- Max = R
- Input target: 
-  ----jGRASP: process ended by user.
  
   ----jGRASP exec: java BST_Driver_Teacher
  		R

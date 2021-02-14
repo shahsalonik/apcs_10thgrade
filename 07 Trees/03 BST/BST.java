@@ -41,18 +41,34 @@ class BST implements BSTinterface
    ****************************************/
    public void add(String s) 
    {
-      add(root, s);
+      if(root == null) {
+         root = new TreeNode(s, null, null);
+         size++;
+      }
+      else {
+         size++;
+         add(root, s);
+      }
    }
    private TreeNode add(TreeNode t, String s) //recursive helper method
    {      
-      if(t == null) {
-         return new TreeNode(s, null, null); 
+      if(s.compareTo((String) t.getValue()) <= 0) {
+         if(t.getLeft() == null) {
+            TreeNode newNode = new TreeNode(s);
+            t.setLeft(newNode);
+         }
+         else {
+            t.setLeft(add(t.getLeft(), s));
+         }
       }
-      else if (s.compareTo((String) t.getValue()) < 0) {
-         t.setLeft(add(t.getLeft(), s));
-      }
-      else {  
-         t.setRight(add(t.getRight(), s));
+      else if (s.compareTo((String) t.getValue()) > 0) {
+         if(t.getRight() == null) {
+            TreeNode newNode = new TreeNode(s);
+            t.setRight(newNode);
+         }
+         else {
+            t.setRight(add(t.getRight(), s));
+         }  
       }
       return t;
    }
@@ -122,12 +138,10 @@ class BST implements BSTinterface
       if(t == null) {
          return null;
       }
-      else {
-         while(t != null && t.getRight() != null) {
-            t = t.getRight();
-         }
-         return (String) t.getValue();
+      else if (t.getRight() != null) {
+          return max(t.getRight());
       }
+      return (String) t.getValue();
    }
    
    public String toString()
