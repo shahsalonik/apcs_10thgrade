@@ -150,7 +150,7 @@ public class BXT
       }
       else if(t.getRight() != null && isOperator((String)(t.getRight().getValue()))) {
          toReturn += inorderTraverseWithParentheses(t.getLeft());   //recurse left
-         if(((String) t.getRight().getValue()).equals("*") && ((String) t.getValue()).equals("+")) {
+         if(!(isLower((String) t.getRight().getValue(), (String) t.getValue()))) {
             toReturn += t.getValue() + " ";             //inorder visit
             toReturn +=	inorderTraverseWithParentheses(t.getRight());  //recurse right 
          }
@@ -167,4 +167,23 @@ public class BXT
       }
       return toReturn;
    }
+   
+   private static boolean isLower(String op1, String op2)
+   {
+       if((op1.equals("+") || op1.equals("-")) && (op2.equals("*") || op2.equals("/")))
+      {
+         return true;
+      }
+      else if((op1.equals("+") && op2.equals("-")) || (op1.equals("-") && (op2.equals("*")))) {
+         return true;
+      }
+      else if (op1.equals(op2)) {
+         return true;
+      }
+      else {
+         return false;
+      }
+      
+   }
+   
 }
