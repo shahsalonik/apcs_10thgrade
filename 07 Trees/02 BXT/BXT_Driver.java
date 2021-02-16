@@ -29,8 +29,9 @@ public class BXT_Driver
       }
       
      /*  extension:  prints parentheses */
-      //tree2.buildTree("20.0 3.0 -4 + *");   // "20.0 * ( 3.0 + -4 )"
-      //System.out.println(tree2.inorderTraverseWithParentheses());         
+      BXT tree2 = new BXT();
+      tree2.buildTree("10 5 3 2 1 + * + * 5 +"); //10 * ( 5 + 3 * ( 2 + 1 ) ) + 5
+      System.out.println(tree2.inorderTraverseWithParentheses());         
    }
 }
 

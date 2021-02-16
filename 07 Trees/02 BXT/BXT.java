@@ -131,8 +131,8 @@ public class BXT
       return toReturn;
    }
    
-  /* extension */
-   /*public String inorderTraverseWithParentheses()
+  /* extension*/
+   public String inorderTraverseWithParentheses()
    {
       return inorderTraverseWithParentheses(root);
    }
@@ -140,16 +140,31 @@ public class BXT
    private String inorderTraverseWithParentheses(TreeNode t)
    {
       String toReturn = "";
-      toReturn += "( ";
       if(t == null) {
-         return "";  
-      } 
+         return "";
+      }
+      if(t.getLeft() != null && isOperator((String)(t.getLeft().getValue()))) {
+         toReturn +=	inorderTraverseWithParentheses(t.getLeft());   //recurse left
+         toReturn += t.getValue() + " ";             //inorder visit
+         toReturn +=	inorderTraverseWithParentheses(t.getRight());  //recurse right   
+      }
+      else if(t.getRight() != null && isOperator((String)(t.getRight().getValue()))) {
+         toReturn += inorderTraverseWithParentheses(t.getLeft());   //recurse left
+         if(((String) t.getRight().getValue()).equals("*") && ((String) t.getValue()).equals("+")) {
+            toReturn += t.getValue() + " ";             //inorder visit
+            toReturn +=	inorderTraverseWithParentheses(t.getRight());  //recurse right 
+         }
+         else {
+            toReturn += t.getValue() + " ( ";             //inorder visit
+            toReturn +=	inorderTraverseWithParentheses(t.getRight()) + ") ";  //recurse right 
+         }
+          
+      }
       else {
          toReturn +=	inorderTraverseWithParentheses(t.getLeft());   //recurse left
          toReturn += t.getValue() + " ";             //inorder visit
-         toReturn +=	inorderTraverseWithParentheses(t.getRight());  //recurse right
+         toReturn +=	inorderTraverseWithParentheses(t.getRight());  //recurse right 
       }
-      toReturn += " )";
       return toReturn;
-   }*/
+   }
 }
