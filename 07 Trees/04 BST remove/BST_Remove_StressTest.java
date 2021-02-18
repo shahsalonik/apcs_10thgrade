@@ -48,7 +48,7 @@ public class BST_Remove_StressTest
    If it crashes, you have probably missed a case or a guard. 
    If the tree stores the letters of the alphabet, what should bst.toString() show?
    */
-      BST_Teacher bst = new BST_Teacher();
+      BST bst = new BST();
       String[] lettersArray = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}; 
       List<String> lettersList = new ArrayList(Arrays.asList(lettersArray)); 
       for(int i = 0; i < 26; i++)
