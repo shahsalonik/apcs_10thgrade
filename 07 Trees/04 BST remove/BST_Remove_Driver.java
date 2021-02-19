@@ -16,6 +16,7 @@ public class BST_Remove_Driver
       //Case 2c:     N F A K G
       //Case 2d:     N S P Q X
       //Case 3.a:    D B N A C F S E J H M 
+      //Case 3.a2:   N F A K S G P Q X
       //Case 3.b:    D B N A C F S E J H 
       //on the handout: H D J A G K F E O L T M N S U
       //on the PowerPoint: Florida Oklahoma Colorado Massachusetts Arizona Iowa New_Hampshire Washington West_Virginia Kazakhstan Arkansas

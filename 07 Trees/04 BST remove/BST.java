@@ -168,16 +168,23 @@ public class BST implements BSTinterface
       TreeNode parent = null;
       TreeNode begin = current;
       
+      //repeats for as long as we have not reached the end of the tree
       while(current != null) {
+      //if target is found
          if (target.equals(((String) current.getValue()))) {
             //if the target is a leaf
             if(current.getLeft() == null && current.getRight() == null) {
                //leaf == root?
                if(parent == null) {
-                  current.setValue("");
+                  return null;
                }
-               else {
+               //a leaf on the left
+               else if (current == parent.getLeft()) {
                   parent.setLeft(null);
+                  current.setValue(null);
+               }
+               //leaf on the right
+               else {
                   parent.setRight(null);
                   current.setValue(null);
                }
@@ -185,62 +192,93 @@ public class BST implements BSTinterface
             }
              //if left or right is not null
             else if((current.getLeft() != null && current.getRight() == null) || (current.getLeft() == null && current.getRight() != null)) {
+               //removing root
                if(parent == null) {
                   parent = current;
+                  //returns the left node
                   if(current.getLeft() != null && current.getRight() == null) {
-                     parent = current.getLeft();
-                     current.setValue(null);
-                     current = parent;
+                     return current.getLeft();
                   }
+                  //returns the right node
                   else if (current.getLeft() == null && current.getRight() != null) {
-                     parent = current.getRight();
-                     current.setValue(null);
-                     current = parent;
+                     return current.getRight();
                   }
+                  //returns the left node
                   else {
-                     parent = current.getLeft();
-                     current.setValue(null);
-                     current = parent;
+                     return current.getLeft();
                   }
                }
+               //if it is on the left
                else if(current == parent.getLeft()) {
+                  //sets the left to the current's left
                   if(current.getLeft() != null && current.getRight() == null) {
                      parent.setLeft(current.getLeft());
                   }
+                  //sets the left to the right
                   else {
                      parent.setLeft(current.getRight());
                   }
                }
+               //if on the right
                else {
+               //sets the right
                   if(current.getLeft() == null && current.getRight() != null) {
                      parent.setRight(current.getRight());
                   }
+                  //sets the right
                   else {
                      parent.setRight(current.getLeft());
                   }
                }
+               //returns the node from current one
                return begin;
             }
              //two children
             else if(current.getLeft() != null && current.getRight() != null)  {
-               if(current.getLeft().getLeft() == null && current.getRight().getRight() == null) {
-                  parent.setLeft(current.getLeft());
+               //current is root
+               if(parent == null) {
+                  parent = current;
+                  if(current.getLeft().getRight().getRight() == null) {
+                     current.getLeft().getRight().setRight(current.getRight());
+                     return parent.getLeft();
+                  }
                }
+               //current is on the left
+               else if(parent.getLeft().equals(current)) {
+                  if(current.getLeft().getRight() == null) {
+                     current.getLeft().setRight(current.getRight());
+                     parent.setLeft(current.getLeft());
+                  }
+                  else {
+                     current.getRight().getLeft().setLeft(current.getLeft());
+                     parent.setLeft(current.getRight());
+                  }
+               }
+               //current is on the right
                else {
-                  parent.setLeft(current.getRight());
-                  current.getLeft().setRight(parent.getRight());
+                  if(current.getRight().getLeft() == null) {
+                     current.getRight().setLeft(current.getLeft());
+                     parent.setRight(current.getRight());
+                  }
+                  else {
+                     current.getRight().getLeft().setLeft(current.getLeft());
+                     parent.setRight(current.getRight());
+                  }  
                }
                return begin;
             }
          }
+         //target is less than the current node
          else if(target.compareTo((String) current.getValue()) < 0) {
             parent = current;
             current = current.getLeft();
          }
+         //target is greater than the current node
          else if (target.compareTo((String) current.getValue()) > 0) {
             parent = current;
             current = current.getRight();
          }
+         //target not found, return empty node
          else {
             return new TreeNode("");
          }
