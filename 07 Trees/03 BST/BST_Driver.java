@@ -14,6 +14,7 @@ public class BST_Driver
    {
       Scanner keyboard = new Scanner(System.in);
       ArrayList<String> list = new ArrayList<String>();
+      list.add("9 7 2 1 4 0");
       list.add("s o o n l l i c a");
       list.add("M A E N I R A C");
       list.add("A M E R I C A N");
