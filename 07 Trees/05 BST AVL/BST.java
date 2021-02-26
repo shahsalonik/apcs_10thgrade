@@ -1,5 +1,5 @@
-// Name: 
-// Date: 
+// Name: Saloni Shah 
+// Date: 03/01/2021
 
 interface BSTinterface
 {
@@ -49,7 +49,11 @@ public class BST implements BSTinterface
    }
    private TreeNode add(TreeNode t, String s) //recursive helper method
    {      
-      if(s.compareTo((String) t.getValue()) <= 0) {
+      if(t == null) {
+         TreeNode newNode = new TreeNode(s);
+         return newNode;
+      }
+      else if(s.compareTo((String) t.getValue()) <= 0) {
          if(t.getLeft() == null) {
             TreeNode newNode = new TreeNode(s);
             t.setLeft(newNode);
@@ -288,8 +292,95 @@ public class BST implements BSTinterface
    public void addBalanced(String value)  
    {
       size++;
-      root = add(root, value);
-      balanceTree(null, root, true);   // for an AVL tree.  You may change this line.
+      root = add(root, value); 
+      balanceTree(root);
+      //balanceTree(height(root), root, isBalanced(root));   // for an AVL tree.  You may change this line.
+   }
+   
+   public static int height(TreeNode t)
+   {
+      //returns max of the heights + 1 
+      if(t == null) {
+         return -1;
+      }
+      else {
+         return 1 + Math.max(height(t.getLeft()), height(t.getRight()));
+      }
+   }
+   
+   private static int getBalance(TreeNode current) {
+      
+      if(current == null) {
+         return 0;
+      }
+      else {
+         return (height(current.getLeft()) - height(current.getRight()));
+      }
+   }
+   
+   private static TreeNode leftRotate(TreeNode toIns) {
+      
+      //establishing the left rotate variables
+      TreeNode insLeft = toIns.getLeft();
+      TreeNode child = insLeft.getRight();
+      
+      //performing the left rotate
+      insLeft.getRight().setValue(toIns);
+      toIns.getLeft().setValue(child);
+      
+      return insLeft;
+   
+   }
+   
+   private static TreeNode rightRotate(TreeNode toIns) {
+   
+      //establishing the right rotate variables
+      TreeNode insRight = toIns.getRight();
+      TreeNode child = insRight.getLeft();
+      
+      //performing the left rotate
+      insRight.getLeft().setValue(toIns);
+      toIns.getRight().setValue(child);
+      
+      return insRight;
+   
+   }
+   
+   private static TreeNode balanceTree(TreeNode begin) {
+      
+      //checking the balance
+      int balHeight = getBalance(begin);
+      
+      if(Math.abs(balHeight) <= 1) {
+         return begin;
+      }
+      
+      //left heavy
+      else if(balHeight > 1) {
+      //LR
+         if(Math.abs(getBalance(begin.getRight())) > 1) {
+            begin.getLeft().setValue(leftRotate(begin.getLeft()));
+            rightRotate(begin);
+         }
+         //LL
+         else {
+            leftRotate(begin);
+         }
+      }
+      //right heavy
+      else if(balHeight < 0) {
+      //RL
+         if(Math.abs(getBalance(begin.getLeft())) < 0) {
+            begin.getRight().setValue(rightRotate(begin.getRight()));
+            return leftRotate(begin);
+         }
+         //RR
+         else {
+            rightRotate(begin);
+         }
+      }
+      
+      return begin;
    }
    
 }
