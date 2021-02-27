@@ -293,7 +293,7 @@ public class BST implements BSTinterface
    {
       size++;
       root = add(root, value); 
-      balanceTree(root);
+      root = balanceTree(root);
       //balanceTree(height(root), root, isBalanced(root));   // for an AVL tree.  You may change this line.
    }
    
@@ -318,29 +318,32 @@ public class BST implements BSTinterface
       }
    }
    
-   private static TreeNode leftRotate(TreeNode toIns) {
+   private static TreeNode leftRotate(TreeNode inPoint) {
       
       //establishing the left rotate variables
-      TreeNode insLeft = toIns.getLeft();
-      TreeNode child = insLeft.getRight();
+      TreeNode insLeft;
+      if(inPoint.getLeft() == null) {
+         insLeft = inPoint.getRight();
+      }
+      else {
+         insLeft = inPoint.getLeft();
+      }
       
-      //performing the left rotate
-      insLeft.getRight().setValue(toIns);
-      toIns.getLeft().setValue(child);
+      //left rotation
+      insLeft.setRight(inPoint);
+      inPoint.setLeft(null);
       
       return insLeft;
    
    }
    
-   private static TreeNode rightRotate(TreeNode toIns) {
+   private static TreeNode rightRotate(TreeNode inPoint) {
    
       //establishing the right rotate variables
-      TreeNode insRight = toIns.getRight();
-      TreeNode child = insRight.getLeft();
+      TreeNode insRight = inPoint.getRight();
       
-      //performing the left rotate
-      insRight.getLeft().setValue(toIns);
-      toIns.getRight().setValue(child);
+      insRight.setLeft(inPoint);
+      inPoint.setRight(null);
       
       return insRight;
    
@@ -357,26 +360,26 @@ public class BST implements BSTinterface
       
       //left heavy
       else if(balHeight > 1) {
-      //LR
-         if(Math.abs(getBalance(begin.getRight())) > 1) {
-            begin.getLeft().setValue(leftRotate(begin.getLeft()));
-            rightRotate(begin);
+      //RL
+         if(getBalance(begin.getLeft()) <= 0) {
+            begin.setLeft(rightRotate(begin.getLeft()));
+            return leftRotate(begin);
          }
          //LL
          else {
-            leftRotate(begin);
+            return leftRotate(begin);
          }
       }
       //right heavy
       else if(balHeight < 0) {
-      //RL
-         if(Math.abs(getBalance(begin.getLeft())) < 0) {
-            begin.getRight().setValue(rightRotate(begin.getRight()));
-            return leftRotate(begin);
+      //LR
+         if(getBalance(begin.getRight()) <= 0) {
+            begin.setRight(leftRotate(begin.getRight()));
+            return rightRotate(begin);
          }
          //RR
          else {
-            rightRotate(begin);
+            return rightRotate(begin);
          }
       }
       
