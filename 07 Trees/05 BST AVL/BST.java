@@ -90,7 +90,7 @@ public class BST implements BSTinterface
       }
       toRet += t.getValue() + "\n";
       toRet += display(t.getLeft(), level + 1); //recurse left
-      return toRet;
+      return toRet; 
    }
    
    public boolean contains( String obj)
@@ -340,7 +340,13 @@ public class BST implements BSTinterface
    private static TreeNode rightRotate(TreeNode inPoint) {
    
       //establishing the right rotate variables
-      TreeNode insRight = inPoint.getRight();
+      TreeNode insRight;
+      if(inPoint.getRight() == null) {
+         insRight = inPoint.getLeft();
+      }
+      else {
+         insRight = inPoint.getRight();
+      }
       
       insRight.setLeft(inPoint);
       inPoint.setRight(null);
@@ -372,8 +378,8 @@ public class BST implements BSTinterface
       }
       //right heavy
       else if(balHeight < 0) {
-      //LR
-         if(getBalance(begin.getRight()) <= 0) {
+      //RL
+         if(getBalance(begin.getRight()) >= 1) {
             begin.setRight(leftRotate(begin.getRight()));
             return rightRotate(begin);
          }
