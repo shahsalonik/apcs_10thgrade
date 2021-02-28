@@ -16,8 +16,8 @@ public class BST_AVL_driver
       //String line = "5 3 2";  //left-left case (right rotation) 
       //String line = "3 5 7";  //right-right case (left rotation)
       //String line = "5 3 4";  //left-right case (left rotation then right rotation)
-      String line = "3 5 4";  //right-left case (right rotation then left rotation)
-      //String line = "a b c d e f g";   
+      //String line = "3 5 4";  //right-left case (right rotation then left rotation)
+      String line = "a b c d e f g";   
       //String line = "g f e d c b a";
       //String line = "J E H B F G D"; //doubleright, doubleright, doubleright
       //String line = "L P N U R O"; //doubleleft, doubleleft, doubleleft
