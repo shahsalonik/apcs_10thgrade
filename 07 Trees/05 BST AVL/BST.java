@@ -47,6 +47,8 @@ public class BST implements BSTinterface
          add(root, s);
       }
    }
+   
+   /*
    private TreeNode add(TreeNode t, String s) //recursive helper method
    {      
       if(t == null) {
@@ -73,11 +75,28 @@ public class BST implements BSTinterface
       }
       return t;
    }
+   */
+   
+   private TreeNode add(TreeNode t, String s) //recursive helper method
+   {      
+      if(t == null) {
+         TreeNode newNode = new TreeNode(s);
+         return newNode;
+      }
+      else if(s.compareTo((String) t.getValue()) <= 0) {
+         t.setLeft(add(t.getLeft(), s));
+      }
+      else if (s.compareTo((String) t.getValue()) > 0) {
+         t.setRight(add(t.getRight(), s));
+      }
+      return t;
+   }
    
    public String display()
    {
       return display(root, 0);
    }
+   
    private String display(TreeNode t, int level) //recursive helper method
    {
       String toRet = "";
@@ -318,40 +337,52 @@ public class BST implements BSTinterface
       }
    }
    
-   private static TreeNode leftRotate(TreeNode inPoint) {
+   private static TreeNode leftRotate(TreeNode t) {
+   
+      TreeNode right = t.getRight();
+      TreeNode newRight = new TreeNode(t.getValue(), right.getLeft(), t.getLeft());
+      TreeNode r = new TreeNode(right.getValue(), newRight, right.getRight());
       
-      //establishing the left rotate variables
-      TreeNode insRight;
-      if(inPoint.getRight() == null) {
-         insRight = inPoint.getLeft();
-      }
-      else {
-         insRight = inPoint.getRight();
-      }
-      
-      insRight.setLeft(inPoint);
-      inPoint.setRight(null);
-      
-      return insRight;
+      return r; 
+   
    }
    
-   private static TreeNode rightRotate(TreeNode inPoint) {
+   private static TreeNode rightRotate(TreeNode t) {
    
-      //establishing the right rotate variables
-      TreeNode insLeft;
-      if(inPoint.getLeft() == null) {
-         insLeft = inPoint.getRight();
-      }
-      else {
-         insLeft = inPoint.getLeft();
-      }
+      TreeNode left = t.getLeft();
+      TreeNode newLeft = new TreeNode(t.getValue(), left.getRight(), t.getRight());
+      TreeNode r = new TreeNode(left.getValue(), left.getLeft(), newLeft); 
       
-      //left rotation
-      insLeft.setRight(inPoint);
-      inPoint.setLeft(null);
-      
-      return insLeft;
+      return r;
    
+   }
+   
+   private static TreeNode rotateToLeft(TreeNode t) {
+   
+      TreeNode left = t.getLeft();
+      TreeNode right = left.getRight();
+      
+      TreeNode newLeft = new TreeNode(left.getValue(), left.getLeft(), right.getLeft());
+      TreeNode newRight = new TreeNode(right.getValue(), newLeft, right.getRight());
+      
+      TreeNode r = new TreeNode(t.getValue(), newRight, t.getRight());
+      
+      return r;
+   
+   }
+   
+   private static TreeNode rotateToRight(TreeNode t) {
+      
+      TreeNode right = t.getRight();
+      TreeNode left = right.getLeft();
+      
+      TreeNode newRight = new TreeNode(right.getValue(), right.getRight(), left.getRight());
+      TreeNode newLeft = new TreeNode(left.getValue(), left.getLeft(), newRight);
+      
+      TreeNode r = new TreeNode(t.getValue(), t.getLeft(), newLeft);
+      
+      return r;
+      
    }
    
    private static TreeNode balanceTree(TreeNode begin) {
@@ -367,7 +398,7 @@ public class BST implements BSTinterface
       else if(balHeight > 1) {
       //RL
          if(getBalance(begin.getLeft()) <= 0) {
-            begin.setLeft(leftRotate(begin.getLeft()));
+            begin = rotateToLeft(begin);
             return rightRotate(begin);
          }
          //LL
@@ -379,7 +410,7 @@ public class BST implements BSTinterface
       else if(balHeight < 0) {
       //LR
          if(getBalance(begin.getRight()) >= 1) {
-            begin.setRight(rightRotate(begin.getRight()));
+            begin = rotateToRight(begin);
             return leftRotate(begin);
          }
          //RR
@@ -389,6 +420,5 @@ public class BST implements BSTinterface
       }
       
       return begin;
-   }
-   
+   }      
 }
