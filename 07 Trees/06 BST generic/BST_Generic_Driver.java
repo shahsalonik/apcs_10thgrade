@@ -9,19 +9,19 @@ public class BST_Generic_Driver
    public static int N = 10;
    public static void main(String[] args)
    {
-      BST_Generic<Integer> treeOfWidgets = new BST_Generic<Integer>();
-      treeOfIntegers.add(5);
-      treeOfIntegers.add(2);
-      treeOfIntegers.add(10);
+      BST_Generic<Integer> treeOfIntegers = new BST_Generic<Integer>();
+      
+      treeOfIntegers.add(6);
+      treeOfIntegers.add(1);
+      //treeOfIntegers.add(10);
       System.out.println(treeOfIntegers.display());
       System.out.println(treeOfIntegers.toString());
       System.out.println("Size: " + treeOfIntegers.size());
       System.out.println("Min: " + treeOfIntegers.min());
       System.out.println("Max: " + treeOfIntegers.max());
-      int a = treeOfIntegers.remove(10);
-      int b = treeOfIntegers.remove(2);
-      int c = treeOfIntegers.remove(5);
-      System.out.println("Sum = "+ (a+b+c));
+      int a = treeOfIntegers.remove(6);
+      int b = treeOfIntegers.remove(1);
+      System.out.println("Sum = "+ (a+b));
       System.out.println();
     /*
       Put some Widget objects into your BST.  Display the tree. 
