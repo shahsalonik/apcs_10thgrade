@@ -14,13 +14,13 @@ interface BSTinterface
    public String toString();
 }
 
-public class BST implements BSTinterface
+public class BSTRedo implements BSTinterface
 {
    /*  copy your BST code  here  */
 
    private TreeNode root;
    private int size;
-   public BST()
+   public BSTRedo()
    {
       root = null;
       size = 0;
@@ -312,9 +312,47 @@ public class BST implements BSTinterface
    {
       size++;
       root = add(root, value); 
+      root = balanceTree(root);
    }
    
-   public static int height(TreeNode t)
+   private TreeNode balanceTree(TreeNode begin) {
+   
+      int balance = getBalance(begin);
+      
+      if(Math.abs(balance) == 0 || Math.abs(balance) == 1) {
+         return begin;
+      }
+      else if (balance > 1) { //left heavy
+      
+         int leftBalance = getBalance(begin.getLeft());
+         
+         //RL
+         if(leftBalance == 2) {
+            return rightRotate(begin);
+         }
+         else { //RR
+            begin.setLeft(balanceTree(begin.getLeft()));
+         }
+      
+      }
+      else if (balance < -1) { //right heavy
+      
+         int rightBalance = getBalance(begin.getRight());
+         
+         if(rightBalance == -2) {
+            return leftRotate(begin);
+         }
+         else {
+            begin.setRight(balanceTree(begin.getRight()));
+         }
+      
+      }
+      
+      return begin;
+   
+   }
+   
+   private static int height(TreeNode t)
    {
       //returns max of the heights + 1 
       if(t == null) {
@@ -324,56 +362,44 @@ public class BST implements BSTinterface
          return 1 + Math.max(height(t.getLeft()), height(t.getRight()));
       }
    }
+
    
-   private static int getBalance(TreeNode current) {
-      
+   private int getBalance(TreeNode current) {
+   
       if(current == null) {
          return 0;
       }
       else {
          return (height(current.getLeft()) - height(current.getRight()));
       }
-   }
-   
-   private static TreeNode leftRotate(TreeNode leftNode) {
-   
-      TreeNode rightNode = leftNode.getRight();
-      
-      leftNode.setRight(rightNode.getLeft());
-      rightNode.setLeft(leftNode);
-      
-      return rightNode;
    
    }
    
-   private static TreeNode rightRotate(TreeNode rightNode) {
+   //used in a right rotation
+   private TreeNode leftRotate(TreeNode a) {
+      
+      TreeNode b = a.getRight();
+      TreeNode child = b.getLeft();
+      
+      b.setLeft(a);
+      a.setRight(child);
+      
+      return b;
+      
+   }
    
-      TreeNode leftNode = rightNode.getLeft();
-   
-      rightNode.setLeft(leftNode.getRight());
-      leftNode.setRight(rightNode);
-   
-      return leftNode;
-   
+   //used in a left rotation
+   private TreeNode rightRotate(TreeNode b) {
+      
+      TreeNode a = b.getLeft();
+      TreeNode child = a.getRight();
+      
+      a.setRight(b);
+      b.setLeft(child);
+      
+      return a;
+      
    }
    
    
-   private static TreeNode balanceTree(TreeNode beginNode) {
-      
-      if(getBalance(beginNode) < -1) {
-      
-         if(getBalance(beginNode.getRight()) > 0) {
-            beginNode.setRight(rightRotate(beginNode.getRight())); 
-         }
-         beginNode = leftRotate(beginNode);
-      
-      }
-      else if (getBalance(beginNode) > 1) {
-         if(getBalance(beginNode.getLeft()) < 0) {
-            beginNode.setLeft(leftRotate(beginNode.getLeft()));
-         }
-         beginNode = rightRotate(beginNode);
-      }
-      return beginNode;
-   }      
 }
