@@ -1,5 +1,5 @@
- // Name: 
- // Date: 
+ // Name: Saloni Shah
+ // Date: 03/08/2021 (due date)
 
 /* 
    Assignment:  This hashing program results in collisions.
@@ -73,16 +73,16 @@ class HashtableLinearProbe implements Hashtable
   
    public HashtableLinearProbe(int size)//constructor
    {
-                          
+      array = new Object[size];     
    }
    
    public void add(Object obj)
    {
       int code = obj.hashCode();
       int index = Math.abs(code % array.length);
-      if(  )  //empty
+      if(array[index] == null)  //empty
       {
-         //insert it
+         array[index] = obj; //insert it
          System.out.println(obj + "\t" + code + "\t" + index);
       }
       else //collision
@@ -96,8 +96,9 @@ class HashtableLinearProbe implements Hashtable
    
    public int linearProbe(int index)
    {      
-   
-      
+      while(array[index] != null) {
+         index++;
+      }   
       return index;
    }
    
@@ -106,14 +107,16 @@ class HashtableLinearProbe implements Hashtable
       int index = Math.abs(obj.hashCode() % array.length);
       while(array[index] != null)
       {
-         if(  )  //found it
+         if(array[index] = obj)  //found it
          {
-            
+            return index;
          }
          else //search for it in a linear probe manner
          {
-            
+            while(array[index] != obj) {
+            linearProbe(index);
             System.out.println("Looking at index " + index);
+            }
          }
       }
       //not found

@@ -8,7 +8,7 @@ public class BXT_Driver
    public static void main(String[] args)
    {
       ArrayList<String> postExp = new ArrayList<String>();
-      postExp.add("c b c e d f e");
+      postExp.add("3 4 + 8 * 5 2 ^ -");
       postExp.add("20.0 3.0 -4.0 + *");
       postExp.add("2 3 + 5 / 4 5 - *");
       postExp.add("5.6");
