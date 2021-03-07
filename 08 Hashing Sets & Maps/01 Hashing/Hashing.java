@@ -1,4 +1,4 @@
- // Name: Saloni Shah
+// Name: Saloni Shah
  // Date: 03/08/2021 (due date)
 
 /* 
@@ -76,6 +76,11 @@ class HashtableLinearProbe implements Hashtable
       array = new Object[size];     
    }
    
+   /**
+    * Adds an Object to the HashTable by checking if the desired index is null
+    * If it is not null, goes through the HashTable to find a null index using linear probing.
+    * @param obj the Object to be inserted
+    */
    public void add(Object obj)
    {
       int code = obj.hashCode();
@@ -94,32 +99,60 @@ class HashtableLinearProbe implements Hashtable
       }
    }  
    
+   /**
+    * Looks through each index of the array in a linear way.
+    * @param index the index of the array
+    * @return an index that is null
+    */
    public int linearProbe(int index)
    {      
-      while(array[index] != null) {
+      while(array[index] != null && index < array.length - 1) {
          index++;
-      }   
+      }
+      
+      if(index == array.length - 1) {
+         index = 0;
+      }
+      
+      while(array[index] != null && index < array.length - 1) {
+         index++;
+      }
+      
       return index;
    }
    
+   /**
+    * A method to look for an Object and return the index of it.
+    * @param obj the Object that is being looked for
+    * @return either the index of the array or -1 (not found)
+    */
    public int indexOf(Object obj)     
    {
       int index = Math.abs(obj.hashCode() % array.length);
       while(array[index] != null)
       {
-         if(array[index] = obj)  //found it
+         if(array[index].equals(obj))  //found it
          {
             return index;
          }
          else //search for it in a linear probe manner
          {
-            while(array[index] != obj) {
-            linearProbe(index);
-            System.out.println("Looking at index " + index);
+            while(!array[index].equals(obj) && index < array.length - 1) {
+               System.out.println("Looking at index " + index);
+               index++;
+            }
+         
+            if(index == array.length - 1) {
+               index = 0;
+            }
+         
+            while(!array[index].equals(obj) && index < array.length - 1) {
+               System.out.println("Looking at index " + index);
+               index++;
             }
          }
       }
-      //not found
+      return -1; //not found
    }
 }
 
@@ -131,16 +164,39 @@ class HashtableRehash implements Hashtable
    
    public HashtableRehash(int size) //constructor
    {
-                             
+      array = new Object[size];
+      constant = relPrime(size);
    }
    
+   /**
+    * Determines an integer that is relatively prime compared to the size of the array.
+    * @param arSize the size of the array
+    * @return a relatively prime integer for the array
+    */
+   private int relPrime(int arSize) {
+      if(arSize % 2 == 1) {
+         return 2;
+      }
+      else if(arSize % 2 == 0 && arSize % 3 == 0) {
+         return 1;
+      }
+      else {
+         return 3;
+      }
+   }
+   
+   /**
+    * Tries to add an Object to the Hashtable by checking if the index is null
+    * If it is not, tries to find the next null index by using rehashing
+    * @param obj the Object to be added
+    */
    public void add(Object obj)
    {
       int code = obj.hashCode();
       int index = Math.abs(code % array.length);
-      if(  )  //empty
+      if(array[index] == null)  //empty
       {
-         //insert it
+         array[index] = obj; //insert it
          System.out.println(obj + "\t" + code + "\t" + index);
       }
       else //collision
@@ -152,27 +208,62 @@ class HashtableRehash implements Hashtable
       }
    }  
    
+   /**
+    * Similar to linear probing, except instead of adding 1 to the index, 
+    * a constant is added instead.
+    * @param index the index where the rehashing starts
+    * @return an index that is null
+    */
    public int rehash(int index)
    {
+      while(array[index] != null && index < array.length - 1) {
+         index = (index + constant) % array.length;
+      }
+      
+      if(index >= array.length - 1) {
+         index = 0;
+      }
+      
+      while(array[index] != null && index < array.length - 1) {
+         index = (index + constant) % array.length;
+      }
+      
+      return index;
       
    }
    
-   public  int indexOf(Object obj)
+   /**
+    * A method to look for an Object and return the index of it.
+    * @param obj the Object that is being looked for
+    * @return either the index of the array or -1 (not found)
+    */
+   public int indexOf(Object obj)
    {
       int index = Math.abs(obj.hashCode() % array.length);
       while(array[index] != null)
       {
-         if(  )  //found it
+         if(array[index].equals(obj))  //found it
          {
-            
+            return index;
          }
          else //search for it in a rehashing manner
          {
+            while(!array[index].equals(obj) && index < array.length - 1) {
+               System.out.println("Looking at index " + index);
+               index = (index + constant) % array.length;
+            }
             
-            System.out.println("Looking at index " + index);
+            if(index >= array.length - 1) {
+               index = 0;
+            }
+            
+            while(!array[index].equals(obj) && index < array.length - 1) {
+               System.out.println("Looking at index " + index);
+               index = (index + constant) % array.length;
+            }
          }
       }
-      //not found
+      return -1; //not found
    }
 }
 
@@ -183,10 +274,17 @@ class HashtableChaining implements Hashtable
    
    public HashtableChaining(int size)
    {
-      //instantiate the array
-      //instantiate the LinkedLists
+      array = new LinkedList[size]; //instantiate the array
+      for(int x = 0; x < size; x++) { //instantiate the LinkedLists
+         array[x] = new LinkedList();
+      }  
                             
    }
+   
+   /**
+    * Doesn't need to look for a null spot because each index is a Linked List
+    * @param obj the Object to be added
+    */
    public void add(Object obj)
    {
       int code = obj.hashCode();
@@ -194,21 +292,30 @@ class HashtableChaining implements Hashtable
       array[index].addFirst(obj);
       System.out.println(obj + "\t" + code + " " + " at " +index + ": "+ array[index]);
    }  
-   
+
+   /**
+    * A method to look for an Object and return the index of it.
+    * @param obj the Object that is being looked for
+    * @return either the index of the array or -1 (not found)
+    */
    public int indexOf(Object obj)
    {
       int index = Math.abs(obj.hashCode() % array.length);
       if( !array[index].isEmpty() )
       {
-         if(  )  //found it
+         if(array[index].equals(obj))  //found it
          {
-            
+            return index;
          }
          else //search for it in a chaining manner
          {
-        
-         }
+            for(Object o : array[index]) {
+               if(o.equals(obj)) {
+                  return index;
+               }
+            }
+         }  
       }
-      //not found
+      return -1; //not found
    }
 }
