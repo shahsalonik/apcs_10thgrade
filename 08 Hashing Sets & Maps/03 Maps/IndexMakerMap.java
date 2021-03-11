@@ -69,10 +69,13 @@ class DocumentIndex extends TreeMap<String, TreeSet<Integer>>
    {
       TreeSet<Integer> wordList = new TreeSet<Integer>();
       
+      //checks if it's already in the list
       if(containsKey(word)) {
+         //adds another value to the existing values
          get(word).add(lineNum);
       } 
       else {
+         //puts the word into the list with the line numbers
          put(word, wordList);
          get(word).add(lineNum);
       }
@@ -81,6 +84,8 @@ class DocumentIndex extends TreeMap<String, TreeSet<Integer>>
    
    public String toString()
    {
+      //2 for-each loops; the first one puts everything into the arraylist,
+      //the second one prints all of the values.
       String word = "";
       ArrayList<String> wordList = new ArrayList<String>();
       for(String entry : keySet()){
