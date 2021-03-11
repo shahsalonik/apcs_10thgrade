@@ -49,7 +49,17 @@ class DocumentIndex extends TreeMap<String, TreeSet<Integer>>
    */
    public void addAllWords(String str, int lineNum) 
    {
-   
+      str.trim();
+      String[] wordsArray = str.split("[., \"!?]");
+      
+      //calls addWord for each of the words in the array
+      if(wordsArray.length > 0) {
+         for(int x = 0; x < wordsArray.length; x++) {
+            if(wordsArray[x].length() > 0) {
+               addWord(wordsArray[x].toUpperCase(), lineNum);
+            }
+         }
+      }
    }
 
   /** Makes the word uppercase.  If the word is already in the map, updates the lineNum.
@@ -57,11 +67,34 @@ class DocumentIndex extends TreeMap<String, TreeSet<Integer>>
    */
    public void addWord(String word, int lineNum)
    {
-   
+      TreeSet<Integer> wordList = new TreeSet<Integer>();
+      
+      if(containsKey(word)) {
+         get(word).add(lineNum);
+      } 
+      else {
+         put(word, wordList);
+         get(word).add(lineNum);
+      }
+      
    }
    
    public String toString()
    {
+      String word = "";
+      ArrayList<String> wordList = new ArrayList<String>();
+      for(String entry : keySet()){
+         String s = "" + get(entry);
+         word = entry + " " + s.substring(1, s.length()-1);
+         wordList.add(word);
+      }      
+      
+      String finalWord = "";
+      for(String str : wordList) {
+         finalWord += str + "\n";
+      }
+      
+      return finalWord;
    
    }
 }
