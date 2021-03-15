@@ -6,73 +6,274 @@ import java.util.*;
 
 public class DictionaryTranslator
 {
-   public static void main(String[] args) 
-   {
+   Map<String, Set<String>> eng2spn;
+   Map<String, Set<String>> spn2eng;
+   static Scanner userInput = new Scanner(System.in);
+   public static final String PASSWORD = "abc";
+   
+   public DictionaryTranslator() {
+   
       Scanner infile = null;
-      Scanner textFile = null;
-      String str = "";
-      String word = "";
+     
       try
-      {  
-         textFile = new Scanner(new File("spanglish.txt"));
-         infile = new Scanner(System.in);
-         System.out.print("Hello! Would you like to translate to English or to Spanish?: ");
-         str = infile.next();
-         //System.setOut(new PrintStream(new FileOutputStream("dictionaryOutput.txt")));
+      {
+         infile = new Scanner(new File("dictionaryOutput.txt"));
       }
       catch(Exception e)
       {
          System.out.println("File not Found");
       }
       
-      if(str.equalsIgnoreCase("English")) {
-         System.out.print("Which word would you like to translate?: ");
-         word = infile.next();
-         while(!isInFile(word, textFile)) {
-            if(isInFile(word, textFile)) {
-               String eng2spn = makeDictionary( word, textFile );
-            }
-            System.out.println("Sorry, we don't have that word. Please enter another one: ");
-            word = infile.next();
+      eng2spn = makeDictionary(infile, "ENGLISH TO SPANISH", "SPANISH TO ENGLISH");
+      spn2eng = makeDictionary(infile, "SPANISH TO ENGLISH", "");
+   
+   }
+   
+   private void spanishToEnglish(String spword) {
+   
+    //check if the word is in the dictionary
+      Set<String> engtranslated = spn2eng.get(spword);
+      if(engtranslated != null) {
+         System.out.println("Here are the translated words!" + engtranslated);
+         System.out.println("Do you know any other translations for " + spword + "? Type yes or no: ");
+         if(userInput.next().equalsIgnoreCase("Yes")) {
+            System.out.print("Please type it now!: ");
+            String extraTranslate = userInput.next();
+            spn2eng.get(spword).add(extraTranslate);
          }
-         System.out.println(eng2spn);
       }
-      else if(str.equalsIgnoreCase("Spanish")) {
+      else {
+         System.out.println("Sorry, we don't have that word!");
+      }
+   }
+   
+   private void englishToSpanish(String engword) {
+      Set<String> sptranslated = eng2spn.get(engword);
+      if(sptranslated != null) {
+         System.out.println("Here are the translated words!" + sptranslated);
+         System.out.println("Do you know any other translations for " + engword + "? Type yes or no: ");
+         if(userInput.next().equalsIgnoreCase("Yes")) {
+            System.out.print("Please type it now!: ");
+            String extraTranslate = userInput.next();
+            eng2spn.get(engword).add(extraTranslate);
+         }
+      }
+      else {
+         System.out.println("Sorry, we don't have that word!");
+      }
+   }
+   
+   private void addWord() {
+      System.out.println("Which dictionary do you want to add to? Press 1 for English and 2 for Spanish: ");
+      int dictLang = userInput.nextInt();
+      if(dictLang == 1 || dictLang == 2) {
+         //what word
+         System.out.println("Which word?");
+         String addWord = userInput.next();
+         //create meaning set
+         TreeSet<String> wordMeanings = new TreeSet<String>();
+         //what translation(s)?
+         System.out.println("What are the translations you would like to add?\nPress enter after each one, and type -1 to exit: ");
+         while(userInput.hasNext()) {
+            String word = userInput.next();
+            if(word.equals("-1")) {
+               break;
+            }
+            else {
+               wordMeanings.add(word.trim());
+            }
+         }
+         if(dictLang == 1) {
+            eng2spn.put(addWord, wordMeanings);
+            System.out.println("Added!");
+         }
+         else {
+            spn2eng.put(addWord, wordMeanings);
+            System.out.println("Added!");
+         }
+      }
+      else {
+         System.out.println("Sorry, that is not a valid dictionary.");
+      }
+   }
+   
+   //this method may not work entirely yet. I am not too sure what modify means in this context, so I just made it like add.
+   private void modify() {
+   
+      System.out.println("Which dictionary do you want to modify? Press 1 for English and 2 for Spanish: ");
+      int dictLang = userInput.nextInt();
+      if(dictLang == 1 || dictLang == 2) {
+         //what word
+         System.out.println("Which word?");
+         String modWord = userInput.next();
+         
+         if(eng2spn.containsKey(modWord)) {
+            System.out.println("What are the translations you would like to modify?\nPress enter after each one, and type -1 to exit: ");
+            Set<String> wordMeanings = new TreeSet<String>();
+         //what translation(s)?
+            while(userInput.hasNext()) {
+               String word = userInput.next();
+               if(word.equals("-1")) {
+                  break;
+               }
+               else {
+                  wordMeanings.add(word.trim());
+               }
+            }
+            eng2spn.put(modWord, wordMeanings);
+         }
+         else if (spn2eng.containsKey(modWord)) {
+            System.out.println("What are the translations you would like to modify?\nPress enter after each one, and type -1 to exit: ");
+            Set<String> wordMeanings = new TreeSet<String>();
+         //what translation(s)?
+            while(userInput.hasNext()) {
+               String word = userInput.next();
+               if(word.equals("-1")) {
+                  break;
+               }
+               else {
+                  wordMeanings.add(word.trim());
+               }
+            }
+            spn2eng.put(modWord, wordMeanings);
+         }
+         else {
+            System.out.println("Sorry, we don't have that word.");
+         }
          
       }
       else {
-         while(!str.equalsIgnoreCase("English") || !str.equalsIgnoreCase("Spanish")) {
-            System.out.println("Sorry, we don't have that language. Please try again: ");
-            str = infile.next();
-         }
+         System.out.println("Sorry, that is not a valid dictionary.");
       }
-   }
-   
-   private static boolean isInFile(String inputStr, Scanner text) {
-   
-      while(text.hasNext()) {
-         String compare = text.next();
-         if(inputStr.equals(compare)) {
-            return true;
-         }
-      }
-      return false;
    
    }
    
-   public static String makeDictionary(String text)
+   public static void main(String[] args) 
+   {
+      DictionaryTranslator translator = new DictionaryTranslator();
+   
+      int choice = -1;
+      String guess = "";
+      while(choice != 0) {
+         System.out.println("Hello! To translate to English, press 1. To translate to Spanish, press 2. To exit, type 0. \n If you want to add a word, type 3. To remove, press 4. To modify, press 5: ");
+         choice = userInput.nextInt();
+      
+         switch(choice) {
+         
+            case 0:
+               System.out.println("Thanks for using the translator!");
+               translator.saveToFile();
+               System.exit(0);
+            
+            case 1:
+            //translate to english given a spanish input
+               System.out.println("Which Spanish word would you like to translate?: ");
+               String spword = userInput.next();
+               translator.spanishToEnglish(spword);
+               break;
+            
+            case 2:
+            //translate to spanish w english input
+               System.out.println("Which English word would you like to translate?: ");
+               String engword = userInput.next();
+               translator.englishToSpanish(engword); 
+               break;
+            
+            case 3:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  translator.addWord();
+               }
+               break;
+            
+            case 4:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  System.out.println("What do you want to remove?");
+                  //remove from both dict
+                  String removal = userInput.next();
+                  if(translator.removeEnglish(removal) != null) {
+                     System.out.println("Removed from the English dictionary!");
+                  }
+                  if(translator.removeSpanish(removal) != null) {
+                     System.out.println("Removed from the Spanish dictionary!");
+                  }
+               }
+               break;
+               
+            case 5:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  translator.modify();
+               }
+               break;
+            
+            default:
+               System.out.println("Invalid choice.");
+               break;
+         }
+      } 
+      
+      translator.saveToFile(); 
+      
+   }
+   
+   private Set<String> removeEnglish(String word) {
+      return eng2spn.remove(word);
+   }
+   
+   private Set<String> removeSpanish(String word) {
+      return spn2eng.remove(word);
+   }
+   
+   private void saveToFile() {
+      try {
+         System.setOut(new PrintStream(new FileOutputStream("dictionaryOutput.txt")));
+      }
+      catch(FileNotFoundException e) {
+         System.exit(0);
+      }
+      System.out.println("ENGLISH TO SPANISH");
+      display(eng2spn);
+      
+      System.out.println("SPANISH TO ENGLISH");
+      display(spn2eng);
+   }
+   
+   public Map<String, Set<String>> makeDictionary(Scanner infile, String startLine, String endLine)
    {
       //reads each line and adds it to the dictionary
       Map<String, Set<String>> dict =  new TreeMap<String, Set<String>>();
-      
+   
       while(infile.hasNext()) {
-         add(dict, infile.next(), infile.next());
+      
+         String line = infile.nextLine();
+         if ( line.equalsIgnoreCase(startLine) ) {
+          //do nothing
+         }
+         else if (line.equalsIgnoreCase(endLine)) {
+            break;
+         }
+         else {
+            String word = line.substring(0,line.indexOf(" "));
+            String meanings = line.substring(line.indexOf("[") +1, line.indexOf("]"));
+            Set<String> meaningSet = new TreeSet<String>();
+            String[] indMean = meanings.split(",");
+            for(int x = 0; x < indMean.length; x++) {
+               meaningSet.add(indMean[x].trim());
+            }
+            dict.put(word, meaningSet);
+         }
       }
       
       return dict;
+   
    }
    
-   public static void add(Map<String, Set<String>> dictionary, String word, String translation)
+   public void add(Map<String, Set<String>> dictionary, String word, String translation)
    { 
       //if the dictionary is empty, adds the word, then the translation into it
       if(dictionary.isEmpty()) {
@@ -93,7 +294,7 @@ public class DictionaryTranslator
    
    }
    
-   public static void display(Map<String, Set<String>> m)
+   public void display(Map<String, Set<String>> m)
    {
       //iterates through the whole map
       for(String str: m.keySet()) {
@@ -101,7 +302,7 @@ public class DictionaryTranslator
       }
    }
    
-   public static Map<String, Set<String>> reverse(Map<String, Set<String>> dictionary)
+   public Map<String, Set<String>> reverse(Map<String, Set<String>> dictionary)
    {
       //iterates through the keyset (then the values) and adds the reversed one as a translation
       Map<String, Set<String>> reversed = new TreeMap<String, Set<String>>();
