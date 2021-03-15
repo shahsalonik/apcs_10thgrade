@@ -7,24 +7,25 @@ import java.util.*;
 public class DictionaryTranslatorREDO
 {
    Map<String, Set<String>> eng2spn;
-   
    Map<String, Set<String>> spn2eng;
    static Scanner userInput = new Scanner(System.in);
+   public static final String PASSWORD = "abc";
+   
    public DictionaryTranslatorREDO() {
    
       Scanner infile = null;
      
       try
       {
-         infile = new Scanner(new File("spanglish.txt"));
+         infile = new Scanner(new File("dictionaryOutput.txt"));
       }
       catch(Exception e)
       {
          System.out.println("File not Found");
       }
       
-      eng2spn = makeDictionary(infile);
-      spn2eng = reverse(eng2spn);
+      eng2spn = makeDictionary(infile, "ENGLISH TO SPANISH", "SPANISH TO ENGLISH");
+      spn2eng = makeDictionary(infile, "SPANISH TO ENGLISH", "");
    
    }
    
@@ -65,10 +66,11 @@ public class DictionaryTranslatorREDO
    public static void main(String[] args) 
    {
       DictionaryTranslatorREDO translator = new DictionaryTranslatorREDO();
-
+   
       int choice = -1;
+      String guess = "";
       while(choice != 0) {
-         System.out.println("Hello! To translate to English, press 1. To translate to Spanish, press 2. To exit, type 0: ");
+         System.out.println("Hello! To translate to English, press 1. To translate to Spanish, press 2. To exit, type 0. \n If you want to add a word, type 3. To remove, press 4. To modify, press 5: ");
          choice = userInput.nextInt();
       
          switch(choice) {
@@ -92,6 +94,44 @@ public class DictionaryTranslatorREDO
                translator.englishToSpanish(engword); 
                break;
             
+            case 3:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  System.out.println("What do you want to add?");
+                  //which dictionary 
+                  //what word
+                  //create meaning set
+                  //what translation(s)
+                  //eng2spn.put(word, set); or spn2eng.put(word, set);
+               }
+               break;
+            
+            case 4:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  System.out.println("What do you want to remove?");
+                  //remove from both dict
+                  String removal = userInput.next();
+                  if(translator.removeEnglish(removal) != null) {
+                     System.out.println("Removed from the English dictionary!");
+                  }
+                  if(translator.removeSpanish(removal) != null) {
+                     System.out.println("Removed from the Spanish dictionary!");
+                  }
+               }
+               break;
+               
+            case 5:
+               System.out.println("What is the password (If you are a CS teacher, the password is abc)?");
+               guess = userInput.next();
+               if(guess.equals(PASSWORD)) {
+                  System.out.println("What do you want to modify?");
+                  //
+               }
+               break;
+            
             default:
                System.out.println("Invalid choice.");
                break;
@@ -100,6 +140,14 @@ public class DictionaryTranslatorREDO
       
       translator.saveToFile(); 
       
+   }
+   
+   private Set<String> removeEnglish(String word) {
+      return eng2spn.remove(word);
+   }
+   
+   private Set<String> removeSpanish(String word) {
+      return spn2eng.remove(word);
    }
    
    private void saveToFile() {
@@ -116,13 +164,30 @@ public class DictionaryTranslatorREDO
       display(spn2eng);
    }
    
-   public Map<String, Set<String>> makeDictionary(Scanner infile)
+   public Map<String, Set<String>> makeDictionary(Scanner infile, String startLine, String endLine)
    {
       //reads each line and adds it to the dictionary
       Map<String, Set<String>> dict =  new TreeMap<String, Set<String>>();
-      
+   
       while(infile.hasNext()) {
-         add(dict, infile.next(), infile.next());
+      
+         String line = infile.nextLine();
+         if ( line.equalsIgnoreCase(startLine) ) {
+          //do nothing
+         }
+         else if (line.equalsIgnoreCase(endLine)) {
+            break;
+         }
+         else {
+            String word = line.substring(0,line.indexOf(" "));
+            String meanings = line.substring(line.indexOf("[") +1, line.indexOf("]"));
+            Set<String> meaningSet = new TreeSet<String>();
+            String[] indMean = meanings.split(",");
+            for(int x = 0; x < indMean.length; x++) {
+               meaningSet.add(indMean[x].trim());
+            }
+            dict.put(word, meaningSet);
+         }
       }
       
       return dict;
