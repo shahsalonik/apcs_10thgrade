@@ -1,5 +1,5 @@
- // Name:    
- // Date: 
+ // Name: Saloni Shah  
+ // Date: 03/22/2021 (due date)
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ public class Polynomial_Driver
       // Polynomial poly5 = new Polynomial("2x^3 + 4x^2 + 6x^1 + -3");
       // System.out.println("Map:  " + poly5.getMap());  
       // System.out.println(poly5);
-
+   
    }
 }
 interface PolynomialInterface
@@ -67,7 +67,112 @@ interface PolynomialInterface
 
 class Polynomial implements PolynomialInterface
 {
-
+   private Map<Integer, Integer> polMap = new TreeMap<Integer, Integer>();
+   
+   /**
+    * Makes the polynomial term by checking if the exp is already there.
+    * If it is, the coefficient is added to the one that is in the map.
+    * Then, puts the exponent and the modified coefficient into the map.
+    */
+   public void makeTerm(Integer exp, Integer coef) {
+      int expCheck = 0;
+      if(polMap.containsKey(exp)) {
+         expCheck = polMap.get(exp);
+      }
+      expCheck += coef;
+      polMap.put(exp, expCheck);
+   }
+   
+   /**
+    * Returns the map
+    * @return the polynomial map
+    */
+   public Map<Integer, Integer> getMap() {
+      return polMap;
+   }
+   
+   /**
+    * Evaluates a polynomial using substitution
+    * @param x the double that will replace all the 'x's in the polynomials
+    * @return the final value
+    */
+   public double evaluateAt(double x) {
+      double result = 0.0;
+      
+      for(int pow : polMap.keySet()) {
+         result += (polMap.get(pow) * Math.pow(x, pow));
+      }
+      
+      return result;
+   }
+   
+   /**
+    * Adds two polynomials together.
+    * @param other the other operand
+    * @return the polynomial result
+    */
+   public Polynomial add(Polynomial other) {
+      
+      Polynomial result = new Polynomial();
+      
+      for(int otherPow : other.getMap().keySet()) {
+         result.makeTerm(otherPow, other.getMap().get(otherPow));
+      }
+      
+      for(int actPow : polMap.keySet()) {
+         result.makeTerm(actPow, polMap.get(actPow));
+      }
+      
+      return result;
+      
+   }
+   
+   /**
+    * Multiplies two polynomials with each other
+    * @param the multiplier
+    * @return the product of the two polynomials
+    */
+   public Polynomial multiply(Polynomial other) {
+      Polynomial result = new Polynomial();
+      
+      for(int otherPow : other.getMap().keySet()) {
+         for(int actPow : polMap.keySet()) {
+            result.makeTerm((otherPow + actPow), (polMap.get(actPow) * other.getMap().get(otherPow)));
+         } 
+      }
+      
+      return result;
+   }
+   
+   /**
+    * Converts the polynomial in the map to a String. Returns the String.
+    * @return the polynomial as a String
+    */
+   public String toString() {
+      String finalExp = "";
+      for(int pow : polMap.keySet()) { 
+         if(pow == 0) {
+            finalExp = finalExp + "" + polMap.get(pow);
+         }
+         else if(pow == 1) {
+            if(polMap.get(pow) == 1) {
+               finalExp = "x + " + finalExp;
+            }
+            else {
+               finalExp = polMap.get(pow) + "x + " + finalExp;
+            }
+         }
+         else {
+            if(polMap.get(pow) == 1) {
+               finalExp = "x^" + pow + " + " + finalExp;
+            }
+            else {
+               finalExp = polMap.get(pow) + "x^" + pow + " + " + finalExp;
+            }
+         }
+      }
+      return finalExp;
+   }
 }
 
 
