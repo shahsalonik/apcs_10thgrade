@@ -1,5 +1,5 @@
-// Name: 
-// Date: 
+// Name: Saloni Shah
+// Date: 03/22/2021 (due date)
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ public class HashingAWidget
       Widget a = new Widget(2,3);   //same or different?
       Widget b = new Widget(2,3);
       Widget c = new Widget(2,3);
-      // c = b;
+      //c = b;
          
       tSet.add(a); 
       tSet.add(b);
@@ -107,8 +107,12 @@ class Widget implements Comparable<Widget>
    }  
    
   	/* 2 new methods for this lab */
-   //public boolean equals(Object arg)
+   public boolean equals(Object arg) {
+      return (arg.hashCode() == hashCode());
+   }
    
-   //public int hashCode()
+   public int hashCode() {
+      return toString().hashCode();
+   }
    
 }

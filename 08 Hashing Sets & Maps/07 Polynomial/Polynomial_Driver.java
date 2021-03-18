@@ -48,10 +48,10 @@ public class Polynomial_Driver
       // System.out.println("Product:  " + poly4.multiply(poly3));   // x^2 + -1 
    //    
    //    /*  testing the one-arg constructor  */
-      // System.out.println("==========================="); 
-      // Polynomial poly5 = new Polynomial("2x^3 + 4x^2 + 6x^1 + -3");
-      // System.out.println("Map:  " + poly5.getMap());  
-      // System.out.println(poly5);
+      System.out.println("==========================="); 
+      Polynomial poly5 = new Polynomial("2x^3 + 4x^2 + 6x^1 + -3");
+      System.out.println("Map:  " + poly5.getMap());  
+      System.out.println(poly5);
    
    }
 }
@@ -67,7 +67,54 @@ interface PolynomialInterface
 
 class Polynomial implements PolynomialInterface
 {
-   private Map<Integer, Integer> polMap = new TreeMap<Integer, Integer>();
+
+   private Map<Integer, Integer> polMap;
+   
+   public Polynomial() {
+      polMap = new TreeMap<Integer, Integer>();
+   }
+   
+   /** Converts all the string numbers to integers in order to put it into the map.
+   *This allows for an easier conversion to a Polynomial.
+   *@param input the initial string of a Polynomial
+   */
+   public Polynomial(String input) {
+      polMap = new TreeMap<Integer, Integer>();
+      
+      int count = 0;
+      
+      for(int x = 0; x < input.length(); x++) {
+         if(input.charAt(x) == '+') {
+            count++;
+         }
+      }
+      
+      count += 1;
+      
+      int[] inputArray = new int[count*2];
+      
+      for(int y = 0; y < inputArray.length; y += 2) {
+         if(input.contains("x") && input.contains("^")) {
+            inputArray[y] = Integer.parseInt(input.substring(0, input.indexOf("x")));
+            inputArray[y + 1] = Integer.parseInt(input.substring(input.indexOf("^") + 1, input.indexOf(" ")));
+            input = input.substring(input.indexOf(" ") + 3);
+         }
+         else if (input.contains("x")) {
+            inputArray[y] = Integer.parseInt(input.substring(0, input.indexOf("x")));
+            inputArray[y + 1] = Integer.parseInt(input.substring(input.indexOf("x") + 1, input.indexOf(" ")));
+            input = input.substring(input.indexOf(" ") + 3);
+         }
+         else {
+            inputArray[y] = Integer.parseInt(input);
+            break;
+         }
+      }
+      
+      for(int z = 0; z < inputArray.length; z += 2) {
+         polMap.put(inputArray[z + 1], inputArray[z]);
+      }
+      
+   }
    
    /**
     * Makes the polynomial term by checking if the exp is already there.
