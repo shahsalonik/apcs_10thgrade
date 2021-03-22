@@ -33,19 +33,19 @@ public class Polynomial_Driver
       System.out.println("Product:  " + poly.multiply(poly2));
       
       /*  Another case:   (x+1)(x-1) -->  x^2 + -1    */
-      // System.out.println("===========================");
-      // Polynomial poly3 = new Polynomial();   // (x+1)
-      // poly3.makeTerm(1, 1);
-      // poly3.makeTerm(0, 1);
-      // System.out.println("Map:  " + poly3.getMap());
-      // System.out.println("String:  " + poly3.toString());
+      System.out.println("===========================");
+      Polynomial poly3 = new Polynomial();   // (x+1)
+      poly3.makeTerm(1, 1);
+      poly3.makeTerm(0, 1);
+      System.out.println("Map:  " + poly3.getMap());
+      System.out.println("String:  " + poly3.toString());
    //       
-      // Polynomial poly4 = new Polynomial();    // (x-1)
-      // poly4.makeTerm(1, 1);
-      // poly4.makeTerm(0, -1);
-      // System.out.println("Map:  " + poly4.getMap());
-      // System.out.println("String:  " + poly4.toString());
-      // System.out.println("Product:  " + poly4.multiply(poly3));   // x^2 + -1 
+      Polynomial poly4 = new Polynomial();    // (x-1)
+      poly4.makeTerm(1, 1);
+      poly4.makeTerm(0, -1);
+      System.out.println("Map:  " + poly4.getMap());
+      System.out.println("String:  " + poly4.toString());
+      System.out.println("Product:  " + poly4.multiply(poly3));   // x^2 + -1 
    //    
    //    /*  testing the one-arg constructor  */
       System.out.println("==========================="); 
@@ -198,23 +198,28 @@ class Polynomial implements PolynomialInterface
    public String toString() {
       String finalExp = "";
       for(int pow : polMap.keySet()) { 
-         if(pow == 0) {
-            finalExp = finalExp + "" + polMap.get(pow);
-         }
-         else if(pow == 1) {
-            if(polMap.get(pow) == 1) {
-               finalExp = "x + " + finalExp;
-            }
-            else {
-               finalExp = polMap.get(pow) + "x + " + finalExp;
-            }
+         if(polMap.get(pow) == 0) {
+            finalExp += "";
          }
          else {
-            if(polMap.get(pow) == 1) {
-               finalExp = "x^" + pow + " + " + finalExp;
+            if(pow == 0) {
+               finalExp = finalExp + "" + polMap.get(pow);
+            }
+            else if(pow == 1) {
+               if(polMap.get(pow) == 1) {
+                  finalExp = "x + " + finalExp;
+               }
+               else {
+                  finalExp = polMap.get(pow) + "x + " + finalExp;
+               }
             }
             else {
-               finalExp = polMap.get(pow) + "x^" + pow + " + " + finalExp;
+               if(polMap.get(pow) == 1) {
+                  finalExp = "x^" + pow + " + " + finalExp;
+               }
+               else {
+                  finalExp = polMap.get(pow) + "x^" + pow + " + " + finalExp;
+               }
             }
          }
       }
