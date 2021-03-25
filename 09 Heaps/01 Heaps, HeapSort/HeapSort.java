@@ -1,5 +1,5 @@
-// Name:
-// Date:
+// Name: Saloni Shah
+// Date: 04/06/2021 (due date)
 
 public class HeapSort
 {
@@ -48,17 +48,31 @@ public class HeapSort
   
    public static void swap(double[] array, int a, int b)
    {
-   
+      double temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
    }
    
    public static void heapDown(double[] array, int k, int size)
    {
-   
+      
    }
    
    public static boolean isSorted(double[] arr)
    {
-
+      double current = arr[0];
+      
+      for(int x = 0; x < arr.length; x++) {
+         if(arr[x] < current) {
+            return false;
+         }
+         else {
+            current = arr[x];
+         }
+      }
+      
+      return true;
+      
    }
    
    //****** Part 2 *******************************************
@@ -67,8 +81,7 @@ public class HeapSort
    public static double[] createRandom(double[] array)
    {  
       array[0] = -1;   //because it will become a heap
-       
-       
+      
       return array;
    }
    
@@ -78,4 +91,3 @@ public class HeapSort
    
    }
 }
-
