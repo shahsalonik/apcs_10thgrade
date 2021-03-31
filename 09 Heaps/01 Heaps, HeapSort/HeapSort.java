@@ -8,7 +8,7 @@ public class HeapSort
    public static void main(String[] args)
    {
       //Part 1: Given a heap, sort it. Do this part first. 
-      SIZE = 5;  
+      SIZE = 4;  
       double heap[] = {-1,7.2,3.4,6.4,9.9};
       
       display(heap);
@@ -47,6 +47,10 @@ public class HeapSort
    
       if(array[1] > array[2])   //just an extra swap, if needed.
          swap(array, 1, 2);
+      
+      if(array[size - 1] > array[size]) {
+         swap(array, size - 1, size);
+      }
    }
   
    public static void swap(double[] array, int a, int b)
@@ -57,7 +61,7 @@ public class HeapSort
    }
    
    public static void heapDown(double[] array, int k, int size) //array, current value, size of the array
-   {
+   { 
       //base case
       if(k >= size || 2 * k >= size) {
          return;
@@ -73,6 +77,9 @@ public class HeapSort
          if(array[k] < array[maxChildIndex]) {
             //swaps the two and then recurs
             swap(array, k, maxChildIndex);
+            heapDown(array, maxChildIndex, size);
+         }
+         else if (array[k] > array[maxChildIndex]) {
             heapDown(array, maxChildIndex, size);
          }
       }
