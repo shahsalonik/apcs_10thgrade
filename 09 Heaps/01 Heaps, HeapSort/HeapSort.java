@@ -8,16 +8,16 @@ public class HeapSort
    public static void main(String[] args)
    {
       //Part 1: Given a heap, sort it. Do this part first. 
-      /*SIZE = 9;  
-      double heap[] = {-1,99,80,85,17,30,84,2,16,1};
+      SIZE = 5;  
+      double heap[] = {-1,7.2,3.4,6.4,9.9};
       
       display(heap);
       sort(heap);
       display(heap);
-      System.out.println(isSorted(heap));*/
+      System.out.println(isSorted(heap));
       
       //Part 2:  Generate 100 random numbers, make a heap, sort it.
-      SIZE = 100;
+      /*SIZE = 100;
       double[] heap = new double[SIZE + 1];
       heap = createRandom(heap);
       display(heap);
@@ -25,7 +25,7 @@ public class HeapSort
       display(heap); 
       sort(heap);
       display(heap);
-      System.out.println(isSorted(heap));
+      System.out.println(isSorted(heap));*/
    }
    
 	//******* Part 1 ******************************************
@@ -106,7 +106,7 @@ public class HeapSort
    //turn the random array into a heap
    public static void makeHeap(double[] array, int size)
    {
-      for(int k = 1; k < size/2; k++) {
+      for(int k = size/2; k >= 1; k--){
          heapDown(array, k, size);
       }
    }
