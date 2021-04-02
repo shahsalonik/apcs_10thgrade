@@ -1,8 +1,7 @@
  //Name: Saloni Shah 
  //Date: 04/06/2021 (due date)
- 
-import java.util.*;
 
+import java.util.*;
 
 /* implement the API for java.util.PriorityQueue
  * test this class with HeapPriorityQueue_Driver.java.
@@ -19,6 +18,11 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       myHeap.add(null);
    }
    
+   /**
+    * Adds the generic passed to the heap, then sorts based on descending order
+    * @param obj
+    * @return true when the generic is added
+    */
    public boolean add(E obj)
    {
       myHeap.add(obj);
@@ -26,6 +30,10 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       return true;
    }
    
+   /**
+    * Removes the smallest element by sorting based on ascending order
+    * @return the value of the removed generic 
+    */
    public E remove()
    {
       heapDown(1, myHeap.size());
@@ -33,6 +41,10 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       return removed;
    }
    
+   /**
+    * Returns the value of the first element of the heap
+    * @return the value of the first element of the heap
+    */
    public E peek()
    {
       if(myHeap.size() == 1) {
@@ -43,11 +55,19 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       }
    }
    
+   /**
+    * Checks whether the heap is empty
+    * @return true if the first value of the heap is null
+    */
    public boolean isEmpty()
    {
       return (peek() == null);
    }
    
+   /**
+    * Sorts the heap in descending order.
+    * @param k the place from where the sorting should take place
+    */
    private void heapUp(int k)
    {
       int current = myHeap.size() - 1;
@@ -63,6 +83,11 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       }
    }
    
+   /**
+    * Swaps two elements given their positions
+    * @param a the index of the first element to be swapped
+    * @param b the index of the second element to be swapped
+    */
    private void swap(int a, int b)
    {
       E temp = myHeap.get(a);
@@ -70,6 +95,11 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       myHeap.set(b, temp);
    }
    
+   /**
+    * Sorts the heap in ascending order.
+    * @param k the index from where the swapping should take place
+    * @param size the size of the heap
+    */
    private void heapDown(int k, int size)
    {
       if(k >= size || 2 * k >= size) {
@@ -87,6 +117,10 @@ public class HeapPriorityQueue<E extends Comparable<E>>
       }
    }
    
+   /**
+    * Returns a string representation of the heap
+    * @return a string version of the heap 
+    */
    public String toString()
    {
       return myHeap.toString();
