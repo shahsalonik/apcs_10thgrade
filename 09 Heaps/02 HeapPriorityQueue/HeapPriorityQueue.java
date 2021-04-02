@@ -45,12 +45,7 @@ public class HeapPriorityQueue<E extends Comparable<E>>
    
    public boolean isEmpty()
    {
-      if(myHeap.size() == 0) {
-         return true;
-      }
-      else {
-         return false;
-      }
+      return (peek() == null);
    }
    
    private void heapUp(int k)
@@ -77,16 +72,18 @@ public class HeapPriorityQueue<E extends Comparable<E>>
    
    private void heapDown(int k, int size)
    {
-      if(k > size || 2 * k >= size) {
+      if(k >= size || 2 * k >= size) {
          return;
       }
-      int maxChild = 2 * k;
-      if(maxChild + 1 <= size && myHeap.get(maxChild).compareTo(myHeap.get(maxChild+1)) > 0) {
-         maxChild++;
-      }
-      if(myHeap.get(k).compareTo(myHeap.get(maxChild)) > 0){
-         swap(k, maxChild);
-         heapDown(maxChild, size);
+      else {
+         int maxChild = 2 * k;
+         if(maxChild + 1 < size && myHeap.get(maxChild).compareTo(myHeap.get(maxChild+1)) > 0) {
+            maxChild++;
+         }
+         if(myHeap.get(k).compareTo(myHeap.get(maxChild)) > 0){
+            swap(k, maxChild);
+            heapDown(maxChild, size);
+         }
       }
    }
    
