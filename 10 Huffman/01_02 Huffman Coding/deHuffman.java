@@ -22,33 +22,34 @@ public class deHuffman
    }
    public static TreeNode huffmanTree(Scanner huffLines)
    {
-      //null temp root and a pointer
+      //empty string temp root and a pointer
       TreeNode root = new TreeNode(null);
+      root.setValue("");
       TreeNode pointer;
       
       //continues for as long as there is a next line
-      while(huffLines.hasNextLine()) {
+      while(huffLines.hasNext()) {
          //sets the pointer to the root every run (resets)
          pointer = root;
          //unseparated code
          String code = huffLines.nextLine();
          //the letter that corresponds to the code
-         char letter = code.charAt(0); 
+         String letter = code.substring(0, 1); 
          //correct code without the letter
          code = code.substring(1);
          
          for(int i = 0; i < code.length(); i++) {
-            //if the char is 0, adds a new null node to the left
-            if(code.charAt(i) == '0') {
+            //if the char is 0, adds a new empty node to the left
+            if(code.substring(i, i + 1).equals("0")) {
                if(pointer.getLeft() == null) {
-                  pointer.setLeft(new TreeNode(null));
+                  pointer.setLeft(new TreeNode(""));
                } 
                pointer = pointer.getLeft(); 
             }
-            //if the char is 1, adds a new null node to the right
+            //if the char is 1, adds a new empty node to the right
             else {
                if(pointer.getRight() == null) {
-                  pointer.setRight(new TreeNode(null));
+                  pointer.setRight(new TreeNode(""));
                } 
                pointer = pointer.getRight(); 
             }
@@ -56,7 +57,7 @@ public class deHuffman
          //sets the value to the letter at the very end
          pointer.setValue(letter);
       }
-      
+      huffLines.close();
       //returns the tree
       return root;
    }
@@ -69,9 +70,9 @@ public class deHuffman
       
       //continues for as long as the position is less than the length
       while(pos < text.length()) {
-         //the nodes with characters are the only ones that are not null
+         //the nodes with characters are the only ones that are not empty
          //adds the value if that is the case and resets
-         if(temp.getValue() != null){
+         if(!(temp.getValue().equals(""))){
             decode += temp.getValue();
             temp = root;
          }
@@ -81,7 +82,7 @@ public class deHuffman
             temp = temp.getLeft();
          }
          //otherwise, if the char in the string is 1, goes to the right
-         else if(text.charAt(pos) == '1') {
+         else {
             pos++;
             temp = temp.getRight();
          }

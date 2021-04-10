@@ -29,15 +29,13 @@ public class Practice {
       return yearList;
    }
    
-   public static void main (String[] args) {
-   
-      HashMap<String, Integer> test = new HashMap<String, Integer>();
-      test.put("Golden", 2019);
-      test.put("Fine Line", 2019);
-      test.put("everything means nothing", 2020);
-      test.put("Wipeout", 1960);
+   public static String reverse(String str) {
       
-      System.out.println(byYear(test));
+      
+      
+   }
+   
+   public static void main (String[] args) {
       
       
    
