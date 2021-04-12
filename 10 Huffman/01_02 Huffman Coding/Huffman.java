@@ -22,14 +22,14 @@ public class Huffman
          //Make a frequency table of the letters
          
       char[] freqCheck = message.toCharArray();
-      HashMap<Character, Integer> freqTable = new HashMap<Character, Integer>();
+      HashMap<String, Integer> freqTable = new HashMap<String, Integer>();
          
       for(char c : freqCheck) {
-         if(freqTable.containsKey(c)) {
-            freqTable.put(c, freqTable.get(c) + 1); 
+         if(freqTable.containsKey("" + c)) {
+            freqTable.put(("" + c), freqTable.get("" + c) + 1); 
          }
          else {
-            freqTable.put(c, 1);
+            freqTable.put(("" + c), 1);
          }
       }
          
@@ -37,37 +37,44 @@ public class Huffman
    		//        node into a priority queue (or a min-heap).   
          
       PriorityQueue<HuffmanTreeNode> pq = new PriorityQueue<HuffmanTreeNode>();
-      for(char ch : freqTable.keySet()) {
-         pq.add(new HuffmanTreeNode(ch, freqTable.get(ch)));
+      for(String str : freqTable.keySet()) {
+         pq.add(new HuffmanTreeNode(str, freqTable.get(str)));
       }
            
       	//Use the priority queue of nodes to build the Huffman tree
-      HashMap<Character, String> helper = new HashMap<Character, String>();
-      for(char k : freqTable.keySet()) {
+      HashMap<String, String> helper = new HashMap<String, String>();
+      for(String k: freqTable.keySet()) {
          helper.put(k, "");
       }
       while(pq.size() > 1) {
          HuffmanTreeNode child1 = pq.remove();
          HuffmanTreeNode child2 = pq.remove();
-         HuffmanTreeNode parent = new HuffmanTreeNode('*', (child1.getFreq() + child2.getFreq()), child1, child2);
-         letterSearch(child1, '0', helper);
-         letterSearch(child2, '1', helper);
+         HuffmanTreeNode parent = new HuffmanTreeNode("*", (child1.getFreq() + child2.getFreq()), child1, child2);
+         letterSearch(child1, "0", helper);
+         letterSearch(child2, "1", helper);
          pq.add(parent);
       } 
       HuffmanTreeNode last = pq.remove();
          
          //System.out.println the binary message 
+      for(char mes : message.toCharArray()) {
+         System.out.print(helper.get("" + mes));
+      }
+      System.out.println();
       	//Write the binary message to the hard drive using the file name ("message." + middlePart + ".txt")
-         //System.out.println the scheme from the tree--needs a recursive helper method
+      PrintStream toPrint = new PrintStream(new File("message." + middlePart + ".txt"));
+      for(char mes : message.toCharArray()) {
+         toPrint.print(helper.get("" + mes));
+      }
+         //System.out.println the scheme from the tree
+      for(String ch : helper.keySet()) {
+         System.out.println(ch + helper.get(ch));
+      }
       	//Write the scheme to the hard drive using the file name ("scheme." + middlePart + ".txt")
          
-      PrintStream toPrint = new PrintStream(new File("scheme." + middlePart + ".txt"));
-      for(char ch : helper.keySet()) {
+      toPrint = new PrintStream(new File("scheme." + middlePart + ".txt"));
+      for(String ch : helper.keySet()) {
          toPrint.println(ch + helper.get(ch));
-      }
-      toPrint = new PrintStream(new File("message." + middlePart + ".txt"));
-      for(char mes : message.toCharArray()) {
-         toPrint.print(helper.get(mes));
       }  
             
    }
@@ -75,9 +82,9 @@ public class Huffman
    //Process the string letter-by-letter and search the tree for the 
    		//       letter. It's recursive. As you recur, build the path through the tree, 
    		//       where going left is 0 and going right is 1.
-   public static void letterSearch(HuffmanTreeNode h, char c, HashMap<Character, String> m) {
+   public static void letterSearch(HuffmanTreeNode h, String c, HashMap<String, String> m) {
       
-      if(h.getLetter() != '*') {
+      if(!(h.getLetter().equals("*"))) {
          m.put(h.getLetter(), c + m.get(h.getLetter()));
          return;
       }
@@ -94,16 +101,20 @@ public class Huffman
 class HuffmanTreeNode implements Comparable<HuffmanTreeNode>
 {
    
-   private char letter;
+   private String letter;
    private int frequency;
    private HuffmanTreeNode left, right;
    
-   public HuffmanTreeNode(char l, int freq) {
+   public HuffmanTreeNode(String l, int freq) {
       letter = l;
       frequency = freq;
    }
    
-   public HuffmanTreeNode(char l, int freq, HuffmanTreeNode initLeft, HuffmanTreeNode initRight)
+   public HuffmanTreeNode(int freq) {
+      frequency = freq;
+   }
+   
+   public HuffmanTreeNode(String l, int freq, HuffmanTreeNode initLeft, HuffmanTreeNode initRight)
    { 
       letter = l; 
       frequency = freq;
@@ -111,7 +122,7 @@ class HuffmanTreeNode implements Comparable<HuffmanTreeNode>
       right = initRight; 
    }  
    
-   public char getLetter() {
+   public String getLetter() {
       return letter;
    } 
    
@@ -137,7 +148,15 @@ class HuffmanTreeNode implements Comparable<HuffmanTreeNode>
    
    public int compareTo(HuffmanTreeNode h) {
       
-      return (getFreq() - h.getFreq());
+      if(frequency < h.getFreq()) {
+         return -1;
+      }
+      else if(frequency > h.getFreq()) {
+         return 1;
+      }
+      else {
+         return 0;
+      }
    }
    
    public String toString() {
