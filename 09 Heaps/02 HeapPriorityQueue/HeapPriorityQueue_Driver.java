@@ -6,23 +6,22 @@ public class HeapPriorityQueue_Driver
    public static void main(String[] args)
    {
       //PriorityQueue<Integer> heap  = new PriorityQueue<>();        // java's PQ
-      HeapPriorityQueue<Integer> heap = new HeapPriorityQueue();   //your implementation
+      //HeapPriorityQueue<String> heap = new HeapPriorityQueue();   //your implementation
      
       /*System.out.println( heap.peek() );                 
       boolean added = heap.add("b");           
-      System.out.println( "Peek: " + heap.peek() ); */
-      heap.add(150);
-      heap.add(85);   
-      heap.add(110);   
-      heap.add(80);   
-      heap.add(65);   
-      heap.add(100); 
-      heap.add(105);     
+      System.out.println( "Peek: " + heap.peek() ); 
+      heap.add("A");
+      heap.add("u");   
+      heap.add("C");   
+      heap.add("m");   
+      heap.add("P");   
+      heap.add("t");      
       System.out.println(heap.toString());                    
       // set the debugger here.  Make sure it acts like a min-heap.       
-      for(int x=1; x<=7; x++)
+      for(int x=1; x<=6; x++)
          System.out.println( heap.remove() );                             
-      System.out.println( heap.isEmpty() );   
+      System.out.println( heap.isEmpty() );   */
        
       //add a lot, then remove half of them 
       /*for(int x = 0; x < 100; x++)
@@ -30,6 +29,14 @@ public class HeapPriorityQueue_Driver
       for(int x = 0; x < 50; x++)
          heap.remove();
       System.out.println(heap.toString()); //is it a heap?*/
+      
+      PriorityQueue<Character> pq = new PriorityQueue<Character>();   //your implementation
+      pq.add('e');
+      pq.add('d');
+      pq.add('H');
+      System.out.print(pq + " ");
+      System.out.print(pq.remove() + " " + pq);
+      
    }
 }
 /*  sample run
