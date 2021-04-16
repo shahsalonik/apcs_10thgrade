@@ -81,14 +81,14 @@ public class AdjMat implements AdjacencyMatrix//,Warshall//,Floyd
    }
    
    /**
-    * Checks for 1 or 0 (indicates an edge if it is 1)
+    * Checks for a number other than 9999 (indicates an edge if it is not 9999)
     * @param from - row
     * @param to - column
-    * @return true or false depending on whether the value is a 1 or 0
+    * @return true or false depending on whether the value is not 9999
     */
    public boolean isEdge(int from, int to) {
    
-      if(grid[from][to] == 1) {
+      if(grid[from][to] != 9999) {
          return true;
       }
       else {
@@ -123,7 +123,7 @@ public class AdjMat implements AdjacencyMatrix//,Warshall//,Floyd
       
       for(int x = 0; x < grid.length; x++) {
          for(int y = 0; y < grid[0].length; y++) {
-            if(grid[x][y] == 1) {
+            if(grid[x][y] != 9999 && grid[x][y] != 0) {
                sum++;
             }
          }
@@ -250,6 +250,43 @@ public class AdjMat implements AdjacencyMatrix//,Warshall//,Floyd
       
       return reachList;
       
+   }
+   
+   //Floyd's Methods 
+   
+   /**
+    * Returns the cost from one place to the other
+    * @param from - the row
+    * @param to - the column
+    * @return the cost at the index
+    */
+   public int getCost(int from, int to) {
+      return grid[from][to];
+   }
+   
+   /**
+    * Returns the cost from one place to the other
+    * @param from - the name of the row
+    * @param to - the name of the column
+    * @return the cost at the index
+    */
+   public int getCost(String from, String to) {
+      return grid[vertices.get(from)][vertices.get(to)];
+   }
+   
+   /**
+    * Floyd's Algorithm
+    */
+   public void allPairsWeighted() {
+      for(int v = 0; v < grid.length; v++) {
+         for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j < grid.length; j++) {
+               if(grid[i][j] > (grid[i][v] + grid[v][j])) {
+                  grid[i][j] = grid[i][v] + grid[v][j];
+               }
+            }
+         }
+      }
    }
    
    
