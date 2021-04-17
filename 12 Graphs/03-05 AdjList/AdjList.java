@@ -1,5 +1,5 @@
-// Name:   
-// Date:
+// Name: Saloni Shah
+// Date: 04/26/2021 (due date)
  
 import java.util.*;
 import java.io.*;
@@ -26,6 +26,27 @@ class Vertex implements VertexInterface
    private ArrayList<Vertex> adjacencies;
   
   /* enter your code here  */
+  
+   public Vertex(String n) {
+      name = n;
+      adjacencies = new ArrayList<Vertex>();
+   }
+  
+   public String toString() { // Don't use commas in the list.  Example: "C [C D]"
+      return getName();
+   }
+   
+   public String getName() {
+      return name;
+   }
+   
+   public ArrayList<Vertex> getAdjacencies() {
+      return adjacencies;
+   }
+   
+   public void addAdjacent(Vertex v) {
+      adjacencies.add(v);
+   }
   
 }   
 
