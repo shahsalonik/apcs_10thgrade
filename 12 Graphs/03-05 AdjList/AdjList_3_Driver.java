@@ -13,8 +13,8 @@ public class AdjList_3_Driver
       System.out.println("Test the Vertex class");
       Vertex a = new Vertex("alpha");
       Vertex b = new Vertex("beta");
-      a.addAdjacent(b);
-      b.addAdjacent(a);
+      a.addEdge(b);
+      b.addEdge(a);
       System.out.println("get the names:\n  " + a.getName() + "\n  " + b.getName() );
       System.out.println("get the list of adjacencies: \n  " + a.getAdjacencies() +"\n  " + b.getAdjacencies());
       System.out.println("toString() shows the names plus the name of the neighbor(s): \n  " + a.toString() +"\n  " + b.toString());
@@ -34,7 +34,7 @@ public class AdjList_3_Driver
       g.addVertex("C");
       g.addVertex("D");
       g.addEdge("B", "A");  // <-- warning! Do not add a new Vertex("A").  You must get
-                           // the old Vertex B and addAdjacent() the old Vertex A.
+                           // the old Vertex B and addEdge() the old Vertex A.
       g.addEdge("C", "C");
       g.addEdge("C", "D");
       g.addEdge("D", "C");

@@ -17,7 +17,7 @@ interface VertexInterface
    String toString(); // Don't use commas in the list.  Example: "C [C D]"
    String getName();
    ArrayList<Vertex> getAdjacencies();
-   void addAdjacent(Vertex v);
+   void addEdge(Vertex v);
 } 
 
 class Vertex implements VertexInterface 
@@ -44,7 +44,7 @@ class Vertex implements VertexInterface
          return toReturn;
       }
       
-      return toReturn;
+      return toReturn.trim();
    }
    
    public String getName() {
@@ -55,7 +55,7 @@ class Vertex implements VertexInterface
       return adjacencies;
    }
    
-   public void addAdjacent(Vertex v) {
+   public void addEdge(Vertex v) {
       adjacencies.add(v);
    }
   
@@ -139,17 +139,17 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
       }
       int s = nameToIndex.get(source);
       int t = nameToIndex.get(target);
-      vertices.get(s).addAdjacent(vertices.get(t));
+      vertices.get(s).addEdge(vertices.get(t));
    }
    
    public String toString() {  //returns all vertices with their edges (omit commas)
       String toReturn = "";
      
       for(Vertex v : vertices) {
-         toReturn += v.toString() + " \n";
+         toReturn += v.toString() + "\n";
       }
       toReturn = toReturn.replace(",", "");
-      return toReturn;
+      return toReturn.trim();
    }
  
  
