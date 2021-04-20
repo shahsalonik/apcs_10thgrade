@@ -33,7 +33,18 @@ class Vertex implements VertexInterface
    }
   
    public String toString() { // Don't use commas in the list.  Example: "C [C D]"
-      return getName();
+      String toReturn = getName() + " [";
+      for(Vertex v : adjacencies) {
+         toReturn += v.getName() + " ";
+      }
+      toReturn += "]";
+      
+      if(toReturn.length() > 3 && toReturn.substring(toReturn.length() - 2, toReturn.length() - 1).equals(" ")) {
+         toReturn = toReturn.substring(0, toReturn.length() - 2) + "]";
+         return toReturn;
+      }
+      
+      return toReturn;
    }
    
    public String getName() {
@@ -95,7 +106,51 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
   
  /* enter your code here  */
  
- 
+   public List<Vertex> getVertices() {
+      return vertices;
+   }
+   
+   public Vertex getVertex(int i) {
+      return vertices.get(i);
+   }
+   
+   public Vertex getVertex(String vertexName) {
+      return getVertex(nameToIndex.get(vertexName));
+   }
+   
+   public Map<String, Integer> getVertexMap() {
+      return nameToIndex;
+   }
+   
+   public void addVertex(String v) {
+      if(nameToIndex.get(v) != null) {
+         return;
+      }
+      nameToIndex.put(v, vertices.size());
+      vertices.add(new Vertex(v));
+   }
+   
+   public void addEdge(String source, String target) {
+      if(nameToIndex.get(source) == null) {
+         addVertex(source);
+      }
+      if(nameToIndex.get(target) == null) {
+         addVertex(target);
+      }
+      int s = nameToIndex.get(source);
+      int t = nameToIndex.get(target);
+      vertices.get(s).addAdjacent(vertices.get(t));
+   }
+   
+   public String toString() {  //returns all vertices with their edges (omit commas)
+      String toReturn = "";
+     
+      for(Vertex v : vertices) {
+         toReturn += v.toString() + " \n";
+      }
+      toReturn = toReturn.replace(",", "");
+      return toReturn;
+   }
  
  
  

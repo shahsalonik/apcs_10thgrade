@@ -84,11 +84,11 @@ public class AdjMat implements AdjacencyMatrix//,Warshall//,Floyd
     * Checks for a number other than 9999 (indicates an edge if it is not 9999)
     * @param from - row
     * @param to - column
-    * @return true or false depending on whether the value is not 9999
+    * @return true or false depending on whether the value is not 9999 or 0
     */
    public boolean isEdge(int from, int to) {
    
-      if(grid[from][to] != 9999) {
+      if(grid[from][to] != 9999 && grid[from][to] != 0) {
          return true;
       }
       else {
