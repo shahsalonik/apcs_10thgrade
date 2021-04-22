@@ -13,8 +13,8 @@ public class AdjList_3_Driver
       System.out.println("Test the Vertex class");
       Vertex a = new Vertex("alpha");
       Vertex b = new Vertex("beta");
-      a.addEdge(b);
-      b.addEdge(a);
+      a.addAdjacent(b);
+      b.addAdjacent(a);
       System.out.println("get the names:\n  " + a.getName() + "\n  " + b.getName() );
       System.out.println("get the list of adjacencies: \n  " + a.getAdjacencies() +"\n  " + b.getAdjacencies());
       System.out.println("toString() shows the names plus the name of the neighbor(s): \n  " + a.toString() +"\n  " + b.toString());
@@ -29,16 +29,16 @@ public class AdjList_3_Driver
       System.out.println("  get vertex by name \"B\":  " + g.getVertex("B").toString());
       System.out.println("the whole graph:\n" + g.toString());
       
-      g.addEdge("A", "C"); // <-- warning!  Be sure to add all the Vertices first; 
+      g.addAdjacent("A", "C"); // <-- warning!  Be sure to add all the Vertices first; 
                            // or else deal with it. 
       g.addVertex("C");
       g.addVertex("D");
-      g.addEdge("B", "A");  // <-- warning! Do not add a new Vertex("A").  You must get
-                           // the old Vertex B and addEdge() the old Vertex A.
-      g.addEdge("C", "C");
-      g.addEdge("C", "D");
-      g.addEdge("D", "C");
-      g.addEdge("D", "A");
+      g.addAdjacent("B", "A");  // <-- warning! Do not add a new Vertex("A").  You must get
+                           // the old Vertex B and addAdjacent() the old Vertex A.
+      g.addAdjacent("C", "C");
+      g.addAdjacent("C", "D");
+      g.addAdjacent("D", "C");
+      g.addAdjacent("D", "A");
       System.out.println("\nlist of vertices in the graph:  " + g.getVertices());
       System.out.println("  map string to index:  " + g.getVertexMap());  
       System.out.println("  get vertex by index:  " + g.getVertex(1));  

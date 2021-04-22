@@ -1,6 +1,6 @@
 // Name: Saloni Shah
 // Date: 04/26/2021 (due date)
- 
+
 import java.util.*;
 import java.io.*;
 
@@ -17,7 +17,7 @@ interface VertexInterface
    String toString(); // Don't use commas in the list.  Example: "C [C D]"
    String getName();
    ArrayList<Vertex> getAdjacencies();
-   void addEdge(Vertex v);
+   void addAdjacent(Vertex v);
 } 
 
 class Vertex implements VertexInterface 
@@ -27,11 +27,19 @@ class Vertex implements VertexInterface
   
   /* enter your code here  */
   
+   /**
+    * Constructor 
+    * @param n - the name of the vertex
+    */
    public Vertex(String n) {
       name = n;
       adjacencies = new ArrayList<Vertex>();
    }
   
+   /**
+    * Returns a String representation of the vertex and its neighbors
+    * @return a String representation of the vertex and its neighbors
+    */
    public String toString() { // Don't use commas in the list.  Example: "C [C D]"
       String toReturn = getName() + " [";
       for(Vertex v : adjacencies) {
@@ -47,15 +55,27 @@ class Vertex implements VertexInterface
       return toReturn.trim();
    }
    
+   /**
+    * Returns the name of the vertex
+    * @return the name of the vertex
+    */
    public String getName() {
       return name;
    }
    
+   /**
+    * Returns a list of all the adjacent vertices
+    * @return the list of all the adjacent vertices
+    */
    public ArrayList<Vertex> getAdjacencies() {
       return adjacencies;
    }
    
-   public void addEdge(Vertex v) {
+   /**
+    * Adds a neighbor to the existing vertex
+    * @param v - the vertex to be added as an adjacent
+    */
+   public void addAdjacent(Vertex v) {
       adjacencies.add(v);
    }
   
@@ -68,7 +88,7 @@ interface AdjListInterface
    Vertex getVertex(String vertexName);
    Map<String, Integer> getVertexMap();
    void addVertex(String v);
-   void addEdge(String source, String target);
+   void addAdjacent(String source, String target);
    String toString();  //returns all vertices with their edges (omit commas)
 }
 
@@ -106,22 +126,44 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
   
  /* enter your code here  */
  
+   /**
+    * Returns the list of the vertices
+    * @return the list of the vertices
+    */
    public List<Vertex> getVertices() {
       return vertices;
    }
    
+   /**
+    * Returns a vertex given its index number 
+    * @param - i the index of the vertex
+    * @return the vertex to return
+    */
    public Vertex getVertex(int i) {
       return vertices.get(i);
    }
    
+   /**
+    * Returns a vertex given its name 
+    * @param - vertexName the name of the vertex
+    * @return the vertex to return
+    */
    public Vertex getVertex(String vertexName) {
       return getVertex(nameToIndex.get(vertexName));
    }
    
+   /**
+    * Returns the map of the vertex with its names
+    * @return the name map
+    */
    public Map<String, Integer> getVertexMap() {
       return nameToIndex;
    }
    
+   /**
+    * Adds a vertex given its name
+    * @param - v the name of the vertex
+    */
    public void addVertex(String v) {
       if(nameToIndex.get(v) != null) {
          return;
@@ -130,7 +172,12 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
       vertices.add(new Vertex(v));
    }
    
-   public void addEdge(String source, String target) {
+   /**
+    * Adds an adjacent given the name of the source and the target
+    * @param source - the vertex to start
+    * @param target - the vertex to end
+    */
+   public void addAdjacent(String source, String target) {
       if(nameToIndex.get(source) == null) {
          addVertex(source);
       }
@@ -139,9 +186,22 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
       }
       int s = nameToIndex.get(source);
       int t = nameToIndex.get(target);
-      vertices.get(s).addEdge(vertices.get(t));
+      vertices.get(s).addAdjacent(vertices.get(t));
    }
    
+   /**
+    * Adds an edge given the name of the source and the target
+    * @param source - the vertex to start
+    * @param target - the vertex to end
+    */
+   public void addEdge(String source, String target) {
+      addAdjacent(source, target);
+   }
+   
+   /**
+    * Returns a String representation of all the vertices with their edges
+    * @return a String representation of all the vertices with their edges
+    */
    public String toString() {  //returns all vertices with their edges (omit commas)
       String toReturn = "";
      
