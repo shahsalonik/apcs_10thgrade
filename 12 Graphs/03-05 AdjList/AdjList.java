@@ -119,7 +119,7 @@ interface EdgeListWithCities
 }
 
 
-public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCities
+public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeListWithCities
 {
    private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
    private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
@@ -211,22 +211,39 @@ public class AdjList implements AdjListInterface// , DFS_BFS , EdgeListWithCitie
       toReturn = toReturn.replace(",", "");
       return toReturn.trim();
    }
- 
+   
+   //DFS-BFS Methods
+   
+   public List<Vertex> depthFirstSearch(String name) {
+   
+   }
+   
+   public List<Vertex> depthFirstSearch(Vertex v) {
+   
+   }
+   
+   public List<Vertex> breadthFirstSearch(String name) {
+   
+   }
+   
+   public List<Vertex> breadthFirstSearch(Vertex v) {
+   
+   }
  
  
  
  /*  three extra credit methods, recursive version  */
-   List<Vertex> depthFirstRecur(String name)
+   public List<Vertex> depthFirstRecur(String name)
    {
       return null;
    }
    
-   List<Vertex> depthFirstRecur(Vertex v)
+   public List<Vertex> depthFirstRecur(Vertex v)
    {
       return null;
    }
    
-   void depthFirstRecurHelper(Vertex v, ArrayList<Vertex> reachable)
+   public void depthFirstRecurHelper(Vertex v, ArrayList<Vertex> reachable)
    {
       
    }   
