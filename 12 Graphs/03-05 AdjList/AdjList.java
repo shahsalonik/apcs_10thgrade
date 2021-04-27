@@ -215,19 +215,58 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
    //DFS-BFS Methods
    
    public List<Vertex> depthFirstSearch(String name) {
-   
+      int ind = nameToIndex.get(name);
+      Vertex source = getVertex(ind);
+      return depthFirstSearch(source);
    }
    
    public List<Vertex> depthFirstSearch(Vertex v) {
-   
+      List<Vertex> edgeList = v.getAdjacencies();
+      Stack<Vertex> temp = new Stack<Vertex>();
+      
+      temp.push(v);
+      edgeList.add(temp.pop());
+      
+      for(Vertex r : edgeList) {
+         temp.push(r);
+      }
+      
+      for(Vertex x : temp) {
+         if(!(edgeList.contains(x))) {
+            edgeList.add(temp.pop());
+            depthFirstSearch(x);
+         }
+      }
+      
+      return edgeList;
+      
    }
    
    public List<Vertex> breadthFirstSearch(String name) {
-   
+      int ind = nameToIndex.get(name);
+      Vertex source = getVertex(ind);
+      return breadthFirstSearch(source);
    }
    
    public List<Vertex> breadthFirstSearch(Vertex v) {
-   
+      List<Vertex> edgeList = v.getAdjacencies();
+      Queue<Vertex> temp = new LinkedList<Vertex>();
+      
+      temp.add(v);
+      edgeList.add(temp.remove());
+      
+      for(Vertex r : edgeList) {
+         temp.add(r);
+      }
+      
+      for(Vertex x : temp) {
+         if(!(edgeList.contains(x))) {
+            edgeList.add(temp.remove());
+            breadthFirstSearch(x);
+         }
+      }
+      
+      return edgeList;
    }
  
  
