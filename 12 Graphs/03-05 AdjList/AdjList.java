@@ -221,25 +221,29 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
    }
    
    public List<Vertex> depthFirstSearch(Vertex v) {
-      List<Vertex> edgeList = v.getAdjacencies();
+      List<Vertex> edgeList = new ArrayList<Vertex>();
       Stack<Vertex> temp = new Stack<Vertex>();
-      
+   
       temp.push(v);
-      edgeList.add(temp.pop());
       
-      for(Vertex r : edgeList) {
-         temp.push(r);
-      }
+      while(!temp.isEmpty()) {
       
-      for(Vertex x : temp) {
-         if(!(edgeList.contains(x))) {
-            edgeList.add(temp.pop());
-            depthFirstSearch(x);
+         Vertex v1 = temp.pop();
+         
+         if(!edgeList.contains(v1)) {
+            for(Vertex v2: v1.getAdjacencies()) {
+               if(!temp.contains(v2)) {
+                  temp.push(v2);
+               }
+            }
+            
+            edgeList.add(v1);
+            
          }
+         
       }
       
       return edgeList;
-      
    }
    
    public List<Vertex> breadthFirstSearch(String name) {
@@ -249,21 +253,26 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
    }
    
    public List<Vertex> breadthFirstSearch(Vertex v) {
-      List<Vertex> edgeList = v.getAdjacencies();
+      List<Vertex> edgeList = new ArrayList<Vertex>();
       Queue<Vertex> temp = new LinkedList<Vertex>();
-      
+   
       temp.add(v);
-      edgeList.add(temp.remove());
       
-      for(Vertex r : edgeList) {
-         temp.add(r);
-      }
+      while(!temp.isEmpty()) {
       
-      for(Vertex x : temp) {
-         if(!(edgeList.contains(x))) {
-            edgeList.add(temp.remove());
-            breadthFirstSearch(x);
+         Vertex v1 = temp.remove();
+         
+         if(!edgeList.contains(v1)) {
+            for(Vertex v2: v1.getAdjacencies()) {
+               if(!temp.contains(v2)) {
+                  temp.add(v2);
+               }
+            }
+            
+            edgeList.add(v1);
+            
          }
+         
       }
       
       return edgeList;
