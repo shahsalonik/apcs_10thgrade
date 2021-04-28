@@ -283,7 +283,9 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
  /*  three extra credit methods, recursive version  */
    public List<Vertex> depthFirstRecur(String name)
    {
-      return null;
+      int ind = nameToIndex.get(name);
+      Vertex source = getVertex(ind);
+      return depthFirstRecur(source);
    }
    
    public List<Vertex> depthFirstRecur(Vertex v)

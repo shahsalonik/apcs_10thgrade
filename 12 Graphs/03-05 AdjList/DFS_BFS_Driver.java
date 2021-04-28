@@ -38,9 +38,9 @@ public class DFS_BFS_Driver
       System.out.println( "D" + " ---> " + g.breadthFirstSearch("D") );
       
       /*  Extension  */   
-      // System.out.println("\nDepth First Search (Recursive)");
-      // for (String name : g.getVertexMap().keySet() )
-      // System.out.println ( name + " ---> " + g.depthFirstRecur(name) );
+      System.out.println("\nDepth First Search (Recursive)");
+      for (String name : g.getVertexMap().keySet() )
+         System.out.println ( name + " ---> " + g.depthFirstRecur(name) );
    }   
 }
 /********************************
