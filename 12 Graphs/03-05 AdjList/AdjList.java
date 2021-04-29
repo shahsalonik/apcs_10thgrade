@@ -290,12 +290,20 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
    
    public List<Vertex> depthFirstRecur(Vertex v)
    {
-      return null;
+      ArrayList<Vertex> edgeList = new ArrayList<Vertex>();
+      edgeList.add(v);
+      depthFirstRecurHelper(v, edgeList);
+      return edgeList;
    }
    
    public void depthFirstRecurHelper(Vertex v, ArrayList<Vertex> reachable)
-   {
-      
+   {   
+      for(Vertex c : v.getAdjacencies()) {
+         if(!(reachable.contains(c))) {
+            reachable.add(c);
+            depthFirstRecurHelper(c, reachable);
+         } 
+      }
    }   
 }
 
