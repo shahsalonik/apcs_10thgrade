@@ -1,5 +1,5 @@
-// Name:   
-// Date:
+// Name: Saloni Shah
+// Date: 06/01/2021 (due date)
  
 import java.util.*;
 import java.io.*;
@@ -41,7 +41,36 @@ class wVertex implements Comparable<wVertex>, wVertexInterface
    //private wVertex previous;  //for building the actual path in Dijkstra 7
    
    /*  enter your code for this class here   */ 
-    
+   
+   public wVertex(String argName) {
+      name = argName;
+      adjacencies = new ArrayList<Edge>();
+   }
+   
+   public String getName() {
+      return name;
+   }
+   
+   public double getMinDistance() {
+      return minDistance;
+   }
+   
+   public void setMinDistance(double m) {
+      minDistance = m;
+   }
+   
+   public ArrayList<Edge> getAdjacencies() {
+      return adjacencies;
+   }
+   
+   public void addEdge(wVertex v, double weight) {
+      adjacencies.add(new Edge(v, weight));
+   }
+     
+   public int compareTo(wVertex other) {
+      return (int) (minDistance - other.minDistance);
+   }
+   
 }
 
 interface AdjListWeightedInterface 
@@ -73,7 +102,57 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
   
    /*  enter your code for Graphs 6 */ 
    
+   public List<wVertex> getVertices() {
+      return vertices;
+   }
    
+   public Map<String, Integer> getNameToIndex() {
+      return nameToIndex;
+   }
+   
+   public wVertex getVertex(int i); 
+   {
+      return vertices.get(i);
+   }
+     
+   public wVertex getVertex(String vertexName) {
+      return getVertex(nameToIndex.get(vertexName));
+   }
+   
+   public void addVertex(String v) {   
+      if(!nameToIndex.containsKey(v)) {
+         nameToIndex.put(v, vertices.size());
+         vertices.add(new wVertex(v));
+      }
+      
+   }
+   
+   public void addEdge(String source, String target, double weight) {
+      addVertex(source);
+      addVertex(target);
+      getVertex(source).getAdjacencies.add(new Edge(getVertex(target), weight));
+   }
+   
+   public void minimumWeightPath(String vertexName) {   //Dijkstra's
+      PriorityQueue<wVertex> pq = new PriorityQueue<wVertex>();
+      wVertex source = getVertex(vertexName);
+      
+      source.setMinDistance(0);
+      pq.add(source);
+      
+      while(!pq.isEmpty()) {
+         
+         wVertex v = pq.remove();
+         
+         for(Edge e: v.getAdjacencies()) {
+            if(v.getMinDistance() + e.weight < e.target.getMinDistance()) {
+               e.target.setMinDistance(v.getMinDistance() + e.weight);
+               e.target.setPrevious(v);
+               pq.add(e.target);
+            }  
+         }
+      }
+   }
    
    
    /*  enter your code for two new methods in Graphs 7 */
