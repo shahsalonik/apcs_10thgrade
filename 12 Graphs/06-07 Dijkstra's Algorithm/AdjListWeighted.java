@@ -42,31 +42,60 @@ class wVertex implements Comparable<wVertex>, wVertexInterface
    
    /*  enter your code for this class here   */ 
    
+   /**
+   * Constructor for wVertex; initializes the adjacencies list
+   * @param argName - the name of the vertex
+   */
    public wVertex(String argName) {
       name = argName;
       adjacencies = new ArrayList<Edge>();
    }
    
+   /**
+   * Returns the name of the wVertex
+   * @return a String representing the name
+   */
    public String getName() {
       return name;
    }
    
+   /**
+   * Returns the minimum distance
+   * @return a double representing the min distance
+   */
    public double getMinDistance() {
       return minDistance;
    }
    
+   /**
+   * Sets the minimum distance
+   * @param m - a double representing the new min distance
+   */
    public void setMinDistance(double m) {
       minDistance = m;
    }
    
+   /**
+   * Returns the adjacencies list
+   * @return an ArrayList with the edges
+   */
    public ArrayList<Edge> getAdjacencies() {
       return adjacencies;
    }
    
+   /**
+   * Adds a new edge
+   * @param v - a new wVertex representing the new edge
+   * @param weight - the weight of the edge
+   */
    public void addEdge(wVertex v, double weight) {
       adjacencies.add(new Edge(v, weight));
    }
-     
+   
+   /**
+   * Compares two wVertices by subtracting the distance
+   * @return an int representing the differences between the min distances
+   */
    public int compareTo(wVertex other) {
       return (int) (minDistance - other.minDistance);
    }
@@ -102,23 +131,43 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
   
    /*  enter your code for Graphs 6 */ 
    
+   /**
+   * Returns the vertices
+   * @return a list representing the vertices
+   */
    public List<wVertex> getVertices() {
       return vertices;
    }
    
+   /**
+   * Returns the map of the names to indices
+   * @return a map representing names and their corresponding indices
+   */
    public Map<String, Integer> getNameToIndex() {
       return nameToIndex;
    }
    
-   public wVertex getVertex(int i); 
-   {
+   /**
+   * Returns the wVertex with that index
+   * @param i - the index of the vertex
+   * @return a wVertex with that index
+   */
+   public wVertex getVertex(int i) {
       return vertices.get(i);
    }
      
+   /**
+   * Returns the wVertex with that name
+   * @param vertexName - the name of the vertex
+   * @return a wVertex with that name
+   */
    public wVertex getVertex(String vertexName) {
       return getVertex(nameToIndex.get(vertexName));
    }
    
+   /**
+   * Adds a new wVertex
+   */
    public void addVertex(String v) {   
       if(!nameToIndex.containsKey(v)) {
          nameToIndex.put(v, vertices.size());
@@ -127,12 +176,22 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
       
    }
    
+   /**
+   * Adds a new edge with the source, target and weight specified.
+   * @param source - the starting point
+   * @param target - the ending point
+   * @param weight - the weight
+   */
    public void addEdge(String source, String target, double weight) {
       addVertex(source);
       addVertex(target);
-      getVertex(source).getAdjacencies.add(new Edge(getVertex(target), weight));
+      getVertex(source).getAdjacencies().add(new Edge(getVertex(target), weight));
    }
    
+   /**
+   * Figures out a path with the lowest weight sum.
+   * @param vertexName - the starting point
+   */
    public void minimumWeightPath(String vertexName) {   //Dijkstra's
       PriorityQueue<wVertex> pq = new PriorityQueue<wVertex>();
       wVertex source = getVertex(vertexName);
@@ -147,7 +206,6 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
          for(Edge e: v.getAdjacencies()) {
             if(v.getMinDistance() + e.weight < e.target.getMinDistance()) {
                e.target.setMinDistance(v.getMinDistance() + e.weight);
-               e.target.setPrevious(v);
                pq.add(e.target);
             }  
          }
