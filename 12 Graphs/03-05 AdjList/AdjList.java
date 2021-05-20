@@ -119,7 +119,7 @@ interface EdgeListWithCities
 }
 
 
-public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeListWithCities
+public class AdjList implements AdjListInterface, DFS_BFS, EdgeListWithCities
 {
    private ArrayList<Vertex> vertices = new ArrayList<Vertex>();
    private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
@@ -277,8 +277,67 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
       
       return edgeList;
    }
- 
- 
+   
+   //EdgeListWithCities methods
+   
+   /**
+   * Adds an edge with the source and target given a filename
+   * @param fileName the file to read the names of the cities from
+   */
+   public void graphFromEdgeListData(String fileName) throws FileNotFoundException {
+      Scanner infile = new Scanner(new File(fileName));
+      
+      while(infile.hasNext()) {
+         addEdge(infile.next(), infile.next());
+      }
+      
+   }
+   
+   /**
+   * Counts each edge in the graph
+   * @return an integer representing the number of edges
+   */
+   public int edgeCount() {
+      int count = 0;
+      for(Vertex v : vertices) {
+         for(Vertex e : v.getAdjacencies()) {
+            count++;
+         }
+      }
+      return count;
+   }
+   
+   /**
+   * Counts the vertices (sources) in the graph
+   * @return an integer representing all the sources
+   */
+   public int vertexCount() { //count the vertices in the object
+      return vertices.size();
+   }
+   
+   /**
+   * Checks if a location is reachable by checking if it occurs in the edges
+   * @param source - the location to start from
+   * @param target - the location to end
+   * @return true or false depending on whether or not it is reachable
+   */
+   public boolean isReachable(String source, String target) {
+      return depthFirstSearch(source).contains(vertices.get(nameToIndex.get(target)));
+   }
+   
+   /**
+   * Checks if every vertex in the graph is reachable
+   * @return true or false depending on reachability
+   */
+   public boolean isConnected() {
+      for(Vertex v : vertices) {
+         if(depthFirstSearch(v.getName()).size() < vertices.size() - 1) {
+            return false;
+         }
+      }
+      return true;
+   }
+   
  
  /*  three extra credit methods, recursive version  */
    public List<Vertex> depthFirstRecur(String name)
@@ -292,16 +351,18 @@ public class AdjList implements AdjListInterface, DFS_BFS // , DFS_BFS , EdgeLis
    {
       ArrayList<Vertex> edgeList = new ArrayList<Vertex>();
       edgeList.add(v);
-      depthFirstRecurHelper(v, edgeList);
+      for(int y = 0; y < edgeList.size(); y++) {
+         depthFirstRecurHelper(edgeList.get(y), edgeList);
+      }
       return edgeList;
    }
    
    public void depthFirstRecurHelper(Vertex v, ArrayList<Vertex> reachable)
    {   
-      for(Vertex c : v.getAdjacencies()) {
-         if(!(reachable.contains(c))) {
-            reachable.add(c);
-            depthFirstRecurHelper(c, reachable);
+      for(int x = v.getAdjacencies().size() - 1; x >= 0 ; x--) {
+         if(!(reachable.contains(vertices.get(x)))) {
+            reachable.add(vertices.get(x));
+            depthFirstRecurHelper(v.getAdjacencies().get(x), reachable);
          } 
       }
    }   
