@@ -212,7 +212,10 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
       PriorityQueue<wVertex> pq = new PriorityQueue<wVertex>();
       wVertex source = getVertex(vertexName);
       
-      source.setMinDistance(0);
+      for(wVertex t : vertices) {
+         t.setMinDistance(Double.POSITIVE_INFINITY);
+      }
+      
       pq.add(source);
       
       while(!pq.isEmpty()) {
