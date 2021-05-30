@@ -26,8 +26,8 @@ interface wVertexInterface
    String getName();
    double getMinDistance();
    void setMinDistance(double m);
-   //wVertex getPrevious();   //for Dijkstra 7
-   //void setPrevious(wVertex v);  //for Dijkstra 7
+   wVertex getPrevious();   //for Dijkstra 7
+   void setPrevious(wVertex v);  //for Dijkstra 7
    ArrayList<Edge> getAdjacencies();
    void addEdge(wVertex v, double weight);   
    int compareTo(wVertex other);
@@ -38,7 +38,7 @@ class wVertex implements Comparable<wVertex>, wVertexInterface
    private final String name;
    private ArrayList<Edge> adjacencies;
    private double minDistance = Double.POSITIVE_INFINITY;
-   //private wVertex previous;  //for building the actual path in Dijkstra 7
+   private wVertex previous;  //for building the actual path in Dijkstra 7
    
    /*  enter your code for this class here   */ 
    
@@ -73,6 +73,22 @@ class wVertex implements Comparable<wVertex>, wVertexInterface
    */
    public void setMinDistance(double m) {
       minDistance = m;
+   }
+   
+   /**
+   * Returns the previous vertex
+   * @return wVertex representing the previous vertex
+   */
+   public wVertex getPrevious() {   
+      return previous;
+   }
+   
+   /**
+   * Sets the previous vertex
+   * @param v - a wVertex representing the previous vertex
+   */
+   public void setPrevious(wVertex v) {
+      previous = v;
    }
    
    /**
@@ -210,12 +226,12 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
             }  
          }
       }
-   }
+   }         
+}
    
    
    /*  enter your code for two new methods in Graphs 7 */
    
    
-}   
 
 
