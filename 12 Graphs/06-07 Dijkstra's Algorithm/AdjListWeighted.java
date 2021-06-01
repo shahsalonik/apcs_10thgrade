@@ -235,7 +235,55 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
             }  
          }
       }
-   }         
+   } 
+   
+   public List<String> getShortestPathTo(wVertex v) {
+      LinkedList<wVertex> list = new LinkedList<wVertex>();
+      list.addFirst(v);
+      wVertex prev = v.getPrevious();
+      List<String> toRet = new ArrayList<String>();
+      
+      if(prev == null) {
+         for(wVertex x : list) {
+            toRet.add(x.getName());
+         }
+         return toRet;
+      }
+         
+      list.addFirst(prev);
+      
+      while(prev.getMinDistance() != 0.0) {
+         prev = prev.getPrevious();
+         list.addFirst(prev);
+      }
+      
+      for(wVertex c : list) {
+         toRet.add(c.getName());
+      }
+      
+      return toRet; 
+   }
+   
+   public AdjListWeighted graphFromEdgeListData(File vertexNames, File edgeListData) throws FileNotFoundException {
+      Scanner vNames = new Scanner(vertexNames);
+      Scanner eData = new Scanner(edgeListData);
+      vNames.next();
+      
+      while(vNames.hasNext()) {
+         addVertex(vNames.next());
+      }
+      
+      while(eData.hasNext()) {
+         addEdge(eData.next(), eData.next(), eData.nextInt());
+         if(eData.hasNextLine()) {
+            eData.nextLine();
+         }
+      }
+      
+      return this;
+      
+   }
+           
 }
    
    
