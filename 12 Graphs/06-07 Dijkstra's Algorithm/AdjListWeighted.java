@@ -237,6 +237,12 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
       }
    } 
    
+   
+   /**
+   * Returns the shortest path and returns the names stored in a list.
+   * @param v - the starting point
+   * @return a list of the path
+   */
    public List<String> getShortestPathTo(wVertex v) {
       LinkedList<wVertex> list = new LinkedList<wVertex>();
       list.addFirst(v);
@@ -264,6 +270,13 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
       return toRet; 
    }
    
+   
+   /**
+   * Makes a graph with the data provided.
+   * @param vertexNames - the names of the vertices
+   * @param edgeListData - the weights and the edges
+   * @return the graph itself
+   */
    public AdjListWeighted graphFromEdgeListData(File vertexNames, File edgeListData) throws FileNotFoundException {
       Scanner vNames = new Scanner(vertexNames);
       Scanner eData = new Scanner(edgeListData);
