@@ -144,7 +144,10 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
    private List<wVertex> vertices = new ArrayList<wVertex>();
    private Map<String, Integer> nameToIndex = new HashMap<String, Integer>();
    //the constructor is a no-arg constructor 
-  
+   public AdjListWeighted() {
+   
+   }
+   
    /*  enter your code for Graphs 6 */ 
    
    /**
@@ -217,6 +220,8 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
       }
       
       pq.add(source);
+      source.setMinDistance(0);
+      pq.add(source);
       
       while(!pq.isEmpty()) {
          
@@ -225,6 +230,7 @@ public class AdjListWeighted implements AdjListWeightedInterface //,AdjListWeigh
          for(Edge e: v.getAdjacencies()) {
             if(v.getMinDistance() + e.weight < e.target.getMinDistance()) {
                e.target.setMinDistance(v.getMinDistance() + e.weight);
+               e.target.setPrevious(v);
                pq.add(e.target);
             }  
          }
