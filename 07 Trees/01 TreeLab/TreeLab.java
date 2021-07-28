@@ -8,7 +8,7 @@ public class TreeLab
    public static TreeNode root = null;
    //public static String s = "XCOMPUTERSCIENCE";
    //public static String s = "XThomasJeffersonHighSchool"; 
-   public static String s = "XAComputerScienceTreeHasItsRootAtTheTop";
+   public static String s = "AMERICAN";
    //public static String s = "XA";   //comment out lines 44-46 below
    //public static String s = "XAF";  //comment out lines 44-46 below
    //public static String s = "XAFP";  //comment out lines 44-46 below
